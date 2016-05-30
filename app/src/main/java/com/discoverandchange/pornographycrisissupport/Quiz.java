@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * Quiz R Us is what this does.
+ * This should conflict.
  * This class will hopefully, eventually, do something useful
  */
 

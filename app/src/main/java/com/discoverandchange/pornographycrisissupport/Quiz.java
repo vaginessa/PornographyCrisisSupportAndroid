@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * This should conflict.
+ * This should conflict. Yes it really did conflict.
  * This class will hopefully, eventually, do something useful
  * This is gonna cause a conflict! :)
  */

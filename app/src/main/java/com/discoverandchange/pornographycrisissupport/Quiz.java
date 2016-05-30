@@ -5,13 +5,14 @@ import android.os.Bundle;
 
 /**
  * This is gonna cause a conflict! :)
+ * This class will hopefully, eventually, do something useful
  */
 
 /**
  * I'm making another comment
  */
 
-// Now it's my turn to make a comment'
+// Now it's my turn to make a comment
 
 public class Quiz extends AppCompatActivity {
 

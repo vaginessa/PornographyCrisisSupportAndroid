@@ -6,6 +6,11 @@ import android.os.Bundle;
 /**
  * This class handles the quiz portion.
  */
+
+/**
+ * I'm making another comment
+ */
+
 public class Quiz extends AppCompatActivity {
 
   @Override

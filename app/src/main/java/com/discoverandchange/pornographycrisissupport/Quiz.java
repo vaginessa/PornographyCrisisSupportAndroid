@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 /**
  * This is gonna cause a conflict! :)
- * This class will hopefully, eventually, do something useful
  */
 
 /**

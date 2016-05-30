@@ -3,6 +3,9 @@ package com.discoverandchange.pornographycrisissupport;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+/**
+ * This class handles the quiz portion.
+ */
 public class Quiz extends AppCompatActivity {
 
   @Override

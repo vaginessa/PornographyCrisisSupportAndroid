@@ -4,7 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * Quiz system is what this activity handles.
+ * Quiz R Us is what this does.
+ * This class will hopefully, eventually, do something useful
  */
 
 /**

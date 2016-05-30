@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * This class handles the quiz portion.
+ * This is gonna cause a conflict! :)
  */
 
 /**

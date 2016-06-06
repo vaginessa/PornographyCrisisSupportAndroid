@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.discoverandchange.pornographycrisissupport.library.LibraryController;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
+
 /**
  * Shares common code for the menu navigation items.
  * Uses code sample from here: http://stackoverflow.com/questions/4922641/sliding-drawer-appear-in-all-activities/25865925#25865925
@@ -30,7 +33,9 @@ public class BaseNavigationActivity extends AppCompatActivity
     getLayoutInflater().inflate(layoutResID, frameLayout, true);
 
     super.setContentView(fullLayout);
-//
+//    TODO: stephen if you figure out how to get this floating bar to work, uncomment this as it came
+//          with the sample code, but I could never get it to work.
+
 //    //Your drawer content...
 //    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //    setSupportActionBar(toolbar);
@@ -79,19 +84,19 @@ public class BaseNavigationActivity extends AppCompatActivity
     // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
-    if (id == R.id.action_support_network) {
-      Intent intent = new Intent(getBaseContext(), SupportNetworkList.class);
-      this.startActivity(intent);
-      return true;
-    } else if (id == R.id.action_quiz) {
-      Intent intent = new Intent(getBaseContext(), Quiz.class);
-      this.startActivity(intent);
-      return true;
+    switch (id) {
+      case R.id.action_support_network: {
+        this.launchActivity(SupportNetworkList.class);
+        return true;
+      }
+      case R.id.action_quiz: {
+        this.launchActivity(Quiz.class);
+        return true;
+      }
+      case R.id.action_library: {
+        this.launchActivity(LibraryController.class);
+        return true;
+      }
     }
 
     return super.onOptionsItemSelected(item);
@@ -103,16 +108,32 @@ public class BaseNavigationActivity extends AppCompatActivity
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
-    if (id == R.id.nav_support_network) {
-      Intent intent = new Intent(getBaseContext(), SupportNetworkList.class);
-      this.startActivity(intent);
-    } else if (id == R.id.nav_quiz) {
-      Intent intent = new Intent(getBaseContext(), Quiz.class);
-      this.startActivity(intent);
+    switch (id) {
+      case R.id.nav_support_network: {
+        this.launchActivity(SupportNetworkList.class);
+      }
+      break;
+      case R.id.nav_quiz: {
+        this.launchActivity(Quiz.class);
+      }
+      break;
+      case R.id.nav_library: {
+        this.launchActivity(LibraryController.class);
+      }
+      break;
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  /**
+   * Given an activity class to launch launch the intent with it.
+   * @param clazz The class of the activity we want to launch from the navigation.
+   */
+  private void launchActivity(Class clazz) {
+    Intent intent = new Intent(getBaseContext(), clazz);
+    this.startActivity(intent);
   }
 }

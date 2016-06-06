@@ -12,6 +12,11 @@
         android:title="@string/action_quiz"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/action_library"
+        android:orderInCategory="100"
+        android:title="@string/action_library"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

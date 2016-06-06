@@ -10,4 +10,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_support_network">Support Network</string>
     <string name="action_quiz">Take Quiz</string>
+    <string name="action_library">Resource Library</string>
+    <string name="library_controller_title">Library Stub</string>
 </resources>

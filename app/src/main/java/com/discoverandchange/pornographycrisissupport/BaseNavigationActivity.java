@@ -1,20 +1,13 @@
 package com.discoverandchange.pornographycrisissupport;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 /**
  * Shares common code for the menu navigation items.
@@ -75,7 +68,7 @@ public class BaseNavigationActivity extends AppCompatActivity
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.nav_drawer_example, menu);
+    getMenuInflater().inflate(R.menu.nav_drawer_main, menu);
     return true;
   }
 
@@ -91,6 +84,16 @@ public class BaseNavigationActivity extends AppCompatActivity
       return true;
     }
 
+    if (id == R.id.action_support_network) {
+      Intent intent = new Intent(getBaseContext(), SupportNetworkList.class);
+      this.startActivity(intent);
+      return true;
+    } else if (id == R.id.action_quiz) {
+      Intent intent = new Intent(getBaseContext(), Quiz.class);
+      this.startActivity(intent);
+      return true;
+    }
+
     return super.onOptionsItemSelected(item);
   }
 
@@ -100,20 +103,12 @@ public class BaseNavigationActivity extends AppCompatActivity
     // Handle navigation view item clicks here.
     int id = item.getItemId();
 
-    if (id == R.id.nav_camera) {
-      // Handle the camera action
-    } else if (id == R.id.nav_gallery) {
-
-    } else if (id == R.id.nav_slideshow) {
-      Intent intent = new Intent(getBaseContext(), Quiz.class);
-      this.startActivity(intent);
-    } else if (id == R.id.nav_manage) {
+    if (id == R.id.nav_support_network) {
       Intent intent = new Intent(getBaseContext(), SupportNetworkList.class);
       this.startActivity(intent);
-    } else if (id == R.id.nav_share) {
-
-    } else if (id == R.id.nav_send) {
-
+    } else if (id == R.id.nav_quiz) {
+      Intent intent = new Intent(getBaseContext(), Quiz.class);
+      this.startActivity(intent);
     }
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

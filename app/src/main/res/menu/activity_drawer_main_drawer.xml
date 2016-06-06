@@ -5,11 +5,11 @@
         <item
             android:id="@+id/nav_support_network"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Support Network"/>
+            android:title="@string/action_support_network"/>
         <item
             android:id="@+id/nav_quiz"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery"/>
+            android:title="@string/action_quiz"/>
     </group>
 
     <!--<item android:title="Communicate">-->

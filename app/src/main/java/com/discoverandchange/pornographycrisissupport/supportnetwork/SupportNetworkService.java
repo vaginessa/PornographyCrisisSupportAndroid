@@ -2,6 +2,7 @@ package com.discoverandchange.pornographycrisissupport.supportnetwork;
 
 import android.telephony.SmsManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class SupportNetworkService {
   }
 
   public List<SupportContact> getSupportContactList() {
-    return null;
+    return new ArrayList <SupportContact> ();
   }
 
   public String getDevicePhoneNumber() {
@@ -36,4 +37,21 @@ public class SupportNetworkService {
   public String getDefaultMessage() {
     return "I am experiencing severe cravings. Help!!!";
   }
+
+  // Obtain the contactID that was given
+  // Search the arrayList of contacts for the contact ID
+  // If that contactID is not present, then it has been removed
+  public SupportContact removeSupportContact(String contactID){
+    return null;
+  }
+
+  public void sendSMSTestMessage(String message) {
+
+  }
+
+  public boolean hasContact(String contactID) {
+    boolean contactPresent = false;
+    return contactPresent;
+  }
+
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.discoverandchange.pornographycrisissupport.library.LibraryController;
+import com.discoverandchange.pornographycrisissupport.quiz.QuizController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 /**
@@ -90,7 +91,7 @@ public class BaseNavigationActivity extends AppCompatActivity
         return true;
       }
       case R.id.action_quiz: {
-        this.launchActivity(Quiz.class);
+        this.launchActivity(QuizController.class);
         return true;
       }
       case R.id.action_library: {
@@ -114,7 +115,7 @@ public class BaseNavigationActivity extends AppCompatActivity
       }
       break;
       case R.id.nav_quiz: {
-        this.launchActivity(Quiz.class);
+        this.launchActivity(QuizController.class);
       }
       break;
       case R.id.nav_library: {

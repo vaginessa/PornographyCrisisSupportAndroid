@@ -1,5 +1,7 @@
 package com.discoverandchange.pornographycrisissupport;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 import static org.mockito.Mockito.*;
@@ -62,4 +64,38 @@ public class SupportNetworkServiceTest {
     List<SupportContact> contactList = service.getSupportContactList();
     contactList.get(0).equals(contact);
   }
+
+  @Test
+  public void removeSupportContact(){
+
+    // Obtain the contactID that was given
+    // Search the arrayList of contacts for the contact ID
+    // If that contactID is not present, then it has been removed
+    String contactID = "1";
+    SupportNetworkService service = new SupportNetworkService(mManager);
+    SupportContact contact = service.addSupportContact("John", "Jacob", contactID, "888-888-8888");
+
+    SupportContact contactRemoved = service.removeSupportContact(contactID);
+    assertTrue("The contact has been removed", contactRemoved != null);
+    List<SupportContact> contactList = service.getSupportContactList();
+
+    assertFalse("The contactID is no longer present in the list", contactList.contains(contactRemoved));
+  }
+
+  @Test
+  public void sendSMSTestMessage() {
+    String phone = "888-888-8888";
+    String first = "Joe";
+    String last = "Smith";
+    String id = "1";
+
+    SupportNetworkService service = new SupportNetworkService(mManager);
+    String phoneSrcAddress = service.getDevicePhoneNumber();
+    String testMessage = "This is a test message.";
+    service.addSupportContact(first, last, id,  phone);
+    service.sendSMSTestMessage(testMessage);
+
+    verify(mManager, times(1)).sendTextMessage(phone, phoneSrcAddress, testMessage, null, null);
+  }
+
 }

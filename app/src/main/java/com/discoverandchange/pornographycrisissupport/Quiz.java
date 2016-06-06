@@ -16,7 +16,7 @@ import android.os.Bundle;
 
 // Now it's my turn to make a comment
 
-public class Quiz extends AppCompatActivity {
+public class Quiz extends BaseNavigationActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

@@ -1,7 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
 /**
- *
+ * Created by khigbee on 6/6/16.
  */
 
 public class Quiz {

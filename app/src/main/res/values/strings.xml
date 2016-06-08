@@ -12,4 +12,7 @@
     <string name="action_quiz">Take Quiz</string>
     <string name="action_library">Resource Library</string>
     <string name="library_controller_title">Library Stub</string>
+    <string name="quiz_controller_contact_network_notified">Your contact network has been notified.</string>
+    <string name="quiz_controller_instructions">Rate your cravings</string>
+    <string name="quiz_controller_go">Go</string>
 </resources>

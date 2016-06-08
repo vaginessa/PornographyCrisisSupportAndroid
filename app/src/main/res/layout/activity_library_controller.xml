@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/library_controller_title"
+        android:text="@string/quiz_controller_contact_network_notified"
         android:id="@+id/libraryTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

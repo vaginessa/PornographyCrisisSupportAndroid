@@ -26,6 +26,14 @@ public class SupportNetworkService {
 //    smsManager.sendTextMessage("8019999999", "8019999999", "some message", null, null);
   }
 
+  public SupportContact getCrisisSupportContact() {
+    SupportContact crisis = new SupportContact();
+    crisis.setPhoneNumber("801-610-9014");
+    crisis.setFirstName("Stephen");
+    crisis.setLastName("Nielson");
+    return crisis;
+  }
+
   public List<SupportContact> getSupportContactList() {
     return new ArrayList <SupportContact> ();
   }

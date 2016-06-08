@@ -10,4 +10,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
   }
+
+
+
 }

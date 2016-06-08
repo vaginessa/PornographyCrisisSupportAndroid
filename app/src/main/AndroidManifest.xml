@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SupportNetworkList">
+
         </activity>
         <activity android:name=".library.LibraryController">
         </activity>

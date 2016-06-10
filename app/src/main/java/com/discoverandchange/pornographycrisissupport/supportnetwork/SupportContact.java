@@ -9,6 +9,11 @@ public class SupportContact {
   private String name;
   private String cid;
 
+  public SupportContact (String cid, String name, String number){
+    this.setContactID(cid);
+    this.setName(name);
+    this.setPhoneNumber(number);
+  }
 
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;

@@ -39,57 +39,45 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
     ContentResolver cr = getContentResolver();
 
-    Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+    String[] projection    = new String[] { ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+    Cursor cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
               ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + cid, null, null);
-      while (phones.moveToNext()) {
-        // A place holder for whatever phone number is currently selected
-        String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-        int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-        // For each type of phone number associated with a contact, do something
-        // We need all numbers to provide the user with a chance to select their preferred number for the contact
-        // This should be a temporary storage location and then the chosen number is stored along with other supportContact Data
 
-        // Making a temporary list to store phone numbers to display to the user
-        public List<String> phoneList;
+    // Locations of our name and phone number within the projection
+    int indexName   = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+    int indexNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
+    // Making a temporary list to store phone numbers to display to the user
+    List phoneList = new ArrayList<String> ();
 
-        switch (type) {
-          case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-            // do something with the Home number here...
+    // Our new Support Contact
+    SupportContact contact;
 
-            Log.v(Constants.LOG_TAG, "Home Phone Number: " + number);
-            Log.w(Constants.LOG_TAG, "Warning: Contact Home Phone Number not Handled Correctly");
-            break;
-          case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-            // do something with the Mobile number here...
+    // A loop to collect all phone numbers for our contact into a list for display later
+    while (cursor.moveToNext()) {
 
-            Log.v(Constants.LOG_TAG, "Mobile Phone Number: " + number);
-            Log.w(Constants.LOG_TAG, "Warning: Contact Mobile Phone Number not Handled Correctly");
-            break;
-          case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-            // do something with the Work number here...
+      // A place holder for whatever phone number is currently selected
+      String number = cursor.getString(indexNumber);
 
-            Log.v(Constants.LOG_TAG, "Work Phone Number: " + number);
-            Log.w(Constants.LOG_TAG, "Warning: Contact Work Phone Number not Handled Correctly");
-            break;
-        }
+      // A place holder for the name of the current contact
+      String name = cursor.getString(indexName);
 
-        // Display the contact list here with somthing like "numberList.displayList();"
-        // Receive User input on which number to store
-        // store that number in the "number" variable
+      phoneList.add(number);
 
-        // Search the contacts table for the name associated with "cid"
-        // Create a variable to store the name
+      contact = new SupportContact(cid, name, number);
+    }
 
-        // Create a new supportContact and store cid, contactNumber, and name in that contact
+    cursor.close();
 
-        // TO DO :  Create a Support Contact with Name, with phone number and cid stored
-        //          Create code to extract the name using a cid
-        //          store the name, number, and cid of the supportContact
-        // Also :   Lay groundwork for storing the supportContact data long-term
+    // Display the contact list here with something like "numberList.displayList();"
+      // Receive User input on which number to store
+      // store that number in the "number" variable
 
-      }
-      phones.close();
+              // Also :   Lay groundwork for storing the supportContact data long-term
+
 
   }
 

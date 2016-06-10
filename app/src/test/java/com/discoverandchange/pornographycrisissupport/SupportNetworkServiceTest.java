@@ -42,26 +42,38 @@ public class SupportNetworkServiceTest {
 
     String phone = "888-888-8888";
     String id = "1";
-    String first = "John";
-    String last = "Jacob";
+    String name = "John Jacob";
 
     SupportNetworkService service = new SupportNetworkService(mManager);
     String phoneSrcAddress = service.getDevicePhoneNumber();
     String defaultCrisisMessage = service.getDefaultMessage();
-    service.addSupportContact(first, last, id,  phone);
+    service.addSupportContact(new SupportContact(id, name, phone));
     service.contactNetwork();
 
     verify(mManager, times(1)).sendTextMessage(phone, phoneSrcAddress, defaultCrisisMessage, null, null);
   }
 
   @Test
-  public void testAddSupportNetworkContact() {
+  public void testAddSupportNetworkContactWithParameters() {
 
     SupportNetworkService service = new SupportNetworkService(mManager);
     SupportContact contact = service.addSupportContact("John", "Jacob", "1", "888-888-8888");
     assertThat("contact should have been added", contact, notNullValue());
 
     List<SupportContact> contactList = service.getSupportContactList();
+    assertThat("Contact list should have at least one item in it.", contactList.isEmpty(), is(false));
+    contactList.get(0).equals(contact);
+  }
+
+  @Test
+  public void testAddSupportNetworkContactWithObject() {
+
+    SupportNetworkService service = new SupportNetworkService(mManager);
+    SupportContact contact = service.addSupportContact(new SupportContact("John Jacob", "1", "888-888-8888"));
+    assertThat("contact should have been added", contact, notNullValue());
+
+    List<SupportContact> contactList = service.getSupportContactList();
+    assertThat("Contact list should have at least one item in it.", contactList.isEmpty(), is(false));
     contactList.get(0).equals(contact);
   }
 

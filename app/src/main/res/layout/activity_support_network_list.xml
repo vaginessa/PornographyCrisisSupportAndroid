@@ -16,9 +16,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Support network List"
         android:id="@+id/textView3"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/addContact"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="124dp" />
+        android:layout_marginTop="32dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -46,4 +46,12 @@
         android:layout_alignTop="@+id/editContact"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvSupportContact"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

@@ -10,13 +10,42 @@ import java.util.List;
  */
 public class SupportNetworkService {
 
+  private List<SupportContact> contacts;
+
   private SmsManager smsManager;
+
+  private static SupportNetworkService service;
 
   public SupportNetworkService(SmsManager smsManager) {
     this.smsManager = smsManager;
+    this.contacts = new ArrayList<SupportContact>();
+    // TODO: eventually we'll load this from a database.
   }
+
+  public static SupportNetworkService getInstance() {
+    if (service == null) {
+      service = new SupportNetworkService(SmsManager.getDefault());
+    }
+    return service;
+  }
+
   public SupportContact addSupportContact(String first, String last, String contactId, String phone) {
-    return null;
+    return addSupportContact(new SupportContact(first + " " + last, contactId, phone));
+  }
+
+  /**
+   * Adds a support contact to the service and persists it.  The contact must have a contact id
+   * in order to be saved.
+   * @param contactToSave The contact to be saved with a valid id.
+   * @return The contact that was saved.
+   */
+  public SupportContact addSupportContact(SupportContact contactToSave) {
+    if (contactToSave.getContactID() == null) {
+      throw new IllegalArgumentException("Contact must have a contact id in order to be saved");
+    }
+
+    this.contacts.add(contactToSave);
+    return contactToSave;
   }
 
   public void contactNetwork() {
@@ -29,13 +58,17 @@ public class SupportNetworkService {
   public SupportContact getCrisisSupportContact() {
     SupportContact crisis = new SupportContact();
     crisis.setPhoneNumber("801-610-9014");
-    crisis.setFirstName("Stephen");
-    crisis.setLastName("Nielson");
+    crisis.setName("Stephen Nielson");
     return crisis;
   }
 
+  /**
+   * Returns all of the support contacts that are being tracked by this service.
+   * @return List of support contacts that have been added.
+   */
   public List<SupportContact> getSupportContactList() {
-    return new ArrayList <SupportContact> ();
+
+    return new ArrayList<SupportContact>(this.contacts);
   }
 
   public String getDevicePhoneNumber() {

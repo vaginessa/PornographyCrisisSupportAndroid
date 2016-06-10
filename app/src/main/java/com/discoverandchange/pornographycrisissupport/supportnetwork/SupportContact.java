@@ -9,6 +9,9 @@ public class SupportContact {
   private String name;
   private String cid;
 
+  public SupportContact() {
+  }
+
   public SupportContact (String cid, String name, String number){
     this.setContactID(cid);
     this.setName(name);
@@ -27,7 +30,7 @@ public class SupportContact {
 
   public String getPhoneNumber() { return this.phoneNumber; }
 
-  public String getName(String cid) { return this.name; }
+  public String getName() { return this.name; }
 
   public String getContactID () { return this.cid; }
 }

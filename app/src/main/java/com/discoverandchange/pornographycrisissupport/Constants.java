@@ -6,4 +6,6 @@ package com.discoverandchange.pornographycrisissupport;
  */
 public class Constants {
   public static final String LOG_TAG = "pornographysupportapp";
+  public static final String DATABASE_NAME = "pcs.db";
+  public static final int DATABASE_VERSION = 1;
 }

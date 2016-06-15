@@ -79,7 +79,7 @@ public class QuizController extends BaseNavigationActivity
 
   public void launchDialer() {
     //EndCallListenerTest listener = new EndCallListenerTest();
-    SupportNetworkService service = new SupportNetworkService(SmsManager.getDefault());
+    SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     SupportContact contact = service.getCrisisSupportContact();
 
 

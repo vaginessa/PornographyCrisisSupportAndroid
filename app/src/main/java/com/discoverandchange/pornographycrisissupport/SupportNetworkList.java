@@ -35,7 +35,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
 
-    SupportNetworkService service = SupportNetworkService.getInstance();
+    SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     // TODO: stephen,john this is test code, remove it when we are done.
     service.addSupportContact(new SupportContact("1", "Test User 1", "888-888-8888"));
     service.addSupportContact(new SupportContact("2", "Test User 2", "888-888-8889"));
@@ -161,7 +161,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   private void saveContactData(SupportContact contact) {
     if (contact != null) {
-      SupportNetworkService service = SupportNetworkService.getInstance();
+      SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
       service.addSupportContact(contact);
     }
   }

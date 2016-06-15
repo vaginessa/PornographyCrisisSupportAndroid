@@ -8,6 +8,7 @@ public class SupportContact {
   private String phoneNumber;
   private String name;
   private String cid;
+  private boolean isCrisisContact;
 
   public SupportContact() {
   }
@@ -33,4 +34,12 @@ public class SupportContact {
   public String getName() { return this.name; }
 
   public String getContactID () { return this.cid; }
+
+  public void setIsCrisisContact(boolean isCrisis) {
+    this.isCrisisContact = isCrisis;
+  }
+
+  public boolean isCrisisContact() {
+    return this.isCrisisContact;
+  }
 }

@@ -28,6 +28,10 @@
             android:authorities="com.discoverandchange.pornographycrisissupport.db.scoresprovider"
             android:name=".db.ScoresProvider"
             android:exported="false" />
+        <provider
+            android:authorities="com.discoverandchange.pornographycrisissupport.SupportContactProvider"
+            android:name=".db.SupportContactProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

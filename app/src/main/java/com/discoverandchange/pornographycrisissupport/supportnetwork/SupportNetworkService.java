@@ -1,5 +1,6 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -7,9 +8,12 @@ import android.telephony.SmsManager;
 
 import com.discoverandchange.pornographycrisissupport.db.SupportContactOpenHelper;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactProvider;
+import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by snielson on 6/6/16.
@@ -18,25 +22,27 @@ public class SupportNetworkService {
 
   private List<SupportContact> contacts;
 
+  /** Contains the list of support contacts that have already been inserted into the database **/
+  private Set<String> managedContactIds;
+
   private SmsManager smsManager;
-
-  private Context context = null;
-
-  private Uri databaseSupportContactUri;
 
   private static SupportNetworkService service;
 
-  public SupportNetworkService(Context context, SmsManager smsManager, Uri dbContactURI) {
-    this.context = context;
+  private SupportContactStorageSystem storageSystem;
+
+  public SupportNetworkService(SupportContactStorageSystem storageSystem, SmsManager smsManager) {
     this.smsManager = smsManager;
-    this.databaseSupportContactUri = dbContactURI;
+    this.storageSystem = storageSystem;
     this.contacts = new ArrayList<>();
+    this.managedContactIds = new HashSet<String>();
   }
 
   public static SupportNetworkService getInstance(Context context) {
     if (service == null) {
-      service = new SupportNetworkService(context, SmsManager.getDefault(),
+      SupportContactStorageSystem storageSystem = new SupportContactStorageSystem(context,
           SupportContactProvider.CONTENT_URI);
+      service = new SupportNetworkService(storageSystem, SmsManager.getDefault());
       service.init();
     }
     return service;
@@ -46,7 +52,7 @@ public class SupportNetworkService {
    * Initialization logic for the service, launching any asynchronous tasks, etc.
    */
   public void init() {
-    this.contacts = this.retrieveSupportContactsFromDatabase();
+    this.contacts = this.storageSystem.retrieveSupportContactsFromStorage();
   }
 
   public SupportContact addSupportContact(String name, String contactId, String phone) {
@@ -64,7 +70,17 @@ public class SupportNetworkService {
       throw new IllegalArgumentException("Contact must have a contact id in order to be saved");
     }
 
-    this.contacts.add(contactToSave);
+    SupportContact contact = getContactById(contactToSave.getContactID());
+    // TODO: stephen need to unit test this case.
+    if (contact != null) {
+      int contactIndex = this.contacts.indexOf(contact);
+      this.contacts.set(contactIndex, contactToSave);
+    }
+    else {
+      this.contacts.add(contactToSave);
+    }
+    // save any changes to the contact.
+    this.storageSystem.persistContact(contactToSave);
     return contactToSave;
   }
 
@@ -128,7 +144,8 @@ public class SupportNetworkService {
 
     SupportContact contact = getContactById(contactID);
     if (contact != null) {
-      if (this.contacts.remove(contact)) {
+      if (this.contacts.remove(contact)) { // remove in memory
+        this.storageSystem.removeContact(contact); // remove in the database
         return contact;
       }
     }
@@ -152,40 +169,6 @@ public class SupportNetworkService {
   public boolean hasContact(String contactID) {
     boolean contactPresent = false;
     return contactPresent;
-  }
-
-  private void persistContact(SupportContact contact) {
-    // grab the contact from the database
-
-  }
-
-  // TODO: stephen... I'd really rather this logic be in the SupportContactProvider
-  private List<SupportContact> retrieveSupportContactsFromDatabase() {
-    Cursor cursor = this.context.getContentResolver().query(this.databaseSupportContactUri,
-        SupportContactOpenHelper.ALL_COLUMNS, null, null, null);
-    List<SupportContact> supportContacts = new ArrayList<SupportContact>();
-    if (cursor.getCount() > 0) {
-      cursor.moveToFirst();
-      do {
-        SupportContact contact = hydrateContactFromCursor(cursor);
-        supportContacts.add(contact);
-        cursor.moveToNext();
-      } while (!cursor.isAfterLast());
-
-    }
-
-    return supportContacts;
-  }
-
-  private SupportContact hydrateContactFromCursor(Cursor cursor) {
-    SupportContact contact = new SupportContact();
-    contact.setContactID(cursor.getString(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_ID)));
-    contact.setName(cursor.getString(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_NAME)));
-    contact.setPhoneNumber(cursor.getString(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_PHONE)));
-    // database holds boolean values as integers, 1 for true, 0 for false.
-    int isCrisis = cursor.getInt(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_IS_CRISIS));
-    contact.setIsCrisisContact(isCrisis == 1);
-    return contact;
   }
 
   /**

@@ -23,11 +23,13 @@ import android.telephony.SmsManager;
 
 import com.discoverandchange.pornographycrisissupport.db.SupportContactOpenHelper;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactProvider;
+import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 import junit.framework.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,74 +40,40 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 public class SupportNetworkServiceTest {
 
-  private static final int FAKE_SCORE = 5;
-
   @Mock
   SmsManager mManager;
 
   @Mock
-  Context mContext;
+  SupportContactStorageSystem storageSystem;
 
   @Test
   public void testInitLoadsData() {
-    int idColumn = 0;
-    int nameColumn = 1;
-    int phoneColumn = 2;
-    int crisisColumn = 3;
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
+    SupportContact contact = getFirstTestContact();
+    List<SupportContact> stubContacts = new ArrayList<>();
+    stubContacts.add(getFirstTestContact());
 
-    String name = "John";
-    String phone = "801 855-8555";
-    String id = "1";
+    when(storageSystem.retrieveSupportContactsFromStorage()).thenReturn(stubContacts);
 
-    Cursor supportNetworkCursor = mock(Cursor.class);
-    ContentResolver resolver = mock(ContentResolver.class);
-    Uri contentUri = mock(Uri.class);
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, contentUri);
-    when(mContext.getContentResolver()).thenReturn(resolver);
-
-    when(resolver.query(contentUri,
-        SupportContactOpenHelper.ALL_COLUMNS, null, null, null))
-        .thenReturn(supportNetworkCursor);
-
-    when(supportNetworkCursor.getCount()).thenReturn(1);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_ID))
-        .thenReturn(idColumn);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_NAME))
-        .thenReturn(nameColumn);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_PHONE))
-        .thenReturn(phoneColumn);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_IS_CRISIS))
-        .thenReturn(crisisColumn);
-    when(supportNetworkCursor.getString(idColumn)).thenReturn(id);
-    when(supportNetworkCursor.getString(nameColumn)).thenReturn(name);
-    when(supportNetworkCursor.getString(phoneColumn)).thenReturn(phone);
-    when(supportNetworkCursor.getInt(crisisColumn)).thenReturn(1);
-    when(supportNetworkCursor.isAfterLast()).thenReturn(true); // only do it once.
-    // init the service and let's verify we can get the contact list.
     service.init();
-
     List<SupportContact> list = service.getSupportContactList();
     assertThat("List should have loaded one contact from the database", list, notNullValue());
     assertThat("List should have loaded one contact from the database", list.size(), is(1));
-    SupportContact contact = list.get(0);
-    assertThat("id should have been loaded", contact.getContactID(), is(id));
-    assertThat("name should have been loaded", contact.getName(), is(name));
-    assertThat("phone should have been loaded", contact.getPhoneNumber(), is(phone));
-    assertThat("isCrisis should have been set", contact.isCrisisContact(), is(true));
+    SupportContact checkContact = list.get(0);
+    assertThat("id should have been loaded", checkContact.getContactID(), is(contact.getContactID()));
+    assertThat("name should have been loaded", checkContact.getName(), is(contact.getName()));
+    assertThat("phone should have been loaded", checkContact.getPhoneNumber(), is(contact.getPhoneNumber()));
+    assertThat("isCrisis should have been set", checkContact.isCrisisContact(), is(contact.isCrisisContact()));
   }
 
 
   @Test
   public void testContactNetwork() {
     // Given a mocked Context inject it into the object under test...
-
-    String phone = "888-888-8888";
-    String id = "1";
-    String name = "John Jacob";
     SupportContact contact = getFirstTestContact();
     SupportContact contact2 = getSecondTestContact();
 
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     String phoneSrcAddress = service.getDevicePhoneNumber();
     String defaultCrisisMessage = service.getDefaultMessage();
     service.addSupportContact(contact);
@@ -121,7 +89,7 @@ public class SupportNetworkServiceTest {
   @Test
   public void testAddSupportNetworkContactWithParameters() {
 
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     SupportContact contact = service.addSupportContact("John Jacob", "1", "888-888-8888");
     assertThat("contact should have been added", contact, notNullValue());
 
@@ -133,7 +101,7 @@ public class SupportNetworkServiceTest {
   @Test
   public void testAddSupportNetworkContactWithObject() {
 
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     SupportContact contact = service.addSupportContact(new SupportContact("John Jacob", "1", "888-888-8888"));
     assertThat("contact should have been added", contact, notNullValue());
 
@@ -149,7 +117,7 @@ public class SupportNetworkServiceTest {
     // Search the arrayList of contacts for the contact ID
     // If that contactID is not present, then it has been removed
     String contactID = "1";
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     SupportContact contact = service.addSupportContact("John Jacob", contactID, "888-888-8888");
 
     SupportContact contactRemoved = service.removeSupportContact(contactID);
@@ -164,7 +132,7 @@ public class SupportNetworkServiceTest {
 
   @Test
   public void testGetCrisisSupportContact() {
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     SupportContact crisis = new SupportContact("1", "John Jacob", "5555");
     crisis.setIsCrisisContact(true);
     SupportContact notCrisis = new SupportContact("2", "Jingleheimer Smith", "6666");
@@ -185,7 +153,7 @@ public class SupportNetworkServiceTest {
     String name = "Joe Smith";
     String id = "1";
 
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     String phoneSrcAddress = service.getDevicePhoneNumber();
     String testMessage = "This is a test message.";
     service.addSupportContact(name, id,  phone);
@@ -200,7 +168,7 @@ public class SupportNetworkServiceTest {
    SupportContact testContact = getFirstTestContact();
     SupportContact testContact2 = getSecondTestContact();
 
-    SupportNetworkService service = new SupportNetworkService(mContext, mManager, mock(Uri.class));
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
     String phoneSrcAddress = service.getDevicePhoneNumber();
     String testMessage = "This is a test message.";
     service.addSupportContact(testContact);

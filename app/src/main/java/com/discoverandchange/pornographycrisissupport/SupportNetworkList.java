@@ -37,8 +37,8 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     // TODO: stephen,john this is test code, remove it when we are done.
-    service.addSupportContact(new SupportContact("1", "Test User 1", "888-888-8888"));
-    service.addSupportContact(new SupportContact("2", "Test User 2", "888-888-8889"));
+    //service.addSupportContact(new SupportContact("1", "Test User 1", "888-888-8888"));
+    //service.addSupportContact(new SupportContact("2", "Test User 2", "888-888-8889"));
 
     contactArrayAdapter = new SupportContactsArrayAdapter(getBaseContext(),
         service.getSupportContactList());

@@ -1,9 +1,11 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork;
 
+import java.io.Serializable;
+
 /**
  * Created by snielson on 6/6/16.
  */
-public class SupportContact {
+public class SupportContact implements Serializable {
 
   private String phoneNumber;
   private String name;

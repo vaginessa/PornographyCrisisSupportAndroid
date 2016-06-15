@@ -13,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 import java.util.ArrayList;
@@ -44,6 +46,17 @@ public class SupportNetworkList extends BaseNavigationActivity {
         service.getSupportContactList());
     ListView contactListView = (ListView)findViewById(R.id.lvSupportContact);
     contactListView.setAdapter(contactArrayAdapter);
+
+    contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position,
+                              long id) {
+        Intent intent = new Intent(getBaseContext(), SupportNetworkEdit.class);
+        intent.putExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE, (SupportContact) parent.getItemAtPosition(position));
+        startActivity(intent);
+      }
+    });
+
   }
 
 

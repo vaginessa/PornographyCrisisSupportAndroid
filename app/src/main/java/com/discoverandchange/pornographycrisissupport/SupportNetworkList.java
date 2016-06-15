@@ -155,8 +155,14 @@ public class SupportNetworkList extends BaseNavigationActivity {
     }
   }
 
+  // Adds a Support contact from the support contacts list
   private void updateContactListWithContact(SupportContact contact) {
     contactArrayAdapter.add(contact);
+  }
+
+  // Removes a Support contact from the support contacts list
+  private void updateContactListRemoveContact(SupportContact contact) {
+    contactArrayAdapter.remove(contact);
   }
 
   private void saveContactData(SupportContact contact) {

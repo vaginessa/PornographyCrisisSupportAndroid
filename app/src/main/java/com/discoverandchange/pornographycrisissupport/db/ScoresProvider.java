@@ -36,7 +36,7 @@ public class ScoresProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    ScoresDbOpenHelper helper = new ScoresDbOpenHelper(getContext());
+    PCSDBOpenHelper helper = new PCSDBOpenHelper(getContext());
     database = helper.getWritableDatabase();
     return true;
   }
@@ -45,12 +45,12 @@ public class ScoresProvider extends ContentProvider {
   public Cursor query(Uri uri, String[] projection, String selection,
                       String[] selectionArgs, String sortOrder) {
     if (uriMatcher.match(uri) == SCORE_ID) {
-      selection = ScoresDbOpenHelper.SCORE_ID + "=" + uri.getLastPathSegment();
+      selection = ScoresTable.SCORE_ID + "=" + uri.getLastPathSegment();
     }
 
-    return database.query(ScoresDbOpenHelper.TBL_SCORES, ScoresDbOpenHelper.ALL_COLUMNS,
+    return database.query(ScoresTable.TBL_SCORES, ScoresTable.ALL_COLUMNS,
         selection, null, null, null,
-        ScoresDbOpenHelper.DATE_CREATED + " DESC");
+        ScoresTable.DATE_CREATED + " DESC");
   }
 
   @Override
@@ -60,19 +60,19 @@ public class ScoresProvider extends ContentProvider {
 
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-    long id = database.insert(ScoresDbOpenHelper.TBL_SCORES,
+    long id = database.insert(ScoresTable.TBL_SCORES,
         null, values);
     return Uri.parse(BASE_PATH + "/" + id);
   }
 
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
-    return database.delete(ScoresDbOpenHelper.TBL_SCORES, selection, selectionArgs);
+    return database.delete(ScoresTable.TBL_SCORES, selection, selectionArgs);
   }
 
   @Override
   public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-    return database.update(ScoresDbOpenHelper.TBL_SCORES,
+    return database.update(ScoresTable.TBL_SCORES,
         values, selection, selectionArgs);
   }
 }

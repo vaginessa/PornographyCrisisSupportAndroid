@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
-import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -18,9 +17,11 @@ import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
+import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
-import com.discoverandchange.pornographycrisissupport.db.ScoresDbOpenHelper;
+import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 import com.discoverandchange.pornographycrisissupport.db.ScoresProvider;
+import com.discoverandchange.pornographycrisissupport.library.LibraryController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
@@ -35,7 +36,7 @@ public class QuizController extends BaseNavigationActivity
     setContentView(R.layout.activity_quiz);
 
     // gets back the data for the display
-    String[] from = {ScoresDbOpenHelper.SCORE};
+    String[] from = {ScoresTable.SCORE};
     int[] to = {android.R.id.text1};
     cursorAdapter = new SimpleCursorAdapter(this,
         android.R.layout.simple_list_item_1, null, from, to, 0);
@@ -57,10 +58,31 @@ public class QuizController extends BaseNavigationActivity
     //startActivity(intent);
 
     // Save the score (passes the current context to the QuizService)
-    boolean saveQuiz = (new QuizService(this)).saveQuiz(slider.getProgress());
+    boolean isCrisisQuizScore = (new QuizService(this)).saveQuiz(slider.getProgress());
 
-    // After saving quiz, launch the dialer
-    launchDialer();
+//    if (isCrisisQuizScore) {
+      sendSupportNetworkTexts();
+      // After saving quiz, launch the dialer
+      launchDialer();
+//    }
+//    else {
+//      launchLibrary();
+//    }
+  }
+
+  /**
+   * Sends out the crisis text message to people that you are really struggling.
+   */
+  private void sendSupportNetworkTexts() {
+    SupportNetworkService.getInstance(getBaseContext()).contactNetwork();
+  }
+
+  /**
+   * Launch the resource library for people not in severe crisis mode.
+   */
+  public void launchLibrary() {
+    Intent intent = new Intent(getBaseContext(), LibraryController.class);
+    startActivity(intent);
   }
 
   public void launchDialer() {
@@ -68,13 +90,21 @@ public class QuizController extends BaseNavigationActivity
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     SupportContact contact = service.getCrisisSupportContact();
 
-    EndCallListener listener = new EndCallListener();
-    TelephonyManager mTM = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-    mTM.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
+    if (contact != null) {
+      EndCallListener listener = new EndCallListener();
+      TelephonyManager mTM = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+      mTM.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
 
-    Uri call = Uri.parse("tel:" + contact.getPhoneNumber());
-    Intent intent = new Intent(Intent.ACTION_DIAL, call) ;
-    startActivity(intent);
+      Uri call = Uri.parse("tel:" + contact.getPhoneNumber());
+      Intent intent = new Intent(Intent.ACTION_DIAL, call) ;
+      startActivity(intent);
+    }
+    // if we don't have a crisis contact then we should just launch the library
+    else {
+      Log.d(Constants.LOG_TAG, "SupportContact crisis not found, launching library");
+      launchLibrary();
+    }
+
   }
 
   @Override

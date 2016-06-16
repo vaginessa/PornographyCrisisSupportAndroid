@@ -19,7 +19,7 @@ public class SupportContactStorageSystem {
 
   private Context context = null;
 
-  private static final String IDENTITY_WHERE = SupportContactOpenHelper.COLUMN_NAME_ID + " = ?";
+  private static final String IDENTITY_WHERE = SupportContactTable.COLUMN_NAME_ID + " = ?";
 
   private Uri databaseSupportContactUri;
 
@@ -41,14 +41,14 @@ public class SupportContactStorageSystem {
   public void persistContact(SupportContact contact) {
     // grab the contact from the database
     ContentValues values = new ContentValues();
-    values.put(SupportContactOpenHelper.COLUMN_NAME_ID, contact.getContactID());
-    values.put(SupportContactOpenHelper.COLUMN_NAME_NAME, contact.getName());
-    values.put(SupportContactOpenHelper.COLUMN_NAME_PHONE, contact.getPhoneNumber());
+    values.put(SupportContactTable.COLUMN_NAME_ID, contact.getContactID());
+    values.put(SupportContactTable.COLUMN_NAME_NAME, contact.getName());
+    values.put(SupportContactTable.COLUMN_NAME_PHONE, contact.getPhoneNumber());
     if (contact.isCrisisContact()) {
-      values.put(SupportContactOpenHelper.COLUMN_NAME_IS_CRISIS, 1);
+      values.put(SupportContactTable.COLUMN_NAME_IS_CRISIS, 1);
     }
     else {
-      values.put(SupportContactOpenHelper.COLUMN_NAME_IS_CRISIS, 0);
+      values.put(SupportContactTable.COLUMN_NAME_IS_CRISIS, 0);
     }
 
     if (this.isTrackingContact(contact)) {
@@ -64,7 +64,7 @@ public class SupportContactStorageSystem {
 
   public List<SupportContact> retrieveSupportContactsFromStorage() {
     Cursor cursor = this.context.getContentResolver().query(this.databaseSupportContactUri,
-        SupportContactOpenHelper.ALL_COLUMNS, null, null, null);
+        SupportContactTable.ALL_COLUMNS, null, null, null);
     List<SupportContact> supportContacts = new ArrayList<SupportContact>();
     if (cursor != null && cursor.getCount() > 0) {
       cursor.moveToFirst();
@@ -82,11 +82,11 @@ public class SupportContactStorageSystem {
 
   private SupportContact hydrateContactFromCursor(Cursor cursor) {
     SupportContact contact = new SupportContact();
-    contact.setContactID(cursor.getString(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_ID)));
-    contact.setName(cursor.getString(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_NAME)));
-    contact.setPhoneNumber(cursor.getString(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_PHONE)));
+    contact.setContactID(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_ID)));
+    contact.setName(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_NAME)));
+    contact.setPhoneNumber(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_PHONE)));
     // database holds boolean values as integers, 1 for true, 0 for false.
-    int isCrisis = cursor.getInt(cursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_IS_CRISIS));
+    int isCrisis = cursor.getInt(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_IS_CRISIS));
     contact.setIsCrisisContact(isCrisis == 1);
     return contact;
   }

@@ -1,12 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.telephony.SmsManager;
 
-import com.discoverandchange.pornographycrisissupport.db.SupportContactOpenHelper;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactProvider;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
 
@@ -16,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Tracks and manages support contacts.  Sends text messages and handles who the top crisis contact
+ * is.
  * Created by snielson on 6/6/16.
  */
 public class SupportNetworkService {
@@ -125,8 +123,13 @@ public class SupportNetworkService {
     return null;
   }
 
+  /**
+   * Returns the default sms text message to send when a person is in crisis mode.
+   * @return The default string message.
+   */
   public String getDefaultMessage() {
-    return "I am experiencing severe cravings. Help!!!";
+
+    return "I'm really struggling with cravings right now.  Please help me!";
   }
 
   /**

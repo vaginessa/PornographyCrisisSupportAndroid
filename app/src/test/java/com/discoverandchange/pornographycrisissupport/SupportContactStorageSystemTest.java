@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.discoverandchange.pornographycrisissupport.db.SupportContactOpenHelper;
+import com.discoverandchange.pornographycrisissupport.db.SupportContactTable;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 
@@ -51,17 +51,17 @@ public class SupportContactStorageSystemTest {
     SupportContactStorageSystem storageSystem = new SupportContactStorageSystem(context, contentUri);
     when(context.getContentResolver()).thenReturn(resolver);
 
-    when(resolver.query(contentUri, SupportContactOpenHelper.ALL_COLUMNS, null, null, null))
+    when(resolver.query(contentUri, SupportContactTable.ALL_COLUMNS, null, null, null))
         .thenReturn(supportNetworkCursor);
 
     when(supportNetworkCursor.getCount()).thenReturn(1);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_ID))
+    when(supportNetworkCursor.getColumnIndex(SupportContactTable.COLUMN_NAME_ID))
         .thenReturn(idColumn);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_NAME))
+    when(supportNetworkCursor.getColumnIndex(SupportContactTable.COLUMN_NAME_NAME))
         .thenReturn(nameColumn);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_PHONE))
+    when(supportNetworkCursor.getColumnIndex(SupportContactTable.COLUMN_NAME_PHONE))
         .thenReturn(phoneColumn);
-    when(supportNetworkCursor.getColumnIndex(SupportContactOpenHelper.COLUMN_NAME_IS_CRISIS))
+    when(supportNetworkCursor.getColumnIndex(SupportContactTable.COLUMN_NAME_IS_CRISIS))
         .thenReturn(crisisColumn);
     when(supportNetworkCursor.getString(idColumn)).thenReturn(id);
     when(supportNetworkCursor.getString(nameColumn)).thenReturn(name);

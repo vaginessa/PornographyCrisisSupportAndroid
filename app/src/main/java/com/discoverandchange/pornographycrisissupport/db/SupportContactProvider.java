@@ -22,7 +22,7 @@ public class SupportContactProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    SupportContactOpenHelper helper = new SupportContactOpenHelper(getContext());
+    PCSDBOpenHelper helper = new PCSDBOpenHelper(getContext());
     database = helper.getWritableDatabase();
     return true;
   }
@@ -30,7 +30,7 @@ public class SupportContactProvider extends ContentProvider {
   @Nullable
   @Override
   public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-    return database.query(SupportContactOpenHelper.TABLE_NAME, projection,
+    return database.query(SupportContactTable.TABLE_NAME, projection,
         selection, selectionArgs, null, null, sortOrder);
   }
 
@@ -44,19 +44,19 @@ public class SupportContactProvider extends ContentProvider {
   @Nullable
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-    long id = database.insert(SupportContactOpenHelper.TABLE_NAME,
+    long id = database.insert(SupportContactTable.TABLE_NAME,
         null, values);
     return Uri.parse(BASE_PATH + "/" + id);
   }
 
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
-    return database.delete(SupportContactOpenHelper.TABLE_NAME, selection, selectionArgs);
+    return database.delete(SupportContactTable.TABLE_NAME, selection, selectionArgs);
   }
 
   @Override
   public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-    return database.update(SupportContactOpenHelper.TABLE_NAME,
+    return database.update(SupportContactTable.TABLE_NAME,
         values, selection, selectionArgs);
   }
 }

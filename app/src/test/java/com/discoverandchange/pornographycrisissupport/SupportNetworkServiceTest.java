@@ -7,33 +7,23 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.telephony.SmsManager;
 
-import com.discoverandchange.pornographycrisissupport.db.SupportContactOpenHelper;
-import com.discoverandchange.pornographycrisissupport.db.SupportContactProvider;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
-
-import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
+ * Tests the support network service.
  * documentation for mocking here: http://site.mockito.org/mockito/docs/1.10.19/org/mockito/Mockito.html
  * Created by snielson on 6/6/16.
  */
@@ -182,6 +172,10 @@ public class SupportNetworkServiceTest {
 
   }
 
+  /**
+   * Returns a test support contact
+   * @return
+   */
   private SupportContact getFirstTestContact() {
     String phone = "888-888-8888";
     String name = "Joe Smith";
@@ -189,6 +183,10 @@ public class SupportNetworkServiceTest {
     return new SupportContact(id, name, phone);
   }
 
+  /**
+   * Returns a different test support contact.
+   * @return
+   */
   private SupportContact getSecondTestContact() {
     String secondPhone = "888-888-9999";
     String secondName = "Second Joe Smith";

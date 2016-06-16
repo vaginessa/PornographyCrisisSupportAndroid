@@ -15,4 +15,7 @@
     <string name="quiz_controller_contact_network_notified">Your contact network has been notified.</string>
     <string name="quiz_controller_instructions">Rate your cravings</string>
     <string name="quiz_controller_go">Go</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

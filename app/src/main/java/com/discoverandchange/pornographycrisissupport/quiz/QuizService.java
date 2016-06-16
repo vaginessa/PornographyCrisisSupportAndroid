@@ -22,6 +22,10 @@ public class QuizService extends ContextWrapper {
     super(base);
   }
 
+  public boolean saveQuiz(Quiz quiz) {
+    throw new RuntimeException("Method not implemented");
+  }
+
   public boolean saveQuiz(int score) {
     ContentValues values = new ContentValues();
     values.put(ScoresDbOpenHelper.SCORE, score);

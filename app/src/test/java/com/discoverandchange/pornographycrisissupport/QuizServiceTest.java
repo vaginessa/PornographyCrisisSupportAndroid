@@ -1,9 +1,14 @@
 package com.discoverandchange.pornographycrisissupport;
 
+import android.content.Context;
+
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -12,13 +17,15 @@ import static org.junit.Assert.assertTrue;
 /**
  *
  */
-
+@RunWith(MockitoJUnitRunner.class)
 public class QuizServiceTest {
 
+    @Mock
+    Context context;
 
 @Test
     public void testSaveQuizCrisisMode() {
-        QuizService service = new QuizService();
+        QuizService service = new QuizService(context);
 
         boolean isCrisis = service.saveQuiz(new Quiz(7));
         boolean isNotCrisis = service.saveQuiz(new Quiz(6));
@@ -29,7 +36,7 @@ public class QuizServiceTest {
 
 @Test
     public void testGetLatestQuizScore() {
-        QuizService service = new QuizService();
+        QuizService service = new QuizService(context);
 
         int testQuizScore = service.getLatestQuizScore();
 

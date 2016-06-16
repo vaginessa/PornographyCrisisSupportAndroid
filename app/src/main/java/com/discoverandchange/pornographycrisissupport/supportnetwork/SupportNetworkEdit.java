@@ -17,15 +17,15 @@ public class SupportNetworkEdit extends AppCompatActivity {
         setContentView(R.layout.activity_support_network_edit);
 
         // Displaying information relating to the contact being edited
-        Intent intent = getIntent();
-        SupportContact editContact = (SupportContact) intent.getSerializableExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE);
-        TextView editView = findViewById(R.id.contactNameText.getContactID());
-
-        // Save / Persist the contact information to the database
-        R.id.<name_from_xml_file>
-                contactNameTextView
-        R.id.contactNameText
-        SupportNetworkService.getInstance().addSupportContact(supportContact);
+//        Intent intent = getIntent();
+//        SupportContact editContact = (SupportContact) intent.getSerializableExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE);
+//        TextView editView = findViewById(R.id.contactNameText.getContactID());
+//
+//        // Save / Persist the contact information to the database
+//        R.id.<name_from_xml_file>
+//                contactNameTextView
+//        R.id.contactNameText
+//        SupportNetworkService.getInstance().addSupportContact(supportContact);
     }
 
 

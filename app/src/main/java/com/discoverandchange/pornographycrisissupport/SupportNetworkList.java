@@ -13,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 import java.util.ArrayList;
@@ -35,15 +37,26 @@ public class SupportNetworkList extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
 
-    SupportNetworkService service = SupportNetworkService.getInstance();
+    SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     // TODO: stephen,john this is test code, remove it when we are done.
-    service.addSupportContact(new SupportContact("1", "Test User 1", "888-888-8888"));
-    service.addSupportContact(new SupportContact("2", "Test User 2", "888-888-8889"));
+    //service.addSupportContact(new SupportContact("1", "Test User 1", "888-888-8888"));
+    //service.addSupportContact(new SupportContact("2", "Test User 2", "888-888-8889"));
 
     contactArrayAdapter = new SupportContactsArrayAdapter(getBaseContext(),
         service.getSupportContactList());
     ListView contactListView = (ListView)findViewById(R.id.lvSupportContact);
     contactListView.setAdapter(contactArrayAdapter);
+
+    contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position,
+                              long id) {
+        Intent intent = new Intent(getBaseContext(), SupportNetworkEdit.class);
+        intent.putExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE, (SupportContact) parent.getItemAtPosition(position));
+        startActivity(intent);
+      }
+    });
+
   }
 
 
@@ -155,13 +168,19 @@ public class SupportNetworkList extends BaseNavigationActivity {
     }
   }
 
+  // Adds a Support contact from the support contacts list
   private void updateContactListWithContact(SupportContact contact) {
     contactArrayAdapter.add(contact);
   }
 
+  // Removes a Support contact from the support contacts list
+  private void updateContactListRemoveContact(SupportContact contact) {
+    contactArrayAdapter.remove(contact);
+  }
+
   private void saveContactData(SupportContact contact) {
     if (contact != null) {
-      SupportNetworkService service = SupportNetworkService.getInstance();
+      SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
       service.addSupportContact(contact);
     }
   }

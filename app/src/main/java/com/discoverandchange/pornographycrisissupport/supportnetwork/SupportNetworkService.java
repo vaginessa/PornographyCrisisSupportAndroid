@@ -1,9 +1,19 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.telephony.SmsManager;
 
+import com.discoverandchange.pornographycrisissupport.db.SupportContactOpenHelper;
+import com.discoverandchange.pornographycrisissupport.db.SupportContactProvider;
+import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by snielson on 6/6/16.
@@ -12,25 +22,41 @@ public class SupportNetworkService {
 
   private List<SupportContact> contacts;
 
+  /** Contains the list of support contacts that have already been inserted into the database **/
+  private Set<String> managedContactIds;
+
   private SmsManager smsManager;
 
   private static SupportNetworkService service;
 
-  public SupportNetworkService(SmsManager smsManager) {
+  private SupportContactStorageSystem storageSystem;
+
+  public SupportNetworkService(SupportContactStorageSystem storageSystem, SmsManager smsManager) {
     this.smsManager = smsManager;
-    this.contacts = new ArrayList<SupportContact>();
-    // TODO: eventually we'll load this from a database.
+    this.storageSystem = storageSystem;
+    this.contacts = new ArrayList<>();
+    this.managedContactIds = new HashSet<String>();
   }
 
-  public static SupportNetworkService getInstance() {
+  public static SupportNetworkService getInstance(Context context) {
     if (service == null) {
-      service = new SupportNetworkService(SmsManager.getDefault());
+      SupportContactStorageSystem storageSystem = new SupportContactStorageSystem(context,
+          SupportContactProvider.CONTENT_URI);
+      service = new SupportNetworkService(storageSystem, SmsManager.getDefault());
+      service.init();
     }
     return service;
   }
 
-  public SupportContact addSupportContact(String first, String last, String contactId, String phone) {
-    return addSupportContact(new SupportContact(first + " " + last, contactId, phone));
+  /**
+   * Initialization logic for the service, launching any asynchronous tasks, etc.
+   */
+  public void init() {
+    this.contacts = this.storageSystem.retrieveSupportContactsFromStorage();
+  }
+
+  public SupportContact addSupportContact(String name, String contactId, String phone) {
+    return addSupportContact(new SupportContact(name, contactId, phone));
   }
 
   /**
@@ -44,22 +70,38 @@ public class SupportNetworkService {
       throw new IllegalArgumentException("Contact must have a contact id in order to be saved");
     }
 
-    this.contacts.add(contactToSave);
+    SupportContact contact = getContactById(contactToSave.getContactID());
+    // TODO: stephen need to unit test this case.
+    if (contact != null) {
+      int contactIndex = this.contacts.indexOf(contact);
+      this.contacts.set(contactIndex, contactToSave);
+    }
+    else {
+      this.contacts.add(contactToSave);
+    }
+    // save any changes to the contact.
+    this.storageSystem.persistContact(contactToSave);
     return contactToSave;
   }
 
+  /**
+   * Sends a text message to all of our support network contacts.
+   */
   public void contactNetwork() {
-    // TODO: go through all of our contact lists & send out the test message.
-    smsManager.sendTextMessage("8018558888", "8018558888", "some message", null, null);
-//    smsManager.sendTextMessage("8018888888", "8018888888", "some message", null, null);
-//    smsManager.sendTextMessage("8019999999", "8019999999", "some message", null, null);
+    this.sendMessageToSupportNetwork(getDefaultMessage());
   }
 
+  /**
+   * Returns the support network contact to call when the user is in crisis mode.
+   * @return The support network to be called when in crisis mode.
+   */
   public SupportContact getCrisisSupportContact() {
-    SupportContact crisis = new SupportContact();
-    crisis.setPhoneNumber("801-610-9014");
-    crisis.setName("Stephen Nielson");
-    return crisis;
+    for (SupportContact contact : getSupportContactList()) {
+      if (contact.isCrisisContact()) {
+        return contact;
+      }
+    }
+    return null;
   }
 
   /**
@@ -71,23 +113,57 @@ public class SupportNetworkService {
     return new ArrayList<SupportContact>(this.contacts);
   }
 
+  /**
+   * Returns the default phone device number.  On Android a null value will use whatever the
+   * device SIM card has set for the phone number.
+   * @return The device phone number, null for the default device number.
+   */
   public String getDevicePhoneNumber() {
-    return "888-888-8888";
+    // if null stops being the default parameter for the device phone number
+    // we will need to take action here.  All of the SMS handling treats null
+    // as being the device number.
+    return null;
   }
 
   public String getDefaultMessage() {
     return "I am experiencing severe cravings. Help!!!";
   }
 
-  // Obtain the contactID that was given
-  // Search the arrayList of contacts for the contact ID
-  // If that contactID is not present, then it has been removed
+  /**
+   * Obtain the contactID that was given
+   * Search the arrayList of contacts for the contact ID
+   * If that contactID is not present, then it has been removed.
+   * @param contactID The id of the contact to be removed
+   * @return The contact that was removed.
+   */
   public SupportContact removeSupportContact(String contactID){
+
+    if (contactID == null) {
+      throw new IllegalArgumentException("contactID must not be null");
+    }
+
+    SupportContact contact = getContactById(contactID);
+    if (contact != null) {
+      if (this.contacts.remove(contact)) { // remove in memory
+        this.storageSystem.removeContact(contact); // remove in the database
+        return contact;
+      }
+    }
+
+    return null;
+  }
+
+  public SupportContact getContactById(String contactID) {
+    for (SupportContact contact : getSupportContactList()) {
+      if (contactID.equals(contact.getContactID())) {
+        return contact;
+      }
+    }
     return null;
   }
 
   public void sendSMSTestMessage(String message) {
-
+    sendMessageToSupportNetwork(message);
   }
 
   public boolean hasContact(String contactID) {
@@ -95,4 +171,17 @@ public class SupportNetworkService {
     return contactPresent;
   }
 
+  /**
+   * Given a message to send, it sends a SMS text to all of the phones for each support contact
+   * we have.
+   * @param message  The message to be sent.
+   */
+  private void sendMessageToSupportNetwork(String message) {
+    for (SupportContact contact : getSupportContactList()) {
+      if (contact.getPhoneNumber() != null) {
+        smsManager.sendTextMessage(contact.getPhoneNumber(), getDevicePhoneNumber(), message
+            , null, null);
+      }
+    }
+  }
 }

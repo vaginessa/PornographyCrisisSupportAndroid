@@ -23,27 +23,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="Add Contact"
         android:id="@+id/addContact"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:onClick="launchContactPicker"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:id="@+id/editContact"
-        android:layout_alignTop="@+id/addContact"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remove"
-        android:id="@+id/removeContact"
-        android:layout_alignTop="@+id/editContact"
+        android:onClick="launchContactPicker"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

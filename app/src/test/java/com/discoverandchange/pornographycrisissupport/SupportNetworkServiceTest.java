@@ -2,6 +2,7 @@ package com.discoverandchange.pornographycrisissupport;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
@@ -98,6 +99,53 @@ public class SupportNetworkServiceTest {
     List<SupportContact> contactList = service.getSupportContactList();
     assertThat("Contact list should have at least one item in it.", contactList.isEmpty(), is(false));
     contactList.get(0).equals(contact);
+  }
+
+  @Test
+  public void testAddSameIdUpdatesSupportContact() {
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
+    SupportContact contact = service.addSupportContact(new SupportContact("1", "John Jacob", "888-888-8888"));
+    assertThat("contact should have been added", contact, notNullValue());
+
+    SupportContact updatedContact = service.addSupportContact(new SupportContact("1", "Some other person", "888-888-8555"));
+    List<SupportContact> contacts = service.getSupportContactList();
+    SupportContact contactCheck = contacts.get(0);
+    assertThat("Contact name should have been updated", contactCheck.getName(),
+        is(updatedContact.getName()));
+    assertThat("Contact name should have been updated", contactCheck.getName(),
+        not(is(contact.getName())));
+  }
+
+  @Test
+  public void testReplaceCrisisContact() {
+
+    SupportContact crisisContact = getFirstTestContact();
+    crisisContact.setIsCrisisContact(true);
+    SupportNetworkService service = new SupportNetworkService(storageSystem, mManager);
+    service.addSupportContact(crisisContact);
+
+    SupportContact crisisCheck = service.getCrisisSupportContact();
+    assertThat("Crisis check should be contact we added", crisisCheck.getContactID(),
+        is(crisisContact.getContactID()));
+
+    SupportContact replaceCrisisContact = getSecondTestContact();
+    replaceCrisisContact.setIsCrisisContact(true);
+    service.addSupportContact(replaceCrisisContact);
+    SupportContact replaceCrisisContactCheck = service.getCrisisSupportContact();
+    assertThat("Crisis check should now be the new contact we added",
+        replaceCrisisContactCheck.getContactID(), is(replaceCrisisContact.getContactID()));
+
+    // grab our service list and make sure only one crisis contact is there
+    List<SupportContact> contactList = service.getSupportContactList();
+    for (SupportContact contact : contactList) {
+      if (contact.isCrisisContact()
+          && !(contact.getContactID().equals(replaceCrisisContactCheck.getContactID()))) {
+        fail("multiple crisis contacts found, when there should only be one. Contact with id "
+            + contact.getContactID());
+      }
+    }
+
+
   }
 
   @Test

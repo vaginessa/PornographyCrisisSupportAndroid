@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * Tracks and manages support contacts.  Sends text messages and handles who the top crisis contact
  * is.
- * Created by snielson on 6/6/16.
+ * @author Stephen Nielson
  */
 public class SupportNetworkService {
 
@@ -25,10 +25,23 @@ public class SupportNetworkService {
 
   private SmsManager smsManager;
 
+  /**
+   * The singleton instance for the support contact.
+   */
   private static SupportNetworkService service;
 
+  /**
+   * The persistance storage system for support contacts.
+   */
   private SupportContactStorageSystem storageSystem;
 
+  /**
+   * Instantiate a support network service with the given storage system and SmsManager.
+   * This method while public is used strictly for testing purposes and shouldn't be used.
+   * Use getInstance(...) instead.
+   * @param storageSystem  The storage system that persists support contacts
+   * @param smsManager The android sms manager system.
+   */
   public SupportNetworkService(SupportContactStorageSystem storageSystem, SmsManager smsManager) {
     this.smsManager = smsManager;
     this.storageSystem = storageSystem;
@@ -53,13 +66,22 @@ public class SupportNetworkService {
     this.contacts = this.storageSystem.retrieveSupportContactsFromStorage();
   }
 
+  /**
+   * Shorthand for adding a support contact with a given name, contactId and phone number
+   * @param name  The display name of this support contact.
+   * @param contactId  The unique id that represents this contact
+   * @param phone  The phone number to call / send a text message to for a contact.
+   * @return A support contact that has been persisted.
+   */
   public SupportContact addSupportContact(String name, String contactId, String phone) {
     return addSupportContact(new SupportContact(name, contactId, phone));
   }
 
   /**
    * Adds a support contact to the service and persists it.  The contact must have a contact id
-   * in order to be saved.
+   * in order to be saved.  If the contact has the same id as an already existing contact, the
+   * contact is updated with the new contact's information.
+   * If the contact is set to be a crisis contact, it replaces the current system crisis contact.
    * @param contactToSave The contact to be saved with a valid id.
    * @return The contact that was saved.
    */
@@ -68,8 +90,17 @@ public class SupportNetworkService {
       throw new IllegalArgumentException("Contact must have a contact id in order to be saved");
     }
 
+    if (contactToSave.isCrisisContact()) {
+      // change the current crisis contact if we have one
+      SupportContact crisisContact = this.getCrisisSupportContact();
+      if (crisisContact != null && !crisisContact.getContactID().equals(contactToSave.getContactID()))
+      {
+        crisisContact.setIsCrisisContact(false);
+        this.storageSystem.persistContact(crisisContact);
+      }
+    }
+
     SupportContact contact = getContactById(contactToSave.getContactID());
-    // TODO: stephen need to unit test this case.
     if (contact != null) {
       int contactIndex = this.contacts.indexOf(contact);
       this.contacts.set(contactIndex, contactToSave);
@@ -156,6 +187,12 @@ public class SupportNetworkService {
     return null;
   }
 
+  /**
+   * Given a unique id of a contact, return the SupportContact if we have one for that id.
+   * If we don't have one then null is returned
+   * @param contactID The unique id of the contact we want to retrieve.
+   * @return The SupportContact saved in the system, or null if none was found.
+   */
   public SupportContact getContactById(String contactID) {
     for (SupportContact contact : getSupportContactList()) {
       if (contactID.equals(contact.getContactID())) {

@@ -6,11 +6,13 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 
 /**
- * Created by Jandar on 6/9/2016.
+ * @author Stephen Nielson
+ * @author Keith Higbee
+ * @author John Okleberry
  */
+
 public class ScoresProvider extends ContentProvider {
 
   private static final String AUTHORITY = "com.discoverandchange.pornographycrisissupport.db.scoresprovider";
@@ -34,41 +36,43 @@ public class ScoresProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    ScoresDBOpenHelper helper = new ScoresDBOpenHelper(getContext());
+    ScoresDbOpenHelper helper = new ScoresDbOpenHelper(getContext());
     database = helper.getWritableDatabase();
     return true;
   }
 
-  @Nullable
   @Override
-  public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-    return database.query(ScoresDBOpenHelper.SCORES, ScoresDBOpenHelper.ALL_COLUMNS,
+  public Cursor query(Uri uri, String[] projection, String selection,
+                      String[] selectionArgs, String sortOrder) {
+    if (uriMatcher.match(uri) == SCORE_ID) {
+      selection = ScoresDbOpenHelper.SCORE_ID + "=" + uri.getLastPathSegment();
+    }
+
+    return database.query(ScoresDbOpenHelper.TBL_SCORES, ScoresDbOpenHelper.ALL_COLUMNS,
         selection, null, null, null,
-        ScoresDBOpenHelper.DATE_CREATED + " DESC");
+        ScoresDbOpenHelper.DATE_CREATED + " DESC");
   }
 
-  @Nullable
   @Override
   public String getType(Uri uri) {
     return null;
   }
 
-  @Nullable
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-    long id = database.insert(ScoresDBOpenHelper.SCORES,
+    long id = database.insert(ScoresDbOpenHelper.TBL_SCORES,
         null, values);
     return Uri.parse(BASE_PATH + "/" + id);
   }
 
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
-    return database.delete(ScoresDBOpenHelper.SCORES, selection, selectionArgs);
+    return database.delete(ScoresDbOpenHelper.TBL_SCORES, selection, selectionArgs);
   }
 
   @Override
   public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-    return database.update(ScoresDBOpenHelper.SCORES,
+    return database.update(ScoresDbOpenHelper.TBL_SCORES,
         values, selection, selectionArgs);
   }
 }

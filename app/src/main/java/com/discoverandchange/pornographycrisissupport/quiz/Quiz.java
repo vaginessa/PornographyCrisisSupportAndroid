@@ -6,14 +6,24 @@ package com.discoverandchange.pornographycrisissupport.quiz;
 
 public class Quiz {
 
-    private int score;
+  private int score;
 
-    public Quiz(int score)
-    {
-        this.score = score;
-    }
+  // constructors
+  public Quiz(int score)
+  {
+    this.score = score;
+  }
 
-    public Quiz() {
-        this(0);
-    }
+  public Quiz() {
+    this(0);
+  }
+
+  // methods
+  public int getScore() {
+    return score;
+  }
+
+  public void setScore(int score) {
+    this.score = score;
+  }
 }

@@ -1,14 +1,12 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsManager;
@@ -16,21 +14,15 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.CursorAdapter;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
-import java.net.URI;
 
-import com.discoverandchange.pornographycrisissupport.App;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
-import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
-import com.discoverandchange.pornographycrisissupport.db.ScoresDBOpenHelper;
+import com.discoverandchange.pornographycrisissupport.db.ScoresDbOpenHelper;
 import com.discoverandchange.pornographycrisissupport.db.ScoresProvider;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
-
-import java.net.URI;
 
 public class QuizController extends BaseNavigationActivity
     implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -43,23 +35,13 @@ public class QuizController extends BaseNavigationActivity
     setContentView(R.layout.activity_quiz);
 
     // gets back the data for the display
-    String[] from = {ScoresDBOpenHelper.SCORE};
+    String[] from = {ScoresDbOpenHelper.SCORE};
     int[] to = {android.R.id.text1};
     cursorAdapter = new SimpleCursorAdapter(this,
         android.R.layout.simple_list_item_1, null, from, to, 0);
 
-//    ListView list = (ListView) findViewById(android.R.id.list);
-//    list.setAdapter(cursorAdapter);
-
+    // initiates the Loader--gets the data asynchronously
     getLoaderManager().initLoader(0, null, this);
-  }
-
-  private void insertScore(String score) {
-    ContentValues values = new ContentValues();
-    values.put(ScoresDBOpenHelper.SCORE, score);
-    Uri scoreUri = getContentResolver().insert(ScoresProvider.CONTENT_URI,
-        values);
-    Log.d("SupportNetworkList", "Inserted score " + scoreUri.getLastPathSegment());
   }
 
   public void handleSubmitQuizClick(View btn) {
@@ -68,12 +50,16 @@ public class QuizController extends BaseNavigationActivity
       throw new RuntimeException("Could not find slider.  Check id is named properly");
     }
 
-    Log.d("PornAddictionSupport", "handleSubmitQuizClick() called with: " + "btn = [" + btn + "]" + " slider equal to " + slider.getProgress());
+    Log.d("PornAddictionSupport", "handleSubmitQuizClick() called with: " +
+        "btn = [" + btn + "]" + " slider equal to " + slider.getProgress());
 
     //Intent intent = new Intent(getBaseContext(), LibraryController.class);
     //startActivity(intent);
 
-    insertScore("Current score");
+    // Save the score (passes the current context to the QuizService)
+    boolean saveQuiz = (new QuizService(this)).saveQuiz(slider.getProgress());
+
+    // After saving quiz, launch the dialer
     launchDialer();
   }
 
@@ -81,7 +67,6 @@ public class QuizController extends BaseNavigationActivity
     //EndCallListenerTest listener = new EndCallListenerTest();
     SupportNetworkService service = new SupportNetworkService(SmsManager.getDefault());
     SupportContact contact = service.getCrisisSupportContact();
-
 
     EndCallListener listener = new EndCallListener();
     TelephonyManager mTM = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);

@@ -5,19 +5,21 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by khigbee on 6/9/2016.
+ * @author Stephen Nielson
+ * @author Keith Higbee
+ * @author John Okleberry
  */
 
-public class ScoresDBOpenHelper extends SQLiteOpenHelper {
+public class ScoresDbOpenHelper extends SQLiteOpenHelper {
 
   // db name and version
   private static final String DATABASE_NAME = "pcs.db";
   private static final int DATABASE_VERSION = 1;
 
   // table
-  public static final String SCORES = "scores";
+  public static final String TBL_SCORES = "tbl_scores";
 
-  // columns
+  // fields
   public static final String SCORE_ID = "_id";
   public static final String SCORE =  "score";
   public static final String DATE_CREATED = "dateCreated";
@@ -27,13 +29,13 @@ public class ScoresDBOpenHelper extends SQLiteOpenHelper {
 
   // SQL to create table
   private static final String TABLE_CREATE =
-      "CREATE TABLE " + SCORES + " (" +
+      "CREATE TABLE " + TBL_SCORES + " (" +
           SCORE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
           SCORE + " INTEGER, " +
           DATE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
           ")";
 
-  public ScoresDBOpenHelper(Context context) {
+  public ScoresDbOpenHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
 
@@ -44,10 +46,14 @@ public class ScoresDBOpenHelper extends SQLiteOpenHelper {
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    // copy the database(
+    // execSQL to implement new database structure
+    // restore the database
+    //if (newVersion > oldVersion) {    }
 
     // currently, any change to the database version will drop the table and recreate
     // need to update this section if data retention is necessary
-    db.execSQL("DROP TABLE IF EXISTS " + SCORES);
+    db.execSQL("DROP TABLE IF EXISTS " + TBL_SCORES);
     onCreate(db);
   }
 }

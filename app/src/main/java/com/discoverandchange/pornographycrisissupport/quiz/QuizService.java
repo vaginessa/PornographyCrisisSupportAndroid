@@ -1,19 +1,37 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.net.Uri;
+import android.util.Log;
+
+import com.discoverandchange.pornographycrisissupport.db.ScoresDbOpenHelper;
+import com.discoverandchange.pornographycrisissupport.db.ScoresProvider;
+
 import java.util.List;
 
 /**
  *
  */
 
-public class QuizService {
-    List<Quiz> listScores;
+public class QuizService extends ContextWrapper {
+  List<Quiz> listScores;
 
-    public boolean saveQuiz(Quiz quiz) {
-        return false;
-    }
+  public QuizService(Context base) {
+    super(base);
+  }
 
-    public int getLatestQuizScore() {
-        return 0;
-    }
+  public boolean saveQuiz(int score) {
+    ContentValues values = new ContentValues();
+    values.put(ScoresDbOpenHelper.SCORE, score);
+    Uri scoreUri = getContentResolver().insert(ScoresProvider.CONTENT_URI, values);
+    Log.d("QuizService", "Inserted score " + scoreUri.getLastPathSegment());
+    return true;
+  }
+
+  public int getLatestQuizScore() {
+    return 0;
+  }
+
 }

@@ -25,6 +25,9 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportCont
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,8 +40,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
   private SupportContactsArrayAdapter contactArrayAdapter = null;
 
   @Override
-  public void onResume()
-  {  // After a pause OR at startup
+  public void onResume() {  // After a pause OR at startup
     super.onResume();
     //Refresh your stuff here
     setupSupportContactsList();
@@ -51,10 +53,11 @@ public class SupportNetworkList extends BaseNavigationActivity {
   }
 
   private void setupSupportContactsList() {
+
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
-    contactArrayAdapter = new SupportContactsArrayAdapter(getBaseContext(),
-        service.getSupportContactList());
-    ListView contactListView = (ListView)findViewById(R.id.lvSupportContact);
+    List<SupportContact> contactList = service.getSupportContactList();
+    contactArrayAdapter = new SupportContactsArrayAdapter(getBaseContext(), contactList);
+    ListView contactListView = (ListView) findViewById(R.id.lvSupportContact);
     contactListView.setAdapter(contactArrayAdapter);
 
     contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,16 +72,14 @@ public class SupportNetworkList extends BaseNavigationActivity {
   }
 
 
-
   public void launchContactPicker(View btn) {
 
-      Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-          ContactsContract.Contacts.CONTENT_URI);
+    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+        ContactsContract.Contacts.CONTENT_URI);
     IntentChecker checker = new IntentChecker(this);
     if (!checker.isIntentSafeToLaunch(contactPickerIntent)) {
       displayInstallContactsAppDialog();
-    }
-    else {
+    } else {
       startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);
     }
 
@@ -106,31 +107,32 @@ public class SupportNetworkList extends BaseNavigationActivity {
 //    launchContactPickerWithPermission();
 //  }
 
-  private SupportContact retrieveContactData(String cid) {
+  private void createContactFromSelection(String cid) {
 
     ContentResolver cr = getContentResolver();
 
-    String[] projection    = new String[] { ContactsContract.Contacts._ID,
-            ContactsContract.Contacts.DISPLAY_NAME,
-            ContactsContract.CommonDataKinds.Phone.NUMBER};
+    String[] projection = new String[]{ContactsContract.Contacts._ID,
+        ContactsContract.Contacts.DISPLAY_NAME,
+        ContactsContract.CommonDataKinds.Phone.NUMBER};
 
     Cursor cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
-              ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + cid, null, null);
+        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + cid, null, null);
 
     // no phone number was available for the contact, or the contact id couldn't be found.
     if (cursor == null || cursor.getCount() < 1) {
-      return null;
+      displayInvalidContactAlert();
+      return;
     }
 
     // Locations of our name and phone number within the projection
-    int indexName   = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+    int indexName = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
     int indexNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-    // Making a temporary list to store phone numbers to display to the user
-    List phoneList = new ArrayList<String> ();
 
     // Our new Support Contact
     SupportContact contact = null;
+    // Making a temporary list to store phone numbers to display to the user
+    List<String> phoneList = new ArrayList<>();
 
     // A loop to collect all phone numbers for our contact into a list for display later
     while (cursor.moveToNext()) {
@@ -141,22 +143,55 @@ public class SupportNetworkList extends BaseNavigationActivity {
       // A place holder for the name of the current contact
       String name = cursor.getString(indexName);
 
-      phoneList.add(number);
-
       contact = new SupportContact(cid, name, number);
+      phoneList.add(number);
     }
+
+    // some data structure to hold the contact && the list of phone numbers to pass back.
 
     cursor.close();
 
-    return contact;
+    if (phoneList.size() > 1) {
+      displayPhoneSelectionDialog(contact, phoneList);
+    } else {
+      saveContactData(contact);
+      setupSupportContactsList();
+    }
+  }
 
-    // Display the contact list here with something like "numberList.displayList();"
-    // Receive User input on which number to store
-    // store that number in the "number" variable
+  private void displayPhoneSelectionDialog(final SupportContact contact, final List<String> potentialPhones) {
 
-    // Also :   Lay groundwork for storing the supportContact data long-term
+    AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+    builderSingle.setIcon(android.R.drawable.ic_dialog_alert);
+    builderSingle.setTitle("Select the phone to contact:-");
 
+    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        this,
+        android.R.layout.select_dialog_singlechoice, potentialPhones);
 
+    builderSingle.setNegativeButton(
+        android.R.string.cancel,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+          }
+        });
+
+    builderSingle.setAdapter(
+        arrayAdapter,
+        new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            // grab the contact they selected
+            String phone = potentialPhones.get(which);
+            contact.setPhoneNumber(phone);
+            saveContactData(contact);
+            setupSupportContactsList();
+            dialog.dismiss();
+          }
+        });
+    builderSingle.show();
   }
 
   @Override
@@ -164,19 +199,13 @@ public class SupportNetworkList extends BaseNavigationActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     if (resultCode == RESULT_OK && requestCode == CONTACT_PICKER_RESULT) {
-          Uri result = data.getData();
+      Uri result = data.getData();
 
-          Log.v(Constants.LOG_TAG, "uri is " + result.toString());
+      Log.v(Constants.LOG_TAG, "uri is " + result.toString());
 
-          String id = result.getLastPathSegment();
-          SupportContact contact = retrieveContactData(id);
-          if (contact != null) {
-            saveContactData(contact);
-            updateContactListWithContact(contact);
-          }
-          else {
-            displayInvalidContactAlert();
-          }
+      String id = result.getLastPathSegment();
+      createContactFromSelection(id);
+
     } else {
       // gracefully handle failure
       Log.w(Constants.LOG_TAG, "Warning: activity result not ok");
@@ -201,7 +230,8 @@ public class SupportNetworkList extends BaseNavigationActivity {
   /**
    * Displays an Alert box representing an error. The error will containct the given title
    * and message passed in from the resources string file. IE R.string.<title|message>
-   * @param titleStringId The resource string id for the alert title
+   *
+   * @param titleStringId   The resource string id for the alert title
    * @param messageStringId The resource string id for the alert message displayed.
    */
   private void displayErrorDialog(int titleStringId, int messageStringId) {
@@ -220,7 +250,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   // Adds a Support contact from the support contacts list
   private void updateContactListWithContact(SupportContact contact) {
-    contactArrayAdapter.add(contact);
+    setupSupportContactsList();
   }
 
   // Removes a Support contact from the support contacts list

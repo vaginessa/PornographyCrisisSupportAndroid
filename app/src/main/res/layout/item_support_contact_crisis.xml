@@ -4,18 +4,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:descendantFocusability="blocksDescendants"
-                android:background="@color/colorPrimaryDark">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Phone"
-        android:id="@+id/contactListItemPhone"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/primary_text_default_material_dark"/>
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/supportContactCrisisItemRow">
 
     <TextView
         android:layout_width="wrap_content"

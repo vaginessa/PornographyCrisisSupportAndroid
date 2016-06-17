@@ -1,6 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,24 +35,29 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
     // Check if an existing view is being reused, otherwise inflate the view
 
     if (convertView == null) {
-      int layout = R.layout.item_support_contact;
       if (user.isCrisisContact()) {
-        layout = R.layout.item_support_contact_crisis;
+        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_support_contact_crisis, parent, false);
       }
-      convertView = LayoutInflater.from(getContext()).inflate(layout, parent, false);
+      else {
+        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_support_contact, parent, false);
+      }
     }
+
+    if (user.isCrisisContact() && convertView.getId() != R.id.supportContactCrisisItemRow) {
+      convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_support_contact_crisis, parent, false);
+    }
+    else if (!user.isCrisisContact() && convertView.getId() != R.id.supportContactItemRow) {
+      convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_support_contact, parent, false);
+    }
+
+    final TextView tvName = (TextView) convertView.findViewById(R.id.contactListItemName);
 
     // Lookup view for data population
     // Populate the data into the template view using the data object
 
     if (user.getName() != null) {
-      TextView tvName = (TextView) convertView.findViewById(R.id.contactListItemName);
-      tvName.setText(user.getName());
-    }
 
-    if (user.getPhoneNumber() != null) {
-      TextView tvPhone = (TextView) convertView.findViewById(R.id.contactListItemPhone);
-      tvPhone.setText(user.getPhoneNumber());
+      tvName.setText(user.getName());
     }
 
     // Listen for the delete button event
@@ -63,7 +70,6 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
     Delete.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-
         // Remove the user from the support network service
         SupportNetworkService removeService = SupportNetworkService.getInstance(getContext());
         removeService.removeSupportContact(user.getContactID());

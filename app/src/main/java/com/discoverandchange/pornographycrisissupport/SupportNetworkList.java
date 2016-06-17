@@ -25,9 +25,6 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportCont
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -31,11 +31,18 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
       convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_support_contact, parent, false);
     }
     // Lookup view for data population
-    TextView tvName = (TextView) convertView.findViewById(R.id.contactListItemName);
-    TextView tvPhone = (TextView) convertView.findViewById(R.id.contactListItemPhone);
+
     // Populate the data into the template view using the data object
-    tvName.setText(user.getName());
-    tvPhone.setText(user.getPhoneNumber());
+
+    if (user.getName() != null) {
+      TextView tvName = (TextView) convertView.findViewById(R.id.contactListItemName);
+      tvName.setText(user.getName());
+    }
+
+    if (user.getPhoneNumber() != null) {
+      TextView tvPhone = (TextView) convertView.findViewById(R.id.contactListItemPhone);
+      tvPhone.setText(user.getPhoneNumber());
+    }
 
     // Listen for the delete button event
     Button Delete= (Button) convertView.findViewById(R.id.contactListItemDelete);

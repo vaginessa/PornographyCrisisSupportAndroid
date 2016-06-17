@@ -1,11 +1,15 @@
 package com.discoverandchange.pornographycrisissupport;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -63,10 +67,15 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   public void launchContactPicker(View btn) {
 
-    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-        ContactsContract.Contacts.CONTENT_URI);
-    startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);
-    //launchContactPickerWithPermission();
+      Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+          ContactsContract.Contacts.CONTENT_URI);
+    IntentChecker checker = new IntentChecker(this);
+    if (!checker.isIntentSafeToLaunch(contactPickerIntent)) {
+      displayInstallContactsAppDialog();
+    }
+    else {
+      startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);
+    }
 
   }
 //
@@ -103,7 +112,10 @@ public class SupportNetworkList extends BaseNavigationActivity {
     Cursor cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,
               ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + cid, null, null);
 
-    // TODO: stephen,john handle the case if there is nothing that came back.
+    // no phone number was available for the contact, or the contact id couldn't be found.
+    if (cursor == null || cursor.getCount() < 1) {
+      return null;
+    }
 
     // Locations of our name and phone number within the projection
     int indexName   = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
@@ -127,6 +139,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
       phoneList.add(number);
 
       contact = new SupportContact(cid, name, number);
+      contact.setIsCrisisContact(true);
     }
 
     cursor.close();
@@ -146,26 +159,59 @@ public class SupportNetworkList extends BaseNavigationActivity {
   /** This gets called when a user selects a contact from the contact picker **/
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    if (resultCode == RESULT_OK) {
-      switch (requestCode) {
-        case CONTACT_PICKER_RESULT: {
-
+    if (resultCode == RESULT_OK && requestCode == CONTACT_PICKER_RESULT) {
           Uri result = data.getData();
 
           Log.v(Constants.LOG_TAG, "uri is " + result.toString());
 
           String id = result.getLastPathSegment();
           SupportContact contact = retrieveContactData(id);
-          saveContactData(contact);
-          updateContactListWithContact(contact);
-        }
-          break;
-      }
-
+          if (contact != null) {
+            saveContactData(contact);
+            updateContactListWithContact(contact);
+          }
+          else {
+            displayInvalidContactAlert();
+          }
     } else {
       // gracefully handle failure
       Log.w(Constants.LOG_TAG, "Warning: activity result not ok");
     }
+  }
+
+  /**
+   * Displays an alert box notifying the user that the contact they chose is invalid.
+   */
+  private void displayInvalidContactAlert() {
+    displayErrorDialog(R.string.contact_add_invalid_title, R.string.contact_add_invalid);
+  }
+
+  /**
+   * Displays an alert box notifying the user that they need to install a contacts app
+   * so we can pick a contact.
+   */
+  private void displayInstallContactsAppDialog() {
+    displayErrorDialog(R.string.contact_app_missing_title, R.string.contact_app_missing);
+  }
+
+  /**
+   * Displays an Alert box representing an error. The error will containct the given title
+   * and message passed in from the resources string file. IE R.string.<title|message>
+   * @param titleStringId The resource string id for the alert title
+   * @param messageStringId The resource string id for the alert message displayed.
+   */
+  private void displayErrorDialog(int titleStringId, int messageStringId) {
+    new AlertDialog.Builder(this)
+        .setTitle(titleStringId)
+        .setMessage(messageStringId)
+        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            // right now we do nothing if they click the ok button.
+          }
+        })
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .show();
   }
 
   // Adds a Support contact from the support contacts list

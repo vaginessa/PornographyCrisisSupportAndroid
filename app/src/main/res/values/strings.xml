@@ -19,4 +19,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="default_crisis_message">I\'m really struggling with cravings right now.  Please help me!</string>
+    <string name="contact_add_invalid">We could not add your contact. The contact you chose does not have a valid phone number.</string>
+    <string name="contact_add_invalid_title">Invalid Contact</string>
+    <string name="contact_app_missing_title">Contact App Missing</string>
+    <string name="contact_app_missing">There is no contacts app installed for us to pick a contact from.  Please install one.</string>
 </resources>

@@ -17,19 +17,28 @@ import java.util.List;
  */
 public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
 
+  private List<SupportContact> userList;
+
   public SupportContactsArrayAdapter(Context context, List<SupportContact> users) {
     super(context, 0, users);
+    this.userList = users;
   }
 
   @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
+  public View getView(final int position, View convertView, ViewGroup parent) {
 
     // Get the data item for this position
     final SupportContact user = getItem(position);
     // Check if an existing view is being reused, otherwise inflate the view
+
     if (convertView == null) {
-      convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_support_contact, parent, false);
+      int layout = R.layout.item_support_contact;
+      if (user.isCrisisContact()) {
+        layout = R.layout.item_support_contact_crisis;
+      }
+      convertView = LayoutInflater.from(getContext()).inflate(layout, parent, false);
     }
+
     // Lookup view for data population
 
     // Populate the data into the template view using the data object
@@ -54,12 +63,13 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
     Delete.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+
         // Remove the user from the support network service
         SupportNetworkService removeService = SupportNetworkService.getInstance(getContext());
         removeService.removeSupportContact(user.getContactID());
-
+        userList.remove(position);
         // Remove the user from the adapter
-        adapter.remove(user);
+        adapter.notifyDataSetChanged();
       }
     });
 

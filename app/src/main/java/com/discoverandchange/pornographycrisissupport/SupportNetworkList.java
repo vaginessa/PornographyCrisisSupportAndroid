@@ -144,7 +144,6 @@ public class SupportNetworkList extends BaseNavigationActivity {
       phoneList.add(number);
 
       contact = new SupportContact(cid, name, number);
-      contact.setIsCrisisContact(true);
     }
 
     cursor.close();

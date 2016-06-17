@@ -114,6 +114,15 @@ public class SupportNetworkService {
   }
 
   /**
+   * Saves the support contact and returns the contact that was saved.
+   * @param contactToSave The contact to be saved with a valid id.
+   * @return The saved contact.
+   */
+  public SupportContact saveSupportContact(SupportContact contactToSave) {
+    return addSupportContact(contactToSave);
+  }
+
+  /**
    * Sends a text message to all of our support network contacts.
    */
   public void contactNetwork() {

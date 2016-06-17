@@ -37,15 +37,21 @@ public class SupportNetworkList extends BaseNavigationActivity {
   private SupportContactsArrayAdapter contactArrayAdapter = null;
 
   @Override
+  public void onResume()
+  {  // After a pause OR at startup
+    super.onResume();
+    //Refresh your stuff here
+    setupSupportContactsList();
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
+  }
 
+  private void setupSupportContactsList() {
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
-    // TODO: stephen,john this is test code, remove it when we are done.
-    //service.addSupportContact(new SupportContact("1", "Test User 1", "888-888-8888"));
-    //service.addSupportContact(new SupportContact("2", "Test User 2", "888-888-8889"));
-
     contactArrayAdapter = new SupportContactsArrayAdapter(getBaseContext(),
         service.getSupportContactList());
     ListView contactListView = (ListView)findViewById(R.id.lvSupportContact);
@@ -60,7 +66,6 @@ public class SupportNetworkList extends BaseNavigationActivity {
         startActivity(intent);
       }
     });
-
   }
 
 

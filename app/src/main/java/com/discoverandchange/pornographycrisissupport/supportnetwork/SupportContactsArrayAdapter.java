@@ -29,6 +29,7 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
 
     // Get the data item for this position
     final SupportContact user = getItem(position);
+
     // Check if an existing view is being reused, otherwise inflate the view
 
     if (convertView == null) {
@@ -40,7 +41,6 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
     }
 
     // Lookup view for data population
-
     // Populate the data into the template view using the data object
 
     if (user.getName() != null) {

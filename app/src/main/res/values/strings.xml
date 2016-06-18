@@ -11,6 +11,7 @@
     <string name="action_support_network">Support Network</string>
     <string name="action_quiz">Take Quiz</string>
     <string name="action_library">Resource Library</string>
+    <string name="action_quiz_history">Quiz History</string>
     <string name="library_controller_title">Library Stub</string>
     <string name="quiz_controller_contact_network_notified">Your contact network has been notified.</string>
     <string name="quiz_controller_instructions">Rate your cravings</string>
@@ -23,4 +24,5 @@
     <string name="contact_add_invalid_title">Invalid Contact</string>
     <string name="contact_app_missing_title">Contact App Missing</string>
     <string name="contact_app_missing">There is no contacts app installed for us to pick a contact from.  Please install one.</string>
+
 </resources>

@@ -35,24 +35,24 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CrisisContact"
+        android:text="Primary Contact"
         android:id="@+id/contactCrisisSwitch"
         android:checked="false"
-        android:textSize="20pt"
+        android:textSize="40dp"
         android:minWidth="200dp"
         android:minHeight="50dp"
-        android:layout_above="@+id/buttonSave"
-        android:layout_alignRight="@+id/contactNameText"
-        android:layout_alignEnd="@+id/contactNameText"/>
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/buttonSave"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/contactCrisisSwitch"
-        android:layout_alignEnd="@+id/contactCrisisSwitch"
-        android:onClick="saveSupportContact" />
+        android:onClick="saveSupportContact"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

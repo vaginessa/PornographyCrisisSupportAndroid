@@ -70,12 +70,6 @@ public class ResourceLibraryService {
     this.notifyObservers();
   }
 
-  public void registerResource(Class<? extends LibraryResource> resourceClass,
-                               Class<Activity> activityClass)
-  {
-
-  }
-
   /**
    * Adds a library service observer to be notified when resources change
    * in the library.  If the observer already is in the list, it is a noop.

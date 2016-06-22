@@ -36,4 +36,7 @@ dependencies {
 
     // adds Range and other common properties.
     compile 'org.apache.commons:commons-lang3:3.4'
+
+    // ease of use grabbing iostreams from the network
+    compile 'commons-io:commons-io:2.4'
 }

@@ -97,7 +97,9 @@ public class ResourceLibraryService {
   }
 
   public void loadResources() {
-
+    LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, new HTTPJSONLoader()
+    ,new ResourceDeserializerService());
+    task.execute(Constants.LIBRARY_RESOURCES_ENDPOINT);
   }
 
   /**

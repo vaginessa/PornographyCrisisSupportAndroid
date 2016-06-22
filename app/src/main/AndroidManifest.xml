@@ -35,6 +35,14 @@
         <activity android:name=".supportnetwork.SupportNetworkEdit"/>
         <activity android:name=".quiz.QuizHistoryController">
         </activity>
+        <activity android:name=".library.VideoActivityController">
+        </activity>
+        <activity android:name=".library.AudioActivityController">
+        </activity>
+        <activity android:name=".library.ExternalWebsiteActivityController">
+        </activity>
+        <activity android:name=".library.WebsiteActivityController">
+        </activity>
     </application>
 
 </manifest>

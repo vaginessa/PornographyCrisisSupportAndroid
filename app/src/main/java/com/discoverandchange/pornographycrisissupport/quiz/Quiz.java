@@ -6,7 +6,9 @@ package com.discoverandchange.pornographycrisissupport.quiz;
 
 public class Quiz {
 
+  private int id;
   private int score;
+  private String date;
 
   // constructors
   public Quiz(int score)
@@ -19,11 +21,27 @@ public class Quiz {
   }
 
   // methods
+  public int getId() {
+    return id;
+  }
+
   public int getScore() {
     return score;
   }
 
+  public String getDate() {
+    return date;
+  }
+
   public void setScore(int score) {
     this.score = score;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public void setDate(String date) {
+    this.date = date;
   }
 }

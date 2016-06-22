@@ -3,7 +3,15 @@ package com.discoverandchange.pornographycrisissupport;
 import android.app.Application;
 import android.content.Context;
 
+import com.discoverandchange.pornographycrisissupport.library.AudioActivityController;
+import com.discoverandchange.pornographycrisissupport.library.AudioResource;
+import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteActivityController;
+import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResourceActivityRegistry;
+import com.discoverandchange.pornographycrisissupport.library.VideoActivityController;
+import com.discoverandchange.pornographycrisissupport.library.VideoResource;
+import com.discoverandchange.pornographycrisissupport.library.WebsiteActivityController;
+import com.discoverandchange.pornographycrisissupport.library.WebsiteContentResource;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 /**
@@ -23,8 +31,12 @@ public class App extends Application {
     // right?
     // probably not the quiz history until later....
 
+    // register the library resources, to the activities that display them.
     LibraryResourceActivityRegistry registry = LibraryResourceActivityRegistry.getInstance();
-    // TODO: stephen, john add the activities mappings here when the classes are implemented.
+    registry.registerResource(AudioResource.class, AudioActivityController.class);
+    registry.registerResource(VideoResource.class, VideoActivityController.class);
+    registry.registerResource(ExternalWebsiteResource.class, ExternalWebsiteActivityController.class);
+    registry.registerResource(WebsiteContentResource.class, WebsiteActivityController.class);
 
   }
 

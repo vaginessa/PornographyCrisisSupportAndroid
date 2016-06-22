@@ -11,4 +11,5 @@ public class Constants {
   public static final String SUPPORT_CONTACT_EDIT_MESSAGE = "supportNetwork.edit";
 
   public static final String LOG_TAG_DEBUG  = "psa.debug";
+  public static final String LIBRARY_RESOURCE_VIEW_MESSAGE = "libraryResource.view";
 }

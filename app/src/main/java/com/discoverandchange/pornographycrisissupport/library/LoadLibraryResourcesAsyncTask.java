@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * TODO: stephen look at moving this back into the library service code... as it needs to modify
+ * some internal state saying the resources have loaded
  * Created by snielson on 6/22/16.
  */
 public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
@@ -51,6 +53,7 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
     for (Range range : rangeListMap.keySet()) {
       service.addResources(range, rangeListMap.get(range));
     }
+    service.markResourcesLoaded();
   }
 
 

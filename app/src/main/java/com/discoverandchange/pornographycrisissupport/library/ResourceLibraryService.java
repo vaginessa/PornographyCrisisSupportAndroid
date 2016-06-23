@@ -3,6 +3,7 @@ package com.discoverandchange.pornographycrisissupport.library;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.Constants;
+import com.discoverandchange.pornographycrisissupport.library.json.FakeHTTPJSONLoader;
 import com.discoverandchange.pornographycrisissupport.library.json.HTTPJSONLoader;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 
@@ -19,9 +20,19 @@ import org.apache.commons.lang3.Range;
  */
 public class ResourceLibraryService {
 
+  private static ResourceLibraryService service;
+
   private Set<LibraryServiceObserver> observers;
 
   private Map<Range, List<LibraryResource>> resourcesByRange;
+  private boolean resourcesLoaded = false;
+
+  public synchronized static ResourceLibraryService getInstance() {
+    if (service == null) {
+      service = new ResourceLibraryService();
+    }
+    return service;
+  }
 
   public ResourceLibraryService() {
     resourcesByRange = new HashMap<Range, List<LibraryResource>>();
@@ -55,7 +66,6 @@ public class ResourceLibraryService {
       mapResources = resourcesByRange.get(range);
     }
     mapResources.addAll(resources);
-    this.notifyObservers();
   }
 
   public void addResource(Range range, LibraryResource resource) {
@@ -67,7 +77,6 @@ public class ResourceLibraryService {
       mapResources = resourcesByRange.get(range);
     }
     mapResources.add(resource);
-    this.notifyObservers();
   }
 
   /**
@@ -93,12 +102,18 @@ public class ResourceLibraryService {
   }
 
   public boolean isResourcesLoaded() {
-    return false;
+    return resourcesLoaded;
+  }
+
+  public void markResourcesLoaded() {
+    this.resourcesLoaded = true;
+    this.notifyObservers();
   }
 
   public void loadResources() {
-    LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, new HTTPJSONLoader()
-    ,new ResourceDeserializerService());
+    resourcesLoaded = false;
+    LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, new FakeHTTPJSONLoader()
+    ,ResourceDeserializerService.getInstance());
     task.execute(Constants.LIBRARY_RESOURCES_ENDPOINT);
   }
 
@@ -107,7 +122,6 @@ public class ResourceLibraryService {
    */
   private void notifyObservers() {
     for (LibraryServiceObserver observer : observers) {
-      // TODO: stephen perhaps a better name for this would be resourcesChanged.
       observer.resourcesLoaded(this);
     }
   }

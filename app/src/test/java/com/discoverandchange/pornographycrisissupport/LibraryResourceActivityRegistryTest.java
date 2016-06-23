@@ -21,7 +21,7 @@ public class LibraryResourceActivityRegistryTest {
   public void testRegisterResource() {
     LibraryResourceActivityRegistry registry = LibraryResourceActivityRegistry.getInstance();
 
-    Class<Activity> activity = registry.getActivityForResource(LibraryResource.class);
+    Class<? extends Activity> activity = registry.getActivityForResource(LibraryResource.class);
     assertThat("there should be no registered activities here", activity, nullValue());
 
     registry.registerResource(LibraryResource.class, Activity.class);

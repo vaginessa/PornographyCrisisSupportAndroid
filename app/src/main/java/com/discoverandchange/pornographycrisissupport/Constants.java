@@ -13,4 +13,5 @@ public class Constants {
   public static final String LOG_TAG_DEBUG  = "pcs.debug";
   public static final String LIBRARY_RESOURCES_ENDPOINT =
       "https://stage.discoverandchange.com/api/v1/pcs/libraryresources/";
+  public static final String LIBRARY_RESOURCE_VIEW_MESSAGE = "libraryResource.view";
 }

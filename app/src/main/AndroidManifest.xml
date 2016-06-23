@@ -15,18 +15,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".quiz.QuizController"/>
         <activity android:name=".SupportNetworkList">
+        </activity>
+        <activity android:name=".library.LibraryController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".library.LibraryController"/>
 
-        <provider
-            android:name=".db.ScoresProvider"
-            android:authorities="com.discoverandchange.pornographycrisissupport.db.scoresprovider"
-            android:exported="false"/>
         <provider
             android:name=".db.SupportContactProvider"
             android:authorities="com.discoverandchange.pornographycrisissupport.SupportContactProvider"
@@ -34,6 +31,14 @@
 
         <activity android:name=".supportnetwork.SupportNetworkEdit"/>
         <activity android:name=".quiz.QuizHistoryController">
+        </activity>
+        <activity android:name=".library.VideoActivityController">
+        </activity>
+        <activity android:name=".library.AudioActivityController">
+        </activity>
+        <activity android:name=".library.ExternalWebsiteActivityController">
+        </activity>
+        <activity android:name=".library.WebsiteActivityController">
         </activity>
     </application>
 

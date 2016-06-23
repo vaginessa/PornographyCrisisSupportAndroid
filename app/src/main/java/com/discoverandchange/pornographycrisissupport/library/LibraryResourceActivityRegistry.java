@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by snielson on 6/22/16.
  */
 public class LibraryResourceActivityRegistry {
-  Map<Class<? extends LibraryResource>, Class<Activity>> activitiesMap;
+  Map<Class<? extends LibraryResource>, Class<? extends Activity>> activitiesMap;
 
   private static LibraryResourceActivityRegistry registry;
 
@@ -25,12 +25,12 @@ public class LibraryResourceActivityRegistry {
   }
 
   public void registerResource(Class<? extends LibraryResource> resourceClass,
-                               Class<Activity> activityClass)
+                               Class<? extends Activity> activityClass)
   {
     activitiesMap.put(resourceClass, activityClass);
   }
 
-  public Class<Activity> getActivityForResource(Class<? extends LibraryResource> resource) {
+  public Class<? extends Activity> getActivityForResource(Class<? extends LibraryResource> resource) {
     if (activitiesMap.containsKey(resource)) {
       return activitiesMap.get(resource);
     }

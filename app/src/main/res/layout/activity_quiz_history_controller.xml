@@ -14,9 +14,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Quiz History"
+        android:text="@string/action_quiz_history"
         android:id="@+id/txtQuizHistoryLabel"
+        android:layout_marginTop="36dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="97dp"/>
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/action_quiz_history_sub"
+        android:id="@+id/txtQuizHistorySubLabel"
+        android:layout_below="@+id/txtQuizHistoryLabel"
+        android:layout_centerHorizontal="true"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/android:list"
+        android:layout_below="@+id/txtQuizHistorySubLabel"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport;
+package com.discoverandchange.pornographycrisissupport.library;
 
 import android.test.suitebuilder.annotation.SmallTest;
 

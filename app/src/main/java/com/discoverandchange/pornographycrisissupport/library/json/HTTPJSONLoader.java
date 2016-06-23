@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.library;
+package com.discoverandchange.pornographycrisissupport.library.json;
 
 import android.util.Log;
 
@@ -24,9 +24,6 @@ public class HTTPJSONLoader {
 
   public String get(String apiURL) throws IOException {
     InputStream is = null;
-    // Only display the first 500 characters of the retrieved
-    // web page content.
-    int len = 500;
 
     try {
       URL url = new URL(apiURL);
@@ -43,6 +40,7 @@ public class HTTPJSONLoader {
 
       // Convert the InputStream into a string
       String contentAsString = IOUtils.toString(is);
+      Log.d(Constants.LOG_TAG_DEBUG, contentAsString);
       return contentAsString;
 
       // Makes sure that the InputStream is closed after the app is

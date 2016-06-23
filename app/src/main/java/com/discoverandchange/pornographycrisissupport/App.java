@@ -8,10 +8,15 @@ import com.discoverandchange.pornographycrisissupport.library.AudioResource;
 import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteActivityController;
 import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResourceActivityRegistry;
+import com.discoverandchange.pornographycrisissupport.library.ResourceDeserializerService;
 import com.discoverandchange.pornographycrisissupport.library.VideoActivityController;
 import com.discoverandchange.pornographycrisissupport.library.VideoResource;
 import com.discoverandchange.pornographycrisissupport.library.WebsiteActivityController;
 import com.discoverandchange.pornographycrisissupport.library.WebsiteContentResource;
+import com.discoverandchange.pornographycrisissupport.library.json.AudioResourceDeserializer;
+import com.discoverandchange.pornographycrisissupport.library.json.ExternalWebsiteResourceDeserializer;
+import com.discoverandchange.pornographycrisissupport.library.json.VideoResourceDeserializer;
+import com.discoverandchange.pornographycrisissupport.library.json.WebsiteContentResourceDeserializer;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 /**
@@ -37,6 +42,13 @@ public class App extends Application {
     registry.registerResource(VideoResource.class, VideoActivityController.class);
     registry.registerResource(ExternalWebsiteResource.class, ExternalWebsiteActivityController.class);
     registry.registerResource(WebsiteContentResource.class, WebsiteActivityController.class);
+
+    // setup the deserializer
+    ResourceDeserializerService deserializerService = ResourceDeserializerService.getInstance();
+    deserializerService.registerDeserializer("Video", new VideoResourceDeserializer());
+    deserializerService.registerDeserializer("Audio", new AudioResourceDeserializer());
+    deserializerService.registerDeserializer("WebsiteContent", new WebsiteContentResourceDeserializer());
+    deserializerService.registerDeserializer("ExternalWebsite", new ExternalWebsiteResourceDeserializer());
 
   }
 

@@ -28,7 +28,7 @@ public class ResourceDeserializerService {
   /**
    * We open this up just so we can get easier unit testing.
    */
-  public ResourceDeserializerService() {
+  ResourceDeserializerService() {
     deserializers = new HashMap<>();
   }
 
@@ -52,17 +52,30 @@ public class ResourceDeserializerService {
 
   public Map<Range,List<LibraryResource>> deserialize(String data) {
 
-    // format
+    try {
+      JSONObject object = new JSONObject(data);
+      return deserialize(object);
+    }
+    catch (JSONException ex) {
+      Log.e(Constants.LOG_TAG, "JSON parsing error: ", ex);
+    }
+    return null;
+  }
 
+  /**
+   * Given a JSONObject of data it converts the JSONObject into it's corresponding java types
+   * for the map of ranges to library resources.
+   * @param data  The JSON representing the map of ranges to library resources.
+   * @return a map where each range is mapped to a list of library resources.
+   */
+  public Map<Range,List<LibraryResource>> deserialize(JSONObject data) {
     Map<Range, List<LibraryResource>> resourcesByRange = new HashMap<>();
 
     try {
-      JSONObject object = new JSONObject(data);
-
       // normally I'd use Gson or something... but I think this will make it easier
       // for the rest of the team to see how this can work.
 
-      JSONArray ranges = object.getJSONArray("ranges");
+      JSONArray ranges = data.getJSONArray("ranges");
       for (int i = 0; i < ranges.length(); i++) {
         JSONObject jsonRange = (JSONObject) ranges.getJSONObject(i);
         Range range = hydrateRange(jsonRange);

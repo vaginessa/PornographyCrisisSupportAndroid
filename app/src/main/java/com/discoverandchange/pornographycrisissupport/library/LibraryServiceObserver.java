@@ -5,4 +5,7 @@ package com.discoverandchange.pornographycrisissupport.library;
  */
 public interface LibraryServiceObserver {
   void resourcesLoaded(ResourceLibraryService service);
+
+  // TODO: stephen we probably need to observe when a resource load error occurred
+  // since this is asynchronous we should fix that problem.
 }

@@ -4,14 +4,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.Constants;
+import com.discoverandchange.pornographycrisissupport.library.json.HTTPJSONLoader;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Range;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 

@@ -1,9 +1,9 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.Constants;
+import com.discoverandchange.pornographycrisissupport.library.json.HTTPJSONLoader;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 
 import java.util.ArrayList;

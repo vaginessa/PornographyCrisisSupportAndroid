@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/quiz_controller_contact_network_notified"
-        android:id="@+id/libraryTitle"
+        android:text="@string/craving_score"
+        android:id="@+id/latestCravingScore"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -24,7 +24,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Library Items"
+        android:text=""
+        android:id="@+id/latestScore"
+        android:layout_above="@+id/libraryTitle"
+        android:layout_alignRight="@+id/libraryTitle"
+        android:layout_alignEnd="@+id/libraryTitle"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_toEndOf="@+id/textView7"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/quiz_controller_contact_network_notified"
+        android:id="@+id/libraryTitle"
+        android:layout_below="@+id/latestCravingScore"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/library_items"
         android:id="@+id/textView7"
         android:layout_below="@+id/libraryTitle"
         android:layout_centerHorizontal="true"/>

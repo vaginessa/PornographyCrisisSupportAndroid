@@ -54,6 +54,10 @@ public class LibraryController extends BaseNavigationActivity
     ListView libraryListView = (ListView) findViewById(R.id.libraryListView);
     libraryListView.setAdapter(libraryResourceListAdapter);
 
+
+    // Displays the list of resources and responds to user touches on list items
+    // resourceToLoad is item touched
+    //
     libraryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position,

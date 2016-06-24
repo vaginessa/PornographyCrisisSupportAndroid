@@ -8,4 +8,6 @@ public class MediaResource extends BaseResource {
   public MediaResource(String type) {
     super(type);
   }
+
+
 }

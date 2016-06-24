@@ -7,19 +7,17 @@ package com.discoverandchange.pornographycrisissupport.library;
  * Expansion: Allow downloadable video files
  */
 public class VideoResource extends MediaResource {
+
+    private String url;
+
+
+    // constructors
     public VideoResource() {
         super("Video");
+    }
 
 
-        private String url;
-
-        // constructors
-        public VideoResource(String newUrl)
-        {
-            this.url = newUrl;
-        }
-
-        // methods
+    // methods
 
     public String getUrl() {
         return url;

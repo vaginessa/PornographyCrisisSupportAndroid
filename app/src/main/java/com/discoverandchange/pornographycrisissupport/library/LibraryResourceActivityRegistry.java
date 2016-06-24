@@ -7,12 +7,15 @@ import java.util.Map;
 
 /**
  * Created by snielson on 6/22/16.
+ *
+ *
  */
 public class LibraryResourceActivityRegistry {
   Map<Class<? extends LibraryResource>, Class<? extends Activity>> activitiesMap;
 
   private static LibraryResourceActivityRegistry registry;
 
+  // Singleton used here,
   public static synchronized LibraryResourceActivityRegistry getInstance() {
     if (registry == null) {
       registry = new LibraryResourceActivityRegistry();

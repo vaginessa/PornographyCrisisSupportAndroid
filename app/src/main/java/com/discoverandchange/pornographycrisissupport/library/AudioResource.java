@@ -8,15 +8,12 @@ package com.discoverandchange.pornographycrisissupport.library;
  */
 public class AudioResource extends MediaResource {
 
-    public AudioResource() {
-        super("Audio");
-    }
     private String url;
 
-    // constructors
-    public AudioResource(String newUrl)
-    {
-        this.url = newUrl;
+
+    // Constructors
+    public AudioResource() {
+        super("Audio");
     }
 
     // methods

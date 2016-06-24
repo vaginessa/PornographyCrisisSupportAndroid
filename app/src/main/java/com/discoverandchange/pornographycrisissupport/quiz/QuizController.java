@@ -20,13 +20,11 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
-import com.discoverandchange.pornographycrisissupport.db.ScoresProvider;
 import com.discoverandchange.pornographycrisissupport.library.LibraryController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
-public class QuizController extends BaseNavigationActivity
-    implements LoaderManager.LoaderCallbacks<Cursor> {
+public class QuizController extends BaseNavigationActivity {
 
   private CursorAdapter cursorAdapter;
 
@@ -42,7 +40,7 @@ public class QuizController extends BaseNavigationActivity
         android.R.layout.simple_list_item_1, null, from, to, 0);
 
     // initiates the Loader--gets the data asynchronously
-    getLoaderManager().initLoader(0, null, this);
+    //getLoaderManager().initLoader(0, null, this);
   }
 
   public void handleSubmitQuizClick(View btn) {
@@ -54,20 +52,25 @@ public class QuizController extends BaseNavigationActivity
     Log.d("PornAddictionSupport", "handleSubmitQuizClick() called with: " +
         "btn = [" + btn + "]" + " slider equal to " + slider.getProgress());
 
-    //Intent intent = new Intent(getBaseContext(), LibraryController.class);
-    //startActivity(intent);
+    // save slider value to new Quiz
+    Quiz quiz = new Quiz();
+    quiz.setScore(slider.getProgress());
 
     // Save the score (passes the current context to the QuizService)
-    boolean isCrisisQuizScore = (new QuizService(this)).saveQuiz(slider.getProgress());
+    boolean isCrisisQuizScore = (new QuizService(this)).saveQuiz(quiz);
 
-//    if (isCrisisQuizScore) {
+    // get the latest score
+    int latestScore = (new QuizService(this)).getLatestQuizScore();
+
+    if (isCrisisQuizScore) {
       sendSupportNetworkTexts();
+
       // After saving quiz, launch the dialer
       launchDialer();
-//    }
-//    else {
-//      launchLibrary();
-//    }
+    }
+    else {
+      launchLibrary();
+    }
   }
 
   /**
@@ -107,7 +110,7 @@ public class QuizController extends BaseNavigationActivity
 
   }
 
-  @Override
+  /*@Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     return new CursorLoader(this, ScoresProvider.CONTENT_URI,
         null, null, null, null);
@@ -121,5 +124,5 @@ public class QuizController extends BaseNavigationActivity
   @Override
   public void onLoaderReset(Loader<Cursor> loader) {
     cursorAdapter.swapCursor(null);
-  }
+  }*/
 }

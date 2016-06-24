@@ -1,5 +1,11 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
+import com.discoverandchange.pornographycrisissupport.R;
+
 /**
  * Created by oogle on 6/23/2016.
  * Displays a video library resource
@@ -14,10 +20,12 @@ package com.discoverandchange.pornographycrisissupport.library;
  *
  */
 
-public class VideoActivityController {
-//
-//    @Override
-//    protected
 
+public class VideoActivityController extends BaseNavigationActivity {
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_video_activity_controller);
+  }
 }

@@ -14,5 +14,9 @@
             android:id="@+id/nav_library"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/action_library"/>
+        <item
+            android:id="@+id/nav_quiz_history"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/action_quiz_history"/>
     </group>
 </menu>

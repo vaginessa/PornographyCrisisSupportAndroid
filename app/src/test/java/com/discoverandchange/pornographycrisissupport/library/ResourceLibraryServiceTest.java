@@ -1,9 +1,9 @@
-package com.discoverandchange.pornographycrisissupport;
+package com.discoverandchange.pornographycrisissupport.library;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
-import com.discoverandchange.pornographycrisissupport.library.Range;
+import com.discoverandchange.pornographycrisissupport.library.LibraryServiceObserver;
 import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 
@@ -18,6 +18,11 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.apache.commons.lang3.Range;
 
 /**
  * Created by snielson on 6/6/16.
@@ -58,17 +63,42 @@ public class ResourceLibraryServiceTest {
         mock(LibraryResource.class), mock(LibraryResource.class));
     List<LibraryResource> severe = Arrays.asList(mock(LibraryResource.class),
         mock(LibraryResource.class), mock(LibraryResource.class));
-    service.addResources(new Range(1, 3), mild);
-    service.addResources(new Range(4, 6), moderate);
-    service.addResources(new Range(7, 10), severe);
+    service.addResources(Range.between(1, 3), mild);
+    service.addResources(Range.between(4, 6), moderate);
+    service.addResources(Range.between(7, 10), severe);
 
     List<LibraryResource> mildCheck = service.getResourcesForQuiz(new Quiz(3));
     List<LibraryResource> moderateCheck = service.getResourcesForQuiz(new Quiz(6));
     List<LibraryResource> severeCheck = service.getResourcesForQuiz(new Quiz(10));
 
-    runResourceCheck(mild, mildCheck, MILD_DEFAULT_RESOURCE_SIZE + mildCheck.size(), "Mild");
-    runResourceCheck(moderate, moderateCheck, MODERATE_DEFAULT_RESOURCE_SIZE + moderateCheck.size(), "Moderate");
-    runResourceCheck(severe, severeCheck, SEVERE_DEFAULT_RESOURCE_SIZE + mildCheck.size(), "Severe");
+    runResourceCheck(mild, mildCheck, mild.size(), "Mild");
+    runResourceCheck(moderate, moderateCheck, moderate.size(), "Moderate");
+    runResourceCheck(severe, severeCheck, severe.size(), "Severe");
+  }
+
+  @Test
+  public void testRegisterObserver() {
+    ResourceLibraryService service = new ResourceLibraryService();
+    LibraryServiceObserver observer = mock(LibraryServiceObserver.class);
+    service.registerObserver(observer);
+
+    service.addResource(Range.between(1, 3), mock(LibraryResource.class));
+    verify(observer, times(1)).resourcesLoaded(service);
+  }
+
+  @Test
+  public void testRemoveObserver() {
+    ResourceLibraryService service = new ResourceLibraryService();
+    LibraryServiceObserver observer1 = mock(LibraryServiceObserver.class);
+    LibraryServiceObserver observer2 = mock(LibraryServiceObserver.class);
+    service.registerObserver(observer1);
+    service.registerObserver(observer2);
+
+    service.removeObserver(observer1);
+
+    service.addResource(Range.between(1, 3), mock(LibraryResource.class));
+    verify(observer1, times(0)).resourcesLoaded(service);
+    verify(observer2, times(1)).resourcesLoaded(service);
   }
 
   private void runResourceCheck(List<LibraryResource> resources, List<LibraryResource> check, int size, String type) {

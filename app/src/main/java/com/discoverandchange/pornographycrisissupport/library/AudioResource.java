@@ -1,13 +1,16 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 /**
- * Created by oogle on 6/23/2016.
+ * Created by snielson on 6/22/16.
  * Represents an Audio resource that can be retrieved from a given media url.
  * This resource can be present on an external website
  * Expansion: Allow downloadable audio files
  */
-public class AudioResource {
+public class AudioResource extends MediaResource {
 
+    public AudioResource() {
+        super("Audio");
+    }
     private String url;
 
     // constructors
@@ -24,5 +27,7 @@ public class AudioResource {
     public void setUrl(String newUrl) {
         this.url = newUrl;
     }
+
+
 
 }

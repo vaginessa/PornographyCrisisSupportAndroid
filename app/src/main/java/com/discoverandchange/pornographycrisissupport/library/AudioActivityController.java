@@ -1,5 +1,6 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,12 @@ import android.widget.Button;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.R;
 
+import java.io.IOException;
+
 public class AudioActivityController extends BaseNavigationActivity {
+
+
+  // Add in pause button for better playback options if there's time
 
   MediaPlayer mediaPlayer;
 
@@ -26,22 +32,30 @@ public class AudioActivityController extends BaseNavigationActivity {
 
       @Override
       public void onClick(View v) {
-        Uri path = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dummy);    // <THIS WAS JUST A SAMPLE FROM THE YOUTUBE VIDEO>
-  //      Uri path = Uri.parse("https://www.discoverandchange.com/wp-content/uploads/2016/04/Relapse-Prevention-Strategies.mp3");
+        String url = "https://www.discoverandchange.com/wp-content/uploads/2016/04/Relapse-Prevention-Strategies.mp3";
 
-        mediaPlayer = MediaPlayer.create(AudioActivityController.this, path);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+          mediaPlayer.setDataSource(url);
+          mediaPlayer.prepare(); // might take long for buffering, etc.
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
         mediaPlayer.start();
+
       }
     });
 
+
     // Handling the stop button
     Button stop = (Button) findViewById(R.id.stop);
-    play.setOnClickListener(new View.OnClickListener() {
+    stop.setOnClickListener(new View.OnClickListener() {
 
 
       @Override
       public void onClick(View v) {
-        if(mediaPlayer.isPlaying()){
+        if(mediaPlayer != null && mediaPlayer.isPlaying()){
           mediaPlayer.stop();
           mediaPlayer.release();
         }

@@ -24,9 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PLAY"
-        android:layout_marginTop="70dp"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/stop"
+        android:layout_toStartOf="@+id/stop"
+        android:layout_marginBottom="44dp" />
 
 
     <Button
@@ -34,9 +35,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="STOP"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/play"
-        android:layout_alignStart="@+id/play"
-        android:layout_marginTop="146dp" />
+        android:layout_alignTop="@+id/play"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <VideoView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/videoView"
+        android:layout_above="@+id/play"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp" />
 
 </RelativeLayout>

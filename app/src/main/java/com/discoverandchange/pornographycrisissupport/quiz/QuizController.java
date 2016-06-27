@@ -54,7 +54,8 @@ public class QuizController extends BaseNavigationActivity {
 
     // save slider value to new Quiz
     Quiz quiz = new Quiz();
-    quiz.setScore(slider.getProgress());
+    // slider is 0 based so we have to add one.  Converts 0 -> 9 into 1 -> 10
+    quiz.setScore(slider.getProgress() + 1);
 
     // Save the score (passes the current context to the QuizService)
     boolean isCrisisQuizScore = (new QuizService(this)).saveQuiz(quiz);

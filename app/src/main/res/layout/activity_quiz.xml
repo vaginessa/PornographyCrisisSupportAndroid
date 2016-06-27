@@ -29,7 +29,7 @@
         android:layout_marginTop="58dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:max="10"
+        android:max="9"
         android:indeterminate="false"/>
 
     <Button

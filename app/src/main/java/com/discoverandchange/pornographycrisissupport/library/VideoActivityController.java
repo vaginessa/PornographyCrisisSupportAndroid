@@ -20,10 +20,6 @@ import com.discoverandchange.pornographycrisissupport.R;
  * Returns to Library Screen.
  * @author john.okleberry@gmail.com
  */
-
-
-
-
 public class VideoActivityController extends BaseNavigationActivity {
 
 //  Requires Permissions: "android.permission.INTERNET" & "android.permission.WAKE_LOCK"
@@ -98,8 +94,10 @@ public class VideoActivityController extends BaseNavigationActivity {
     });
   }
 
-    // Handling destruction of this activity to release media
-    protected void onDestroy() {
+  /**
+   * Handles the destruction of this activity to release media
+   */
+  protected void onDestroy() {
 
       VideoView videoView = (VideoView) findViewById(R.id.videoView);
 

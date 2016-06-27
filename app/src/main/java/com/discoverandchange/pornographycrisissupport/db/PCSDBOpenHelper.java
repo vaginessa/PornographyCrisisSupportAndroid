@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.discoverandchange.pornographycrisissupport.Constants;
 
 /**
+ * Executes creation of the database and tables
  * Created by snielson on 6/16/16.
  */
 public class PCSDBOpenHelper extends SQLiteOpenHelper {
@@ -15,13 +16,20 @@ public class PCSDBOpenHelper extends SQLiteOpenHelper {
     super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
   }
 
+  /**
+   * Creates the tables in the database
+   * @param db The reference to the database
+   */
   @Override
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(ScoresTable.TABLE_CREATE);
     db.execSQL(SupportContactTable.CREATE_TABLE);
   }
 
-
+  /**
+   * Drops the tables and then recreates the tables in the database
+   * @param db The reference to the database
+   */
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     db.execSQL("DROP TABLE IF EXISTS " + ScoresTable.TBL_SCORES);

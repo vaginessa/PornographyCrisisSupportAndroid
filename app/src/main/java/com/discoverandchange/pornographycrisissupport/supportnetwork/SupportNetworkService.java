@@ -215,11 +215,6 @@ public class SupportNetworkService {
     sendMessageToSupportNetwork(message);
   }
 
-  public boolean hasContact(String contactID) {
-    boolean contactPresent = false;
-    return contactPresent;
-  }
-
   /**
    * Given a message to send, it sends a SMS text to all of the phones for each support contact
    * we have.

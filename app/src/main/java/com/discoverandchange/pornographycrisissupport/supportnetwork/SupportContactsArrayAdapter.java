@@ -14,20 +14,34 @@ import com.discoverandchange.pornographycrisissupport.R;
 
 import java.util.List;
 
+
 /**
- * Created by snielson on 6/10/16.
+ * Creates an ArrayAdapter using information from our support network contacts list to allow the
+ * user to interact with the list.
+ *  @author snielson
  */
 public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
 
   private List<SupportContact> userList;
 
-  public SupportContactsArrayAdapter(Context context, List<SupportContact> users) {
+  /**
+   * An ArrayAdapter to allow user interaction with the support contacts list
+   * @param context Information about where the list is created
+   * @param users Information about the users in the array
+     */
+    public SupportContactsArrayAdapter(Context context, List<SupportContact> users) {
     super(context, 0, users);
     this.userList = users;
   }
 
-  @Override
-  public View getView(final int position, View convertView, ViewGroup parent) {
+  /**
+   * Generates the view itself using information about our support network contacts.
+   * @param position Which contact in the list was interacted with
+   * @param convertView Allows information about a support contact to be made visual
+   * @param parent Information about where the list of support contacts will be displayed
+     * @return The completed view to be displayed on the user's screen
+     */
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
     // Get the data item for this position
     final SupportContact user = getItem(position);
@@ -68,8 +82,12 @@ public class SupportContactsArrayAdapter extends ArrayAdapter<SupportContact> {
     final SupportContactsArrayAdapter adapter = this;
 
     Delete.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+
+      /**
+       * Allows the user to delete a contact from the support network.
+       * @param v Allows the view which holds a support network contact to be interacted with
+         */
+        public void onClick(View v) {
         // Remove the user from the support network service
         SupportNetworkService removeService = SupportNetworkService.getInstance(getContext());
         removeService.removeSupportContact(user.getContactID());

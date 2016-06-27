@@ -36,20 +36,30 @@ public class SupportNetworkList extends BaseNavigationActivity {
   private static final int CONTACT_PICKER_RESULT = 1001;
   private SupportContactsArrayAdapter contactArrayAdapter = null;
 
-  @Override
-  public void onResume() {  // After a pause OR at startup
+  /**
+   * Refreshes the support network content on the page after a pause or startup.
+   */
+    public void onResume() {  // After a pause OR at startup
     super.onResume();
     //Refresh your stuff here
     setupSupportContactsList();
   }
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  /**
+   * Used saved state data to put support network list into a view.
+   * @param savedInstanceState This is necessary for displaying the support network list
+     */
+    protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
   }
 
-  private void setupSupportContactsList() {
+
+  /**
+   * Converts a list of support contacts into a list that is visible to the user and can be
+   * interacted with.
+   */
+    private void setupSupportContactsList() {
 
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     List<SupportContact> contactList = service.getSupportContactList();
@@ -69,7 +79,11 @@ public class SupportNetworkList extends BaseNavigationActivity {
   }
 
 
-  public void launchContactPicker(View btn) {
+  /**
+   * Opens up the contact app or notifies the user that the app does not exist on the device.
+   * @param btn This is required for the contacts app to open
+     */
+    public void launchContactPicker(View btn) {
 
     Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
         ContactsContract.Contacts.CONTENT_URI);
@@ -81,30 +95,13 @@ public class SupportNetworkList extends BaseNavigationActivity {
     }
 
   }
-//
-//  private void launchContactPickerWithPermission() {
-//    int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
-//
-//    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-//      Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-//          ContactsContract.Contacts.CONTENT_URI);
-//      startActivityForResult(contactPickerIntent, CONTACT_PICKER_RESULT);
-//    }
-//    else {
-//      requestContactPermissionAndLaunch();
-//    }
-//  }
-//
-//  private void requestContactPermissionAndLaunch() {
-//
-//    if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-//        Manifest.permission.READ_CONTACTS)) {
-//
-//      // request permission and then launch again.
-//    launchContactPickerWithPermission();
-//  }
 
-  private void createContactFromSelection(String cid) {
+
+  /**
+   * Brings in data from the contacts application and stores it in the application data.
+   * @param cid This is a unique identifier used by the contacts application to specify a contact
+     */
+    private void createContactFromSelection(String cid) {
 
     ContentResolver cr = getContentResolver();
 
@@ -156,7 +153,14 @@ public class SupportNetworkList extends BaseNavigationActivity {
     }
   }
 
-  private void displayPhoneSelectionDialog(final SupportContact contact, final List<String> potentialPhones) {
+
+  /**
+   * Allows a user to specify which phone number to save for a support network contact when multiple
+   * numbers are associated with this contact in the Google Contacts application.
+   * @param contact The specific contact who possesses multiple phone numbers in the Contacts app
+   * @param potentialPhones A list of phone numbers associated with our selected contact
+     */
+    private void displayPhoneSelectionDialog(final SupportContact contact, final List<String> potentialPhones) {
 
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
     builderSingle.setIcon(android.R.drawable.ic_dialog_alert);
@@ -191,9 +195,14 @@ public class SupportNetworkList extends BaseNavigationActivity {
     builderSingle.show();
   }
 
-  @Override
-  /** This gets called when a user selects a contact from the contact picker **/
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  /**
+   * When a user selects a contact from the Contacts app contact picker, this
+   * adds the contacts information as a new contact in our support network list
+   * @param requestCode Requests submitted to the Contacts app
+   * @param resultCode  Results from the Contacts app request
+   * @param data Data returned from the Contacts app
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     if (resultCode == RESULT_OK && requestCode == CONTACT_PICKER_RESULT) {
       Uri result = data.getData();

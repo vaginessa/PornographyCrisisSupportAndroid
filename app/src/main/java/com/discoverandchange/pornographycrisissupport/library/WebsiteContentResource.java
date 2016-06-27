@@ -1,10 +1,14 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 /**
- * Created by snielson on 6/22/16.
+ * Represents a website resource to be retrieved from a given url
+ * @author Stephen Nielson
  */
 public class WebsiteContentResource extends BaseResource {
 
+  /**
+   * The content for the website
+   */
   private String content;
 
   public WebsiteContentResource() {

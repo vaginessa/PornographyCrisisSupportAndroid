@@ -5,11 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * @author Stephen Nielson
+ * Declares the structure of the scores table
  * @author Keith Higbee
- * @author John Okleberry
  */
-
 public class ScoresTable {
 
   // db name and version

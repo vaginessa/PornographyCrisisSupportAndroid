@@ -1,23 +1,25 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.ListViewAutoScrollHelper;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
+/**
+ * QuizHistoryController displays all quiz scores in a list
+ * @author Keith Higbee
+ */
 public class QuizHistoryController extends BaseNavigationActivity {
 
+  /**
+   * Creates the view displaying all quiz scores.
+   * @param savedInstanceState Any saved data needed for this activity.
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

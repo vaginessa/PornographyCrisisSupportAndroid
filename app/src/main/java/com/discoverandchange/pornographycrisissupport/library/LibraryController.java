@@ -2,19 +2,16 @@ package com.discoverandchange.pornographycrisissupport.library;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
-import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
-import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
-import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +26,13 @@ public class LibraryController extends BaseNavigationActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_library_controller);
 
+    QuizService quizService = new QuizService(getBaseContext());
+    TextView latestScore = (TextView)findViewById(R.id.latestScore);
+    latestScore.setText(Integer.toString(quizService.getLatestQuizScore()));
+
+
     ResourceLibraryService service = ResourceLibraryService.getInstance();
-    setupListAdapter(service);
+    setupListAdapter(service, quizService);
   }
 
   @Override
@@ -44,8 +46,7 @@ public class LibraryController extends BaseNavigationActivity
     }
   }
 
-  private void setupListAdapter(ResourceLibraryService service) {
-    QuizService quizService = new QuizService(getBaseContext());
+  private void setupListAdapter(ResourceLibraryService service, QuizService quizService) {
     List<LibraryResource> resources = new ArrayList<>();
     if (service.isResourcesLoaded()) {
       resources = service.getResourcesForQuizScore(quizService.getLatestQuizScore());
@@ -83,7 +84,8 @@ public class LibraryController extends BaseNavigationActivity
 
   @Override
   public void resourcesLoaded(ResourceLibraryService service) {
+    QuizService quizService = new QuizService(getBaseContext());
     // grab our resources.
-    setupListAdapter(service);
+    setupListAdapter(service, quizService);
   }
 }

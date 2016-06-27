@@ -7,6 +7,7 @@ import com.discoverandchange.pornographycrisissupport.R;
 
 /**
  * Displays the website for the resource
+ * @author Stephen Nielson
  */
 public class WebsiteActivityController extends AppCompatActivity {
 

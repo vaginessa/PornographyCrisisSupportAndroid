@@ -11,18 +11,34 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created by snielson on 6/23/16.
+ * Tests the AudioResourceDeserializer class to make sure it
+ * properly converts from JSON to an AudioResource
+ * @see AudioResourceDeserializer
+ * @see AudioResource
+ * @author Stephen Nielson <snielson@discoverandchange.com>
  */
 public class AudioResourceDeserializerTest {
 
   @Test
+  /**
+   * Verifies the deserialize method hydrates an AudioResource.
+   */
   public void testDeserialize() throws JSONException {
-    String fullTest = "{\"type\":\"Audio\",\"url\":\"https://www.discoverandchange.com/wp-content/uploads/2016/04/Relapse-Prevention-Strategies.mp3\"}";
+    String type = "Audio";
+    String audioUrl = "https://www.discoverandchange.com/wp-content/uploads/2016/04/Relapse-Prevention-Strategies.mp3";
+    String description = "Sample description";
+    String title = "Audio Resource";
+    String thumbnail = "thumb.png";
+    String fullTest = "{\"type\":\"" + type + "\",\"url\":\"" + audioUrl + "\","
+        + "\"description\":\"" + description + "\","
+        + "\"title\":\"" + title + "\","
+        + "\"thumbnail\":\"" + thumbnail + "\"}";
 
     AudioResourceDeserializer deserializer = new AudioResourceDeserializer();
     LibraryResource audio = deserializer.deserialize(new JSONObject(fullTest));
 
-    assertThat("resource should be a video resource", audio,  instanceOf(AudioResource.class));
-    // TODO: stephen implement the rest of the methods when we have them.
+    assertThat("resource should be a audio resource", audio,  instanceOf(AudioResource.class));
+    MediaResourceAssert.assertMediaResourceDeserialized(audio, audioUrl, description, thumbnail,
+        title, type);
   }
 }

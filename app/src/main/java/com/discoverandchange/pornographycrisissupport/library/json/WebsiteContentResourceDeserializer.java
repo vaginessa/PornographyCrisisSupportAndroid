@@ -14,6 +14,10 @@ public class WebsiteContentResourceDeserializer extends BaseResourceDeserializer
   public LibraryResource deserialize(JSONObject jsonResource) {
     WebsiteContentResource websiteContent = new WebsiteContentResource();
     hydrateBaseResource(websiteContent, jsonResource);
+
+
+    String content = jsonResource.optString("content", null);
+    websiteContent.setContent(content);
     return websiteContent;
   }
 }

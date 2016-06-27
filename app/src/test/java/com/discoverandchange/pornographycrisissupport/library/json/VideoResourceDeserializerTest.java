@@ -12,18 +12,33 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created by snielson on 6/23/16.
+ * Tests the VideoResourceDeserializer class to make sure it
+ * properly converts from JSON to an VideoResource
+ * @see VideoResourceDeserializer
+ * @see VideoResource
+ * @author Stephen Nielson <snielson@discoverandchange.com>
  */
 public class VideoResourceDeserializerTest {
 
   @Test
+  /**
+   * Verifies the deserialize method hydrates an VideoResource.
+   */
   public void testDeserialize() throws JSONException {
-    String fullTest = "{\"type\":\"Video\",\"url\":\"https://www.discoverandchange.com/wp-content/uploads/2016/02/DiscoverAndChangeIntroVideo.mp4\"}";
+    String type = "Video";
+    String url = "https://www.discoverandchange.com/wp-content/uploads/2016/02/DiscoverAndChangeIntroVideo.mp4";
+    String description = "Sample description";
+    String title = "Audio Resource";
+    String thumbnail = "thumb.png";
+    String fullTest = "{\"type\":\"" + type + "\",\"url\":\"" + url + "\","
+        + "\"description\":\"" + description + "\","
+        + "\"title\":\"" + title + "\","
+        + "\"thumbnail\":\"" + thumbnail + "\"}";
 
     VideoResourceDeserializer deserializer = new VideoResourceDeserializer();
     LibraryResource video = deserializer.deserialize(new JSONObject(fullTest));
 
     assertThat("resource should be a video resource", video,  instanceOf(VideoResource.class));
-    // TODO: stephen implement the rest of the methods when we have them.
+    MediaResourceAssert.assertMediaResourceDeserialized(video, url, description, thumbnail, title, type);
   }
 }

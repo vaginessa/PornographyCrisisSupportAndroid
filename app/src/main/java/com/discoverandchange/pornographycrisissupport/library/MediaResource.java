@@ -5,9 +5,17 @@ package com.discoverandchange.pornographycrisissupport.library;
  */
 public class MediaResource extends BaseResource {
 
+  private String url;
+
   public MediaResource(String type) {
     super(type);
   }
 
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
+  public String getUrl() {
+    return url;
+  }
 }

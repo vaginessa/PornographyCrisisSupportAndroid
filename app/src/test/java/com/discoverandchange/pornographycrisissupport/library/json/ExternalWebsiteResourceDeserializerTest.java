@@ -11,18 +11,33 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created by snielson on 6/23/16.
+ * Tests the ExternalWebsiteResourceDeserializer class to make sure it
+ * properly converts from JSON to an ExternalWebsiteResource
+ * @see ExternalWebsiteResourceDeserializer
+ * @see ExternalWebsiteResource
+ * @author Stephen Nielson <snielson@discoverandchange.com>
  */
 public class ExternalWebsiteResourceDeserializerTest {
 
   @Test
+  /**
+   * Verifies the deserialize method hydrates an ExternalWebsiteResource.
+   */
   public void testDeserialize() throws JSONException {
-    String fullTest = "{\"type\":\"ExternalWebsite\",\"url\":\"https://www.discoverandchange.com/relapse-strategies/\"}";
+    String type = "ExternalWebsite";
+    String url = "https://www.discoverandchange.com/relapse-strategies/";
+    String description = "Sample description";
+    String title = "External Website Resource";
+    String thumbnail = "thumb.png";
+    String fullTest = "{\"type\":\"" + type + "\",\"url\":\"" + url + "\","
+        + "\"description\":\"" + description + "\","
+        + "\"title\":\"" + title + "\","
+        + "\"thumbnail\":\"" + thumbnail + "\"}";
 
     ExternalWebsiteResourceDeserializer deserializer = new ExternalWebsiteResourceDeserializer();
     LibraryResource website = deserializer.deserialize(new JSONObject(fullTest));
 
     assertThat("resource should be a video resource", website,  instanceOf(ExternalWebsiteResource.class));
-    // TODO: stephen implement the rest of the methods when we have them.
+    MediaResourceAssert.assertMediaResourceDeserialized(website, url, description, thumbnail, title, type);
   }
 }

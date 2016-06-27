@@ -9,21 +9,40 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created by snielson on 6/23/16.
+ * Tests the WebsiteContentResourceDeserializer class to make sure it
+ * properly converts from JSON to an WebsiteContentResource
+ * @see WebsiteContentResourceDeserializer
+ * @see WebsiteContentResource
+ * @author Stephen Nielson <snielson@discoverandchange.com>
  */
 public class WebsiteContentResourceDeserializerTest {
 
   @Test
+  /**
+   * Verifies the deserialize method hydrates an WebsiteContentResource.
+   */
   public void testDeserialize() throws JSONException {
-    String fullTest = "{\"type\":\"WebsiteContent\",\"content\":\"<b>I am html content</b>\"}";
+    String type = "WebsiteContent";
+    String content = "<b>I am html content</b>";
+    String description = "Sample description";
+    String title = "Audio Resource";
+    String thumbnail = "thumb.png";
+    String fullTest = "{\"type\":\"" + type + "\",\"content\":\"" + content + "\","
+        + "\"description\":\"" + description + "\","
+        + "\"title\":\"" + title + "\","
+        + "\"thumbnail\":\"" + thumbnail + "\"}";
 
     WebsiteContentResourceDeserializer deserializer = new WebsiteContentResourceDeserializer();
-    LibraryResource websiteContent = deserializer.deserialize(new JSONObject(fullTest));
+    LibraryResource resource = deserializer.deserialize(new JSONObject(fullTest));
 
-    assertThat("resource should be a video resource", websiteContent,  instanceOf(WebsiteContentResource.class));
-    // TODO: stephen implement the rest of the methods when we have them.
+    assertThat("resource should be a WebsiteContent resource", resource,  instanceOf(WebsiteContentResource.class));
+    WebsiteContentResource contentResource = (WebsiteContentResource)resource;
+
+    assertThat("resource content should be deserialized", contentResource.getContent(), is(content));
+    BaseMediaResourceAssert.assertResourceDeserialized(resource, description, thumbnail, title, type);
   }
 }

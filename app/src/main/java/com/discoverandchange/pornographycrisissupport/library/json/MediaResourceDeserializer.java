@@ -10,7 +10,9 @@ import org.json.JSONObject;
 public abstract class MediaResourceDeserializer extends BaseResourceDeserializer {
 
   protected void hydrateMedia(MediaResource video, JSONObject jsonResource) {
-    // TODO: stephen methods to hydrate media resource
     hydrateBaseResource(video, jsonResource);
+
+    String url = jsonResource.optString("url", null);
+    video.setUrl(url);
   }
 }

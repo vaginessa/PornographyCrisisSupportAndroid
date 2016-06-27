@@ -9,7 +9,20 @@ import org.json.JSONObject;
  */
 public abstract class BaseResourceDeserializer implements ResourceDeserializer {
 
-  protected void hydrateBaseResource(BaseResource video, JSONObject jsonResource) {
-    // TODO: stephen implement base resources.
+  protected void hydrateBaseResource(BaseResource resource, JSONObject jsonResource) {
+
+    String description = jsonResource.optString("description", "");
+    resource.setDescription(description);
+
+    String thumbnail = jsonResource.optString("thumbnail", "");
+    resource.setThumbnail(thumbnail);
+
+    String title = jsonResource.optString("title", "");
+    resource.setTitle(title);
+
+    if (resource.getType() == null) {
+      String type = jsonResource.optString("type", null);
+      resource.setType(type);
+    }
   }
 }

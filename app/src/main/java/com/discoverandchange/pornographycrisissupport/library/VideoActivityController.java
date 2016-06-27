@@ -15,29 +15,36 @@ import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 
 /**
- * Created by oogle on 6/23/2016.
  * Displays a video library resource
- * Controls interactions with video.
- * Returns to Library Screen
- *
- * Requires Permissions: "android.permission.INTERNET" & "android.permission.WAKE_LOCK"
- *
- * Helpful Resources:
- *      https://developer.android.com/guide/topics/media/mediaplayer.html (Initial Setup)
- *      https://developer.android.com/guide/appendix/media-formats.html   (Compatible Media)
- *      https://youtu.be/IVGE5J7-3AQ                                      (Best Instructions)
- *      http://stackoverflow.com/questions/21849602/android-how-to-play-mp4-video-from-url/21849982#21849982
- *
+ * Controls interactions with video-
+ * Returns to Library Screen.
+ * @author john.okleberry@gmail.com
  */
+
+
 
 
 public class VideoActivityController extends BaseNavigationActivity {
 
+//  Requires Permissions: "android.permission.INTERNET" & "android.permission.WAKE_LOCK"
+//          *
+//          * Helpful Resources:
+//          *      https://developer.android.com/guide/topics/media/mediaplayer.html (Initial Setup)
+//          *      https://developer.android.com/guide/appendix/media-formats.html   (Compatible Media)
+//          *      https://youtu.be/IVGE5J7-3AQ                                      (Best Instructions)
+//          *      http://stackoverflow.com/questions/21849602/android-how-to-play-mp4-video-from-url/21849982#21849982
+
   // TODO: John Replace with mediaController in the stop controls?
   MediaPlayer mediaPlayer;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
+
+    /**
+     * Creates a view for playback of video resource content and allows for playback controls to be
+     * implemented.
+     * @param savedInstanceState The information necessary to create this view
+     *
+     */
+    protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     try {
 

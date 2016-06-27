@@ -48,7 +48,10 @@ public class ResourceLibraryService {
       }
     }
 
-    return null;
+    // should never happen but in the event no resources load, or for some reason
+    // the quiz score is out of range for what we have saved we want the app
+    // to behave normally so we return an empty list.
+    return new ArrayList<>();
   }
 
   public void addResources(Range range, List<LibraryResource> resources) {

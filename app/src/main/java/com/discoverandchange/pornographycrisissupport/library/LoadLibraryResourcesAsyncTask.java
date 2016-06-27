@@ -50,8 +50,16 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
   protected void onPostExecute(Map<Range, List<LibraryResource>> rangeListMap) {
     // TODO: stephen this will cause several notifies to happen...
     // is that what we want, figure out a way to fix this.
-    for (Range range : rangeListMap.keySet()) {
-      service.addResources(range, rangeListMap.get(range));
+
+    // resources never loaded and we have an exception here
+    if (rangeListMap != null) {
+      for (Range range : rangeListMap.keySet()) {
+        service.addResources(range, rangeListMap.get(range));
+      }
+    }
+    else {
+      // so the app can continue with null resources we should mark the resources loaded
+      // TODO: stephen perhaps have an resourcesFailed handler
     }
     service.markResourcesLoaded();
   }

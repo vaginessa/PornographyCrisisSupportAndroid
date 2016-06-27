@@ -48,9 +48,6 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
 
   @Override
   protected void onPostExecute(Map<Range, List<LibraryResource>> rangeListMap) {
-    // TODO: stephen this will cause several notifies to happen...
-    // is that what we want, figure out a way to fix this.
-
     // resources never loaded and we have an exception here
     if (rangeListMap != null) {
       for (Range range : rangeListMap.keySet()) {

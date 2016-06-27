@@ -115,8 +115,10 @@ public class ResourceLibraryService {
 
   public void loadResources() {
     resourcesLoaded = false;
-    LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, new FakeHTTPJSONLoader()
-    ,ResourceDeserializerService.getInstance());
+    //HTTPJSONLoader loader = new FakeHTTPJSONLoader();
+    HTTPJSONLoader loader = new HTTPJSONLoader(Constants.LIBRARY_RESOURCES_AUTH_TOKEN);
+    LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, loader,
+      ResourceDeserializerService.getInstance());
     task.execute(Constants.LIBRARY_RESOURCES_ENDPOINT);
   }
 
@@ -128,4 +130,6 @@ public class ResourceLibraryService {
       observer.resourcesLoaded(this);
     }
   }
+
+  
 }

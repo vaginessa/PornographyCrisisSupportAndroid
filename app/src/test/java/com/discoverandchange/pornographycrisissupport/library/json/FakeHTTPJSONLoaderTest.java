@@ -28,5 +28,6 @@ public class FakeHTTPJSONLoaderTest {
     assertNotNull("result should not be null");
     JSONObject obj = new JSONObject(result); // should be able to load it back into json
     assertNotNull("json should have hydrated", obj);
+    System.out.println(result);
   }
 }

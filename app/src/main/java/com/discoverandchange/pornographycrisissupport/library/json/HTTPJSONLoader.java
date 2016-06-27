@@ -19,14 +19,20 @@ public class HTTPJSONLoader {
 
   private static final int READ_TIMEOUT = 10000;
   private static final int CONNECTION_TIMEOUT = 15000;
+  private String authToken = null;
 
-  public HTTPJSONLoader() {}
+  public HTTPJSONLoader(String authToken) {
+    // FUTURE: stephen eventually we want this to do some kind of oauth or JWT token to verify the user
+    // has access to the api.
+    this.authToken = authToken;
+  }
 
   public String get(String apiURL) throws IOException {
+    String destinationUrl = apiURL + "?token=" + this.authToken;
     InputStream is = null;
 
     try {
-      URL url = new URL(apiURL);
+      URL url = new URL(destinationUrl);
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setReadTimeout(READ_TIMEOUT /* milliseconds */);
       conn.setConnectTimeout(CONNECTION_TIMEOUT /* milliseconds */);

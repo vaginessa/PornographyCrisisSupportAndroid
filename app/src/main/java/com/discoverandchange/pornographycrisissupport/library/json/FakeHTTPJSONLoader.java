@@ -8,6 +8,10 @@ import java.io.IOException;
  */
 public class FakeHTTPJSONLoader extends HTTPJSONLoader {
 
+  public FakeHTTPJSONLoader() {
+    super("");
+  }
+
   @Override
   public String get(String apiURL) throws IOException {
 

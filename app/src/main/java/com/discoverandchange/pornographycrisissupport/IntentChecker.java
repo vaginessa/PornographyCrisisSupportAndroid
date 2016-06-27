@@ -7,8 +7,10 @@ import android.content.pm.PackageManager;
 
 import java.util.List;
 
+
 /**
- * Created by snielson on 6/17/16.
+ * Verifies that an intent can open without error before actually doing so.
+ *  @author Stephen Nielson
  */
 public class IntentChecker extends ContextWrapper {
 

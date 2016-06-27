@@ -3,7 +3,9 @@ package com.discoverandchange.pornographycrisissupport.supportnetwork;
 import java.io.Serializable;
 
 /**
- * Created by snielson on 6/6/16.
+ * Information about a single support contact from our support network list such as name, phone number,
+ * and cid from the Google Contacts application.
+ * @author snielson
  */
 public class SupportContact implements Serializable {
 

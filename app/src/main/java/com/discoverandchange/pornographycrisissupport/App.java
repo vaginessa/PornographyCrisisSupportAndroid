@@ -20,7 +20,8 @@ import com.discoverandchange.pornographycrisissupport.library.json.WebsiteConten
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 /**
- * Created by snielson on 6/7/16.
+ * Creates an instance of the support network when the application is started.
+ * @author snielson
  */
 public class App extends Application {
 

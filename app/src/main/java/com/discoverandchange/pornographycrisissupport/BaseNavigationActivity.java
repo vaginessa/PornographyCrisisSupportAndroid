@@ -16,18 +16,24 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
 
 /**
  * Shares common code for the menu navigation items.
- * Uses code sample from here: http://stackoverflow.com/questions/4922641/sliding-drawer-appear-in-all-activities/25865925#25865925
- * and here: http://stackoverflow.com/questions/30822326/sharing-navigationview-with-all-the-activities
- * Created by snielson on 6/4/16.
+ * @author snielson
  */
 public class BaseNavigationActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener{
 
+  /*
+  *  Uses code sample from here: http://stackoverflow.com/questions/4922641/sliding-drawer-appear-in-all-activities/25865925#25865925
+  *  and here: http://stackoverflow.com/questions/30822326/sharing-navigationview-with-all-the-activities
+   */
+
   protected DrawerLayout fullLayout;
   protected FrameLayout frameLayout;
 
-  @Override
-  public void setContentView(int layoutResID) {
+  /**
+   * Adjusts the application so that it fills the enter screen of the Android device.
+   * @param layoutResID Information about the resolution of the user's Android device
+     */
+    public void setContentView(int layoutResID) {
 
     fullLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
     frameLayout = (FrameLayout) fullLayout.findViewById(R.id.drawer_frame);
@@ -62,8 +68,10 @@ public class BaseNavigationActivity extends AppCompatActivity
 
   }
 
-  @Override
-  public void onBackPressed() {
+  /**
+   * Allows the user to close the application drawer.
+   */
+    public void onBackPressed() {
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     if (drawer.isDrawerOpen(GravityCompat.START)) {
       drawer.closeDrawer(GravityCompat.START);
@@ -72,15 +80,24 @@ public class BaseNavigationActivity extends AppCompatActivity
     }
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
+  /**
+   * Adds items to the action bar if the action bar is present.
+   * @param menu The visible menu in our application
+   * @return Verifies if the menu / action bar is visible and active
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.nav_drawer_main, menu);
     return true;
   }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  /**
+   * Handles the action bar item clicks including clicks on Home button so long as parent activity
+   * is specified.
+   * @param item The action bar item that the user has interacted with
+   * @return Confirms that an activity has been launched by the user
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
     // Handle action bar item clicks here. The action bar will
     // automatically handle clicks on the Home/Up button, so long
     // as you specify a parent activity in AndroidManifest.xml.
@@ -108,10 +125,14 @@ public class BaseNavigationActivity extends AppCompatActivity
     return super.onOptionsItemSelected(item);
   }
 
-  @SuppressWarnings("StatementWithEmptyBody")
-  @Override
-  public boolean onNavigationItemSelected(MenuItem item) {
-    // Handle navigation view item clicks here.
+
+  /**
+   * Handles navigation view item clicks.
+   * @param item The menu item that the user has interacted with
+   * @return Confirms that the user has interacted with a menu item
+     */
+    public boolean onNavigationItemSelected(MenuItem item) {
+
     int id = item.getItemId();
 
     switch (id) {

@@ -1,13 +1,21 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
 /**
- * Created by khigbee on 6/6/16.
+ * Holds a quiz object and its properties
  */
-
 public class Quiz {
 
+  /**
+   * The id of the quiz from the database
+   */
   private int id;
+  /**
+   *  The score of the quiz from the database
+   */
   private int score;
+  /**
+   * The date the quiz was taken
+   */
   private String date;
 
   // constructors

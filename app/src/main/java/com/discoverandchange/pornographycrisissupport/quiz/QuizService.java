@@ -5,29 +5,36 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.db.PCSDBOpenHelper;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 
-import java.util.LinkedList;
-import java.util.List;
 
 /**
- *
+ * Connects to the SQLite database and performs CRUD operations with the data
+ * @author Keith Higbee
  */
-
 public class QuizService extends ContextWrapper {
 
-  //ScoresProvider provider = new ScoresProvider();
+  /**
+   * The database reference
+   */
   private SQLiteDatabase db;
+  /**
+   * The Helper reference
+   */
   private PCSDBOpenHelper helper;
 
   public QuizService(Context base) {
     super(base);
   }
 
+  /**
+   * Gets data from the quiz and saves it to the database
+   * @param quiz The quiz object that contains the data to be saved
+   * @return Returns true if the score is a crisis score
+   */
   public boolean saveQuiz(Quiz quiz) {
     // get db
     helper = new PCSDBOpenHelper(this);
@@ -49,14 +56,13 @@ public class QuizService extends ContextWrapper {
     Log.d("saveQuiz", "Score: " + quiz.getScore());
 
     // determine ifCrisisQuizScore
-    if (quiz.getScore() > 7) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return quiz.getScore() > 7;
   }
 
+  /**
+   * Gets the latest quiz from the database and saves it to a quiz object/
+   * @return The most recent quiz score
+   */
   public int getLatestQuizScore() {
     // get db
     helper = new PCSDBOpenHelper(this);
@@ -133,6 +139,10 @@ public class QuizService extends ContextWrapper {
     return quizzes;
   }*/
 
+  /**
+   * Gets all quizzes from the database
+   * @return The cursor data from the query
+   */
   public Cursor getAllQuizzes() {
     // get db
     helper = new PCSDBOpenHelper(this);
@@ -144,7 +154,7 @@ public class QuizService extends ContextWrapper {
     Cursor cursor = db.rawQuery(query, null);
 
     // iterate through each row, add to the list
-    Quiz quiz = null;
+    Quiz quiz;
     if (cursor.moveToFirst()) {
       do {
         quiz = new Quiz();
@@ -162,6 +172,11 @@ public class QuizService extends ContextWrapper {
     return cursor;
   }
 
+  /**
+   * Updates a quiz score based on id number
+   * @param quiz The quiz to be updated
+   * @return The value of the quiz id
+   */
   public int updateQuiz(Quiz quiz) {
     // get db
     helper = new PCSDBOpenHelper(this);
@@ -174,7 +189,7 @@ public class QuizService extends ContextWrapper {
     // update the db
     int i = db.update(ScoresTable.TBL_SCORES,           // table
         values,                                         // column:value
-        ScoresTable.SCORE_ID+" = ?",                    // seletion
+        ScoresTable.SCORE_ID+" = ?",                    // selection
         new String[] { String.valueOf(quiz.getId()) }); // selectionArgs
 
     // close the db
@@ -184,6 +199,10 @@ public class QuizService extends ContextWrapper {
     return i;
   }
 
+  /**
+   * Deletes a quiz based on id number
+   * @param quiz The quiz to be deleted
+   */
   public void deleteQuiz(Quiz quiz) {
     // get db
     helper = new PCSDBOpenHelper(this);

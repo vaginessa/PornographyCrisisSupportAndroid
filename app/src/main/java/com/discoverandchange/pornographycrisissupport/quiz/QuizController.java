@@ -24,10 +24,18 @@ import com.discoverandchange.pornographycrisissupport.library.LibraryController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
+/**
+ * Controls the quiz and actions taken after saving a quiz score.
+ * Actions are either launching the dialer or launching the library.
+ */
 public class QuizController extends BaseNavigationActivity {
 
   private CursorAdapter cursorAdapter;
 
+  /**
+   * Creates the initial arrays and cursorAdapter for communicating with the database.
+   * @param savedInstanceState Any saved data needed for this activity.
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -43,6 +51,11 @@ public class QuizController extends BaseNavigationActivity {
     //getLoaderManager().initLoader(0, null, this);
   }
 
+  /**
+   * Handles the flow of saving a quiz score.  If the score is a crisis score, it
+   * launches the dialer.  Otherwise, it launches the library
+   * @param btn Used for determining debugging
+   */
   public void handleSubmitQuizClick(View btn) {
     SeekBar slider = (SeekBar)findViewById(R.id.cravingsLevelSlider);
     if (slider == null) {
@@ -89,6 +102,9 @@ public class QuizController extends BaseNavigationActivity {
     startActivity(intent);
   }
 
+  /**
+   * Launches the dialer if the support network has been created.
+   */
   public void launchDialer() {
     //EndCallListenerTest listener = new EndCallListenerTest();
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());

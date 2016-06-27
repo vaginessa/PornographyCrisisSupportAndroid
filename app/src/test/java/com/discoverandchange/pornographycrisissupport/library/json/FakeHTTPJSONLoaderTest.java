@@ -1,5 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.library.json;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,10 +21,12 @@ public class FakeHTTPJSONLoaderTest {
   /**
    * Verifies the get method retrieves a fake JSON string.
    */
-  public void testGet() throws IOException {
+  public void testGet() throws IOException, JSONException {
     String url = "http://fakedomain.com/blah.json";
     FakeHTTPJSONLoader loader = new FakeHTTPJSONLoader();
     String result = loader.get(url);
     assertNotNull("result should not be null");
+    JSONObject obj = new JSONObject(result); // should be able to load it back into json
+    assertNotNull("json should have hydrated", obj);
   }
 }

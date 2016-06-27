@@ -30,8 +30,21 @@ public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
       convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_library_resource, parent, false);
     }
 
-    TextView view = (TextView)convertView.findViewById(R.id.resourceListItemName);
-    view.setText(item.getType());
+    TextView title = (TextView)convertView.findViewById(R.id.resourceListItemName);
+    if (item.getTitle() != null) {
+      title.setText(item.getTitle());
+    }
+    else {
+      title.setText("<Title Missing>");
+    }
+
+    TextView description = (TextView)convertView.findViewById(R.id.resourceListItemDescription);
+    if (item.getDescription() != null) {
+      description.setText(item.getDescription());
+    }
+    else {
+      description.setText("");
+    }
 
     return convertView;
   }

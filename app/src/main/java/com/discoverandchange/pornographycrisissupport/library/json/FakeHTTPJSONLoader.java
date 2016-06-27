@@ -43,8 +43,8 @@ public class FakeHTTPJSONLoader extends HTTPJSONLoader {
       sb.append("{");
       appendKeyValue(sb, "type", "Video");
       sb.append(",");
-      appendKeyValue(sb, "url", "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
-          + "DiscoverAndChangeIntroVideo.mp4");
+      appendTestMediaResource(sb, "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
+          + "DiscoverAndChangeIntroVideo.mp4", "Test Video", "Sample video description", "thumb.png");
       sb.append("}");
   }
 
@@ -52,8 +52,8 @@ public class FakeHTTPJSONLoader extends HTTPJSONLoader {
     sb.append("{");
     appendKeyValue(sb, "type", "Audio");
     sb.append(",");
-    appendKeyValue(sb, "url", "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
-        + "DiscoverAndChangeIntroVideo.mp4");
+    appendTestMediaResource(sb, "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
+        + "DiscoverAndChangeIntroVideo.mp4", "Test Audio", "Sample audio description", "thumb.png");
     sb.append("}");
   }
 
@@ -61,8 +61,9 @@ public class FakeHTTPJSONLoader extends HTTPJSONLoader {
     sb.append("{");
     appendKeyValue(sb, "type", "ExternalWebsite");
     sb.append(",");
-    appendKeyValue(sb, "url", "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
-        + "DiscoverAndChangeIntroVideo.mp4");
+    appendTestMediaResource(sb, "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
+        + "DiscoverAndChangeIntroVideo.mp4", "Test Website", "Sample website description", "thumb.png");
+
     sb.append("}");
   }
 
@@ -70,9 +71,28 @@ public class FakeHTTPJSONLoader extends HTTPJSONLoader {
     sb.append("{");
     appendKeyValue(sb, "type", "WebsiteContent");
     sb.append(",");
-    appendKeyValue(sb, "cpntent", "<b>I am website content</b>");
+    appendKeyValue(sb, "content", "<b>I am website content</b>");
+    sb.append(",");
+    appendTestBaseResource(sb, "Test Website", "Sample website description", "thumb.png");
     sb.append("}");
   }
+
+
+  private void appendTestMediaResource(StringBuilder sb, String url, String title,
+                                       String description, String thumbnail) {
+    appendKeyValue(sb, "url", url);
+    sb.append(",");
+    appendTestBaseResource(sb, title, description, thumbnail);
+  }
+
+  private void appendTestBaseResource(StringBuilder sb, String title, String description, String thumbnail) {
+    appendKeyValue(sb, "title", title);
+    sb.append(",");
+    appendKeyValue(sb, "description", description);
+    sb.append(",");
+    appendKeyValue(sb, "thumbnail", thumbnail);
+  }
+
 
   private void appendKey(StringBuilder sb, String key) {
     sb.append("\"");

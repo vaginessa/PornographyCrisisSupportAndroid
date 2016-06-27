@@ -27,6 +27,7 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
 /**
  * Controls the quiz and actions taken after saving a quiz score.
  * Actions are either launching the dialer or launching the library.
+ * @author Keith Higbee
  */
 public class QuizController extends BaseNavigationActivity {
 

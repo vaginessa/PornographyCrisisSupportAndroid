@@ -2,6 +2,7 @@ package com.discoverandchange.pornographycrisissupport.quiz;
 
 /**
  * Holds a quiz object and its properties
+ * @author Keith Higbee
  */
 public class Quiz {
 

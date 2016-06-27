@@ -12,6 +12,7 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
+import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 
@@ -44,9 +45,10 @@ public class LibraryController extends BaseNavigationActivity
   }
 
   private void setupListAdapter(ResourceLibraryService service) {
+    QuizService quizService = new QuizService(getBaseContext());
     List<LibraryResource> resources = new ArrayList<>();
     if (service.isResourcesLoaded()) {
-     resources = service.getResourcesForQuiz(new Quiz(1));
+      resources = service.getResourcesForQuizScore(quizService.getLatestQuizScore());
     }
 
     libraryResourceListAdapter = new LibraryResourceListAdapter(getBaseContext(), resources);

@@ -38,12 +38,10 @@ public class ResourceLibraryService {
     resourcesByRange = new HashMap<Range, List<LibraryResource>>();
     observers = new HashSet<>();
   }
-  public List<LibraryResource> getResourcesForQuiz(Quiz quiz) {
-    if (quiz == null) {
-      throw new IllegalArgumentException("Quiz argument cannot be null");
-    }
+
+  public List<LibraryResource> getResourcesForQuizScore(int latestQuizScore) {
     for (Range range : resourcesByRange.keySet()) {
-      if (range.contains(quiz.getScore())) {
+      if (range.contains(latestQuizScore)) {
         return resourcesByRange.get(range);
       }
     }
@@ -52,6 +50,14 @@ public class ResourceLibraryService {
     // the quiz score is out of range for what we have saved we want the app
     // to behave normally so we return an empty list.
     return new ArrayList<>();
+  }
+
+  public List<LibraryResource> getResourcesForQuiz(Quiz quiz) {
+    if (quiz == null) {
+      throw new IllegalArgumentException("Quiz argument cannot be null");
+    }
+
+    return getResourcesForQuizScore(quiz.getScore());
   }
 
   public void addResources(Range range, List<LibraryResource> resources) {
@@ -130,6 +136,4 @@ public class ResourceLibraryService {
       observer.resourcesLoaded(this);
     }
   }
-
-  
 }

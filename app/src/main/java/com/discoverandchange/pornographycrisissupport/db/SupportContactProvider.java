@@ -8,16 +8,30 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 /**
- * Created by snielson on 6/15/16.
+ * Contact provider for CRUD on the SupportContact entities.
  */
 public class SupportContactProvider extends ContentProvider {
 
+  /**
+   * The authority to use for querying this data.
+   */
   private static final String AUTHORITY = "com.discoverandchange.pornographycrisissupport"
       + ".SupportContactProvider";
+
+  /**
+   * The base query path for this entity.
+   */
   private static final String BASE_PATH = "SupportContactProvider";
+
+  /**
+   * The public content uri.
+   */
   public static final Uri CONTENT_URI =
       Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
+  /**
+   * The database we are reading / updating data in.
+   */
   private SQLiteDatabase database;
 
   @Override
@@ -36,6 +50,11 @@ public class SupportContactProvider extends ContentProvider {
 
   @Nullable
   @Override
+  /**
+   * We don't use mime types here so no type is returned.
+   * @param uri the uri to return the type for.
+   * @return null as we don't deal with mime types.
+   */
   public String getType(Uri uri) {
     // returns mime type, which is not used.
     return null;

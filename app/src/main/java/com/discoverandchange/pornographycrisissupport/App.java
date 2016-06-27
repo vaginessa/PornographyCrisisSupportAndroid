@@ -20,21 +20,21 @@ import com.discoverandchange.pornographycrisissupport.library.json.WebsiteConten
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 /**
- * Created by snielson on 6/7/16.
+ * Handles app initialization and setup logic.
  */
 public class App extends Application {
 
   protected static Context context = null;
 
   @Override
+  /**
+   * Sets up our mappings of resources to activity classes as well as deserializers for the
+   * library resources.
+   */
   public void onCreate() {
     super.onCreate();
     context = getApplicationContext();
     SupportNetworkService service = SupportNetworkService.getInstance(context);
-
-    // do we lazy load the quiz?  At least we need to grab the latest quiz score if we have one
-    // right?
-    // probably not the quiz history until later....
 
     // register the library resources, to the activities that display them.
     LibraryResourceActivityRegistry registry = LibraryResourceActivityRegistry.getInstance();
@@ -52,6 +52,10 @@ public class App extends Application {
 
   }
 
+  /**
+   * Returns the app context.
+   * @return The android app context.
+   */
   public static Context getContext() {
     return context;
   }

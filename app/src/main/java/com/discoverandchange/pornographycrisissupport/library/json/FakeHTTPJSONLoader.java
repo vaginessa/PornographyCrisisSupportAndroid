@@ -3,11 +3,15 @@ package com.discoverandchange.pornographycrisissupport.library.json;
 import java.io.IOException;
 
 /**
- * This is just temporary while we hook up the web services.
- * Created by snielson on 6/23/16.
+ * Used for faking an actual HTTP request for the library JSON
+ * when we don't have a network connection.
+ * @author Stephen Nielson
  */
 public class FakeHTTPJSONLoader extends HTTPJSONLoader {
 
+  /**
+   * Instantiates the json loader with a fake json auth token.
+   */
   public FakeHTTPJSONLoader() {
     super("");
   }

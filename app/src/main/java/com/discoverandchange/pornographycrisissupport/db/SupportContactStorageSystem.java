@@ -13,31 +13,54 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by snielson on 6/15/16.
+ * Handles CRUD for the SupportContact
  */
 public class SupportContactStorageSystem {
 
+  /**
+   * The application context for the android app.
+   */
   private Context context = null;
 
+  /**
+   * The where clause for retrieving a specific SupportContact
+   */
   private static final String IDENTITY_WHERE = SupportContactTable.COLUMN_NAME_ID + " = ?";
 
+  /**
+   * The URI used to retrieve the support contact information.
+   */
   private Uri databaseSupportContactUri;
 
   /** Contains the list of support contacts that have already been inserted into the database **/
   private Set<String> managedContactIds;
 
+  /**
+   * Instantiates the storage system and prepares it to start working with data.
+   * @param context The application context we are working in.
+   * @param contactUri The unique support contact URI for working with data in the database.
+   */
   public SupportContactStorageSystem(Context context, Uri contactUri) {
     this.context = context;
     this.databaseSupportContactUri = contactUri;
     this.managedContactIds = new HashSet<String>();
   }
 
+  /**
+   * Removes a SupportContact from the database.
+   * @param contact The contact we want to be removed.  Must have a contactId set.
+   */
   public void removeContact(SupportContact contact) {
     String[] deletionArgs = new String[] {contact.getContactID()};
     this.context.getContentResolver().delete(this.databaseSupportContactUri,IDENTITY_WHERE,deletionArgs);
     this.stopTrackingContact(contact);
   }
 
+  /**
+   * Saves the contact to the database.  If the contact already exists in the database it is updated.
+   *
+   * @param contact The contact we want saved.
+   */
   public void persistContact(SupportContact contact) {
     // grab the contact from the database
     ContentValues values = new ContentValues();
@@ -62,6 +85,10 @@ public class SupportContactStorageSystem {
     }
   }
 
+  /**
+   * Retrieves all of the support contacts from the database.
+   * @return The list of support contacts stored in the database.
+   */
   public List<SupportContact> retrieveSupportContactsFromStorage() {
     Cursor cursor = this.context.getContentResolver().query(this.databaseSupportContactUri,
         SupportContactTable.ALL_COLUMNS, null, null, null);

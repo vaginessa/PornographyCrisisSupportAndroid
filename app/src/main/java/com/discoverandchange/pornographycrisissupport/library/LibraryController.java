@@ -16,12 +16,23 @@ import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Responsible for displaying library resources, the user's current quiz score, and launching
+ * library resource activities when a user clicks on a library resource.
+ */
 public class LibraryController extends BaseNavigationActivity
   implements LibraryServiceObserver {
 
+  /**
+   * The list adapter that holds LibraryResources and handles displaying them.
+   */
   private LibraryResourceListAdapter libraryResourceListAdapter;
 
   @Override
+  /**
+   * Creates the library list and displays the current quiz score on the activity
+   * @param savedInstancedState the information saved for this activity.
+   */
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_library_controller);
@@ -36,6 +47,10 @@ public class LibraryController extends BaseNavigationActivity
   }
 
   @Override
+  /**
+   * Starts the activity and begins the loading of the library resources if they are not loaded
+   * already.
+   */
   protected void onStart() {
     super.onStart();
 
@@ -76,6 +91,9 @@ public class LibraryController extends BaseNavigationActivity
   }
 
   @Override
+  /**
+   * Handles cleanup code for the library.
+   */
   protected void onStop() {
     super.onStop();
     ResourceLibraryService service = ResourceLibraryService.getInstance();

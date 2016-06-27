@@ -1,10 +1,14 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 /**
- * Created by snielson on 6/22/16.
+ * Represents a resource that can be played, listened to, or interacted with such as a video, audio,
+ * or external website.
  */
 public class MediaResource extends BaseResource {
 
+  /**
+   * The external URL to load this resource from.
+   */
   private String url;
 
   public MediaResource(String type) {

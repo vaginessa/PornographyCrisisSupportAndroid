@@ -12,21 +12,44 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Retrieves the JSON data from the network.
- * Created by snielson on 6/22/16.
+ * Retrieves the JSON data for the resource library from the network.
+ * @author Stephen Nielson
  */
 public class HTTPJSONLoader {
 
+  /**
+   * The time when we should timeout from reading from the socket.
+   */
   private static final int READ_TIMEOUT = 10000;
+
+  /**
+   * The time we should timeout when we have not yet made a connection.
+   */
   private static final int CONNECTION_TIMEOUT = 15000;
+
+  /**
+   * The authentication token to use for communicating over the API.
+   */
   private String authToken = null;
 
+  /**
+   * Constructs the loader with the given authentication token to allow us to talk to the JSON
+   * API.
+   * @param authToken the authentication token to use to allow api requests to be made for the library.
+   */
   public HTTPJSONLoader(String authToken) {
     // FUTURE: stephen eventually we want this to do some kind of oauth or JWT token to verify the user
     // has access to the api.
     this.authToken = authToken;
   }
 
+  /**
+   * Given the API url to hit, it connects to the api passing the authentication token and retrieves
+   * the json content as a string.
+   * @param apiURL The URL to connect to.
+   * @return The retrieved json data, or null if nothing was retrieved.
+   * @throws IOException An exception if we can't connect to the api or anything fails while reading from it.
+   */
   public String get(String apiURL) throws IOException {
     String destinationUrl = apiURL + "?token=" + this.authToken;
     InputStream is = null;

@@ -17,12 +17,21 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by snielson on 6/22/16.
+ * Deserializes a JSON string into the java objects that the string represents.  Users of this
+ * service can register deserializers with this class and connect them with a LibraryResource
+ * corresponding type.
+ * @author Stephen Nielson
  */
 public class ResourceDeserializerService {
 
+  /**
+   * Singleton instance of the deserializer.
+   */
   private static ResourceDeserializerService service;
 
+  /**
+   * Mapping of resource types to their corresponding deserializer objects.
+   */
   private Map<String, ResourceDeserializer> deserializers;
 
   /**
@@ -32,6 +41,11 @@ public class ResourceDeserializerService {
     deserializers = new HashMap<>();
   }
 
+  /**
+   * Returns the singleton instance of this service. Note that care should be used in calling this
+   * method in multiple threads as the method is synchronized.
+   * @return The instantiated instance of this singleton.
+   */
   public static synchronized ResourceDeserializerService getInstance() {
     if (service == null) {
       service = new ResourceDeserializerService();
@@ -39,10 +53,20 @@ public class ResourceDeserializerService {
     return service;
   }
 
+  /**
+   * Register the object to use to deserializer the resource for the given resourceType.
+   * @param resourceType The type value that a given deserializer should be used for.
+   * @param deserializer The deserializer that will turn a JSONObject into a LibraryResource.
+   */
   public void registerDeserializer(String resourceType, ResourceDeserializer deserializer) {
     deserializers.put(resourceType, deserializer);
   }
 
+  /**
+   * Retrieves the deserializer that will be given for the specific LibraryResource type.
+   * @param resourceType The string value representing a LibraryResource type
+   * @return The deserializer that will turn a JSONObject into a LibraryResource.
+   */
   public ResourceDeserializer getDeserializerForType(String resourceType) {
     if (deserializers.containsKey(resourceType)) {
       return deserializers.get(resourceType);
@@ -50,6 +74,12 @@ public class ResourceDeserializerService {
     return null;
   }
 
+  /**
+   * Given a JSON string representing a mapping of range objects to library resources, convert
+   * that json string into a Map with ranges mapped onto a list of library resources.
+   * @param data The json string representing a mapping of range objects to library resources.
+   * @return The hydrated mapping, or null if we could not deserialize the object.
+   */
   public Map<Range,List<LibraryResource>> deserialize(String data) {
 
     try {

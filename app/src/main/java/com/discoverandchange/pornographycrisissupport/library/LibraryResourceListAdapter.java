@@ -12,7 +12,7 @@ import com.discoverandchange.pornographycrisissupport.R;
 import java.util.List;
 
 /**
- * Created by snielson on 6/22/16.
+ *
  */
 public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
   private List<LibraryResource> resources;

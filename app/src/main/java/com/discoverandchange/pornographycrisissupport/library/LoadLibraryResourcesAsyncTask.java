@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Handles the loading of library resources in the background and adding them back to the library
+ * resource service once it's done.
  * TODO: stephen look at moving this back into the library service code... as it needs to modify
  * some internal state saying the resources have loaded
  * Created by snielson on 6/22/16.
@@ -32,6 +34,11 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
   }
 
   @Override
+  /**
+   * Retrieves the JSON api and loads the resources on a background thread.
+   * @param params The urls that we should load resources from.  Right now we only load the first
+   *               one.
+   */
   protected Map<Range, List<LibraryResource>> doInBackground(String... params) {
 
     String url = params[0];
@@ -47,6 +54,10 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
   }
 
   @Override
+  /**
+   * Given the loaded resources from the background add them to the resource library service
+   * and mark the resources as the loading being complete.
+   */
   protected void onPostExecute(Map<Range, List<LibraryResource>> rangeListMap) {
     // resources never loaded and we have an exception here
     if (rangeListMap != null) {

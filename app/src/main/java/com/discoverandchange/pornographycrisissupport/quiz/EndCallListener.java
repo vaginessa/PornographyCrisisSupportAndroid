@@ -11,21 +11,23 @@ import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.library.LibraryController;
 
 /**
- * TODO: stephen verify that the app context is what we want and it won't cause problems.
- * Created by snielson on 6/7/16.
+ * Listens for phone call status and determines its state
+ * @author Stephen Nielson
  */
 public class EndCallListener extends PhoneStateListener {
 
-  //private Intent returnIntent;
+  /**
+   * Was the phone call initiated by the app?
+   */
   private boolean phoneCallInitiatedByApp = false;
 
-//  public EndCallListener(Intent intent) {
-//    returnIntent = intent;
-//  }
-
+  /**
+   * Determines if the phone call state has been changed
+   * @param state The status of the phone call (ringing, off hook, or idle).
+   * @param incomingNumber The incoming phone number of the call if the phone is ringing
+   */
   @Override
   public void onCallStateChanged(int state, String incomingNumber) {
-
 
     if(TelephonyManager.CALL_STATE_RINGING == state) {
       Log.i(Constants.LOG_TAG, "RINGING, number: " + incomingNumber);

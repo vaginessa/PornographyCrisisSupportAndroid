@@ -43,4 +43,7 @@ dependencies {
 
     // ease of use grabbing iostreams from the network
     compile 'commons-io:commons-io:2.4'
+
+    // used for asynchronously loading images, see http://square.github.io/picasso/
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

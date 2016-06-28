@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,9 +19,11 @@ import java.util.List;
  */
 public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
   private List<LibraryResource> resources;
+  private Context context;
 
   public LibraryResourceListAdapter(Context context, List<LibraryResource> resources) {
     super(context, 0, resources);
+    this.context = context;
     this.resources = resources;
   }
 
@@ -43,12 +46,19 @@ public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
     // set our thumbnail if we have one
     ImageView imageView = (ImageView)convertView.findViewById(R.id.resourceListItemImage);
     String thumbnail = item.getThumbnail();
+
+    // cancel any request that may be going on right now.
+    Picasso.with(context).cancelRequest(imageView);
+    // if we have an external resource let's load that.
     if (thumbnail != null && thumbnail.startsWith("http")) {
       // load the resource as an http
-      imageView.setImageURI(Uri.parse(thumbnail));
+      Picasso.with(context).load(thumbnail).fit().into(imageView);
     }
     else {
+      // load our android resource thumbnail into the image view.
       imageView.setImageResource(item.getDefaultThumbnailResource());
+      //Picasso.with(context).load(R.drawable.ic_assessment_black_48dpi).into(imageView);
+      //Picasso.with(context).load(item.getDefaultThumbnailResource()).into(imageView);
     }
 
     TextView description = (TextView)convertView.findViewById(R.id.resourceListItemDescription);

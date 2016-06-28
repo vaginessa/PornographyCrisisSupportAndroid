@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:descendantFocusability="blocksDescendants"
-    android:id="@+id/resourceListItem">
+                android:id="@+id/resourceListItem"
+                android:minHeight="150px">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,8 +14,8 @@
         android:text="Name"
         android:id="@+id/resourceListItemName"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_toRightOf="@+id/resourceListItemImage"
+        android:layout_toEndOf="@+id/resourceListItemImage"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +24,17 @@
         android:text="Description"
         android:id="@+id/resourceListItemDescription"
         android:layout_below="@+id/resourceListItemName"
+        android:layout_toRightOf="@+id/resourceListItemImage"
+        android:layout_toEndOf="@+id/resourceListItemImage"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resourceListItemImage"
+        android:src="@drawable/ic_play_48dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
 
 </RelativeLayout>

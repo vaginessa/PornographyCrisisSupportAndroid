@@ -1,5 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import com.discoverandchange.pornographycrisissupport.R;
+
 /**
  * Represents an Audio resource that can be retrieved from a given media url.
  * This resource can be present on an external website
@@ -24,7 +26,4 @@ public class AudioResource extends MediaResource {
     public void setUrl(String newUrl) {
         this.url = newUrl;
     }
-
-
-
 }

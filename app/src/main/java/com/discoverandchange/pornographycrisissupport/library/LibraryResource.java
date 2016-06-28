@@ -35,4 +35,10 @@ public interface LibraryResource extends Serializable {
    */
   String getDescription();
 
+  /**
+   * Returns the default thumbnail resource id to use if
+   * there is no external thumbnail url.
+   * @return
+   */
+  int getDefaultThumbnailResource();
 }

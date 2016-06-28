@@ -1,5 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import com.discoverandchange.pornographycrisissupport.R;
+
 /**
  * Represents a primitive LibraryResource type that implements all of the basic functionality
  * that all LibraryResource types should have such as title, description, and it's core type.
@@ -67,5 +69,10 @@ public class BaseResource implements LibraryResource {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  @Override
+  public int getDefaultThumbnailResource() {
+    return R.drawable.ic_play_48dp;
   }
 }

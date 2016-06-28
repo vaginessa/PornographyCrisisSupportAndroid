@@ -1,10 +1,12 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.R;
@@ -36,6 +38,17 @@ public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
     }
     else {
       title.setText("<Title Missing>");
+    }
+
+    // set our thumbnail if we have one
+    ImageView imageView = (ImageView)convertView.findViewById(R.id.resourceListItemImage);
+    String thumbnail = item.getThumbnail();
+    if (thumbnail != null && thumbnail.startsWith("http")) {
+      // load the resource as an http
+      imageView.setImageURI(Uri.parse(thumbnail));
+    }
+    else {
+      imageView.setImageResource(item.getDefaultThumbnailResource());
     }
 
     TextView description = (TextView)convertView.findViewById(R.id.resourceListItemDescription);

@@ -10,13 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.discoverandchange.pornographycrisissupport.library.WebsiteActivityController">
 
-    <TextView
+    <WebView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Website Content Controller"
-        android:id="@+id/textView4"
+        android:id="@+id/webView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="83dp"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

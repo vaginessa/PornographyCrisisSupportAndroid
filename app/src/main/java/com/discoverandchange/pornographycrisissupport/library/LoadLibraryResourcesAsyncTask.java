@@ -26,6 +26,13 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
   private HTTPJSONLoader jsonLoader;
   private ResourceDeserializerService deserializerService;
 
+  /**
+   * Constructs the Async task to load resources into the passed in service using the given
+   * json loader and the deserializer to hydrate the objects.
+   * @param service The service that we will be loading resources into.
+   * @param jsonLoader The object that will fetch the json document to turn into library resources.
+   * @param deserializerService The service that will turn json documents into library java objects.
+   */
   public LoadLibraryResourcesAsyncTask(ResourceLibraryService service, HTTPJSONLoader jsonLoader,
                                        ResourceDeserializerService deserializerService) {
     this.service = service;

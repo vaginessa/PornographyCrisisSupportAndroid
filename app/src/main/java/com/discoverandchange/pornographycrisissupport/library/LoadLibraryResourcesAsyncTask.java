@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.Constants;
-import com.discoverandchange.pornographycrisissupport.library.json.HTTPJSONLoader;
+import com.discoverandchange.pornographycrisissupport.library.json.HttpJsonLoader;
 
 import org.apache.commons.lang3.Range;
 
@@ -23,7 +23,7 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
     Map<Range, List<LibraryResource>>>{
 
   private ResourceLibraryService service;
-  private HTTPJSONLoader jsonLoader;
+  private HttpJsonLoader jsonLoader;
   private ResourceDeserializerService deserializerService;
 
   /**
@@ -33,7 +33,7 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
    * @param jsonLoader The object that will fetch the json document to turn into library resources.
    * @param deserializerService The service that will turn json documents into library java objects.
    */
-  public LoadLibraryResourcesAsyncTask(ResourceLibraryService service, HTTPJSONLoader jsonLoader,
+  public LoadLibraryResourcesAsyncTask(ResourceLibraryService service, HttpJsonLoader jsonLoader,
                                        ResourceDeserializerService deserializerService) {
     this.service = service;
     this.jsonLoader = jsonLoader;

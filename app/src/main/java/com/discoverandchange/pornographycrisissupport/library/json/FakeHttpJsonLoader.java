@@ -8,7 +8,7 @@ import java.io.IOException;
  *
  * @author Stephen Nielson
  */
-public class FakeHttpJsonLoader extends HTTPJSONLoader {
+public class FakeHttpJsonLoader extends HttpJsonLoader {
 
   /**
    * Instantiates the json loader with a fake json auth token.

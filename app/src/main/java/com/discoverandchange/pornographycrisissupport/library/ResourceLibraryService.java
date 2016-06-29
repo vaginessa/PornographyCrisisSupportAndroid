@@ -3,7 +3,7 @@ package com.discoverandchange.pornographycrisissupport.library;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.Constants;
-import com.discoverandchange.pornographycrisissupport.library.json.HTTPJSONLoader;
+import com.discoverandchange.pornographycrisissupport.library.json.HttpJsonLoader;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 
 import java.util.ArrayList;
@@ -189,8 +189,8 @@ public class ResourceLibraryService {
    */
   public void loadResources() {
     resourcesLoaded = false;
-    //HTTPJSONLoader loader = new FakeHttpJsonLoader();
-    HTTPJSONLoader loader = new HTTPJSONLoader(Constants.LIBRARY_RESOURCES_AUTH_TOKEN);
+    //HttpJsonLoader loader = new FakeHttpJsonLoader();
+    HttpJsonLoader loader = new HttpJsonLoader(Constants.LIBRARY_RESOURCES_AUTH_TOKEN);
     LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, loader,
       ResourceDeserializerService.getInstance());
     task.execute(Constants.LIBRARY_RESOURCES_ENDPOINT);

@@ -15,7 +15,7 @@ import java.net.URL;
  * Retrieves the JSON data for the resource library from the network.
  * @author Stephen Nielson
  */
-public class HTTPJSONLoader {
+public class HttpJsonLoader {
 
   /**
    * The time when we should timeout from reading from the socket.
@@ -37,7 +37,7 @@ public class HTTPJSONLoader {
    * API.
    * @param authToken the authentication token to use to allow api requests to be made for the library.
    */
-  public HTTPJSONLoader(String authToken) {
+  public HttpJsonLoader(String authToken) {
     // FUTURE: stephen eventually we want this to do some kind of oauth or JWT token to verify the user
     // has access to the api.
     this.authToken = authToken;

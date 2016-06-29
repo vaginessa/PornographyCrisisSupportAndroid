@@ -51,7 +51,7 @@ public class SupportNetworkServiceTest {
     assertThat("List should have loaded one contact from the database", list, notNullValue());
     assertThat("List should have loaded one contact from the database", list.size(), is(1));
     SupportContact checkContact = list.get(0);
-    assertThat("id should have been loaded", checkContact.getContactID(), is(contact.getContactID()));
+    assertThat("id should have been loaded", checkContact.getContactId(), is(contact.getContactId()));
     assertThat("name should have been loaded", checkContact.getName(), is(contact.getName()));
     assertThat("phone should have been loaded", checkContact.getPhoneNumber(), is(contact.getPhoneNumber()));
     assertThat("isCrisis should have been set", checkContact.isCrisisContact(), is(contact.isCrisisContact()));
@@ -125,23 +125,23 @@ public class SupportNetworkServiceTest {
     service.addSupportContact(crisisContact);
 
     SupportContact crisisCheck = service.getCrisisSupportContact();
-    assertThat("Crisis check should be contact we added", crisisCheck.getContactID(),
-        is(crisisContact.getContactID()));
+    assertThat("Crisis check should be contact we added", crisisCheck.getContactId(),
+        is(crisisContact.getContactId()));
 
     SupportContact replaceCrisisContact = getSecondTestContact();
     replaceCrisisContact.setIsCrisisContact(true);
     service.addSupportContact(replaceCrisisContact);
     SupportContact replaceCrisisContactCheck = service.getCrisisSupportContact();
     assertThat("Crisis check should now be the new contact we added",
-        replaceCrisisContactCheck.getContactID(), is(replaceCrisisContact.getContactID()));
+        replaceCrisisContactCheck.getContactId(), is(replaceCrisisContact.getContactId()));
 
     // grab our service list and make sure only one crisis contact is there
     List<SupportContact> contactList = service.getSupportContactList();
     for (SupportContact contact : contactList) {
       if (contact.isCrisisContact()
-          && !(contact.getContactID().equals(replaceCrisisContactCheck.getContactID()))) {
+          && !(contact.getContactId().equals(replaceCrisisContactCheck.getContactId()))) {
         fail("multiple crisis contacts found, when there should only be one. Contact with id "
-            + contact.getContactID());
+            + contact.getContactId());
       }
     }
 
@@ -179,7 +179,7 @@ public class SupportNetworkServiceTest {
 
     SupportContact contact = service.getCrisisSupportContact();
     assertThat("Crisis contact should be returned", crisis, notNullValue());
-    assertThat("Contact id should match", contact.getContactID(), is(crisis.getContactID()));
+    assertThat("Contact id should match", contact.getContactId(), is(crisis.getContactId()));
     assertThat("Contact name should match", contact.getName(), is(crisis.getName()));
     assertThat("Contact phone should match", contact.getPhoneNumber(), is(crisis.getPhoneNumber()));
     assertThat("Contact should have crisis setting", contact.isCrisisContact(), is(true));
@@ -195,7 +195,7 @@ public class SupportNetworkServiceTest {
     String phoneSrcAddress = service.getDevicePhoneNumber();
     String testMessage = "This is a test message.";
     service.addSupportContact(name, id,  phone);
-    service.sendSMSTestMessage(testMessage);
+    service.sendSmsTestMessage(testMessage);
 
     verify(mManager, times(1)).sendTextMessage(phone, phoneSrcAddress, testMessage, null, null);
   }
@@ -212,7 +212,7 @@ public class SupportNetworkServiceTest {
     service.addSupportContact(testContact);
     service.addSupportContact(testContact2);
 
-    service.sendSMSTestMessage(testMessage);
+    service.sendSmsTestMessage(testMessage);
     verify(mManager, times(1)).sendTextMessage(testContact.getPhoneNumber(), phoneSrcAddress,
         testMessage, null, null);
     verify(mManager, times(1)).sendTextMessage(testContact2.getPhoneNumber(), phoneSrcAddress,

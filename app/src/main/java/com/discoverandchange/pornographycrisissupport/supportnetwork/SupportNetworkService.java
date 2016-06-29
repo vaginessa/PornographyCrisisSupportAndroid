@@ -14,13 +14,16 @@ import java.util.Set;
 /**
  * Tracks and manages support contacts.  Sends text messages and handles who the top crisis contact
  * is.
+ *
  * @author Stephen Nielson
  */
 public class SupportNetworkService {
 
   private List<SupportContact> contacts;
 
-  /** Contains the list of support contacts that have already been inserted into the database **/
+  /**
+   * Contains the list of support contacts that have already been inserted into the database.
+   **/
   private Set<String> managedContactIds;
 
   private SmsManager smsManager;
@@ -39,8 +42,9 @@ public class SupportNetworkService {
    * Instantiate a support network service with the given storage system and SmsManager.
    * This method while public is used strictly for testing purposes and shouldn't be used.
    * Use getInstance(...) instead.
-   * @param storageSystem  The storage system that persists support contacts
-   * @param smsManager The android sms manager system.
+   *
+   * @param storageSystem The storage system that persists support contacts
+   * @param smsManager    The android sms manager system.
    */
   public SupportNetworkService(SupportContactStorageSystem storageSystem, SmsManager smsManager) {
     this.smsManager = smsManager;
@@ -49,7 +53,13 @@ public class SupportNetworkService {
     this.managedContactIds = new HashSet<String>();
   }
 
-  public static SupportNetworkService getInstance(Context context) {
+  /**
+   * Retrieves the singleton instance of the SupportNetworkService.  Note because this method is
+   * synchronized care should be made to avoid repeated calls across multiple threads.
+   * @param context The global android application context
+   * @return The current/instantiated instance of SupportNetworkService.
+   */
+  public static synchronized SupportNetworkService getInstance(Context context) {
     if (service == null) {
       SupportContactStorageSystem storageSystem = new SupportContactStorageSystem(context,
           SupportContactProvider.CONTENT_URI);
@@ -68,9 +78,10 @@ public class SupportNetworkService {
 
   /**
    * Shorthand for adding a support contact with a given name, contactId and phone number
-   * @param name  The display name of this support contact.
-   * @param contactId  The unique id that represents this contact
-   * @param phone  The phone number to call / send a text message to for a contact.
+   *
+   * @param name      The display name of this support contact.
+   * @param contactId The unique id that represents this contact
+   * @param phone     The phone number to call / send a text message to for a contact.
    * @return A support contact that has been persisted.
    */
   public SupportContact addSupportContact(String name, String contactId, String phone) {
@@ -82,30 +93,30 @@ public class SupportNetworkService {
    * in order to be saved.  If the contact has the same id as an already existing contact, the
    * contact is updated with the new contact's information.
    * If the contact is set to be a crisis contact, it replaces the current system crisis contact.
+   *
    * @param contactToSave The contact to be saved with a valid id.
    * @return The contact that was saved.
    */
   public SupportContact addSupportContact(SupportContact contactToSave) {
-    if (contactToSave.getContactID() == null) {
+    if (contactToSave.getContactId() == null) {
       throw new IllegalArgumentException("Contact must have a contact id in order to be saved");
     }
 
     if (contactToSave.isCrisisContact()) {
       // change the current crisis contact if we have one
       SupportContact crisisContact = this.getCrisisSupportContact();
-      if (crisisContact != null && !crisisContact.getContactID().equals(contactToSave.getContactID()))
-      {
+      if (crisisContact != null && !crisisContact.getContactId().equals(
+          contactToSave.getContactId())) {
         crisisContact.setIsCrisisContact(false);
         this.storageSystem.persistContact(crisisContact);
       }
     }
 
-    SupportContact contact = getContactById(contactToSave.getContactID());
+    SupportContact contact = getContactById(contactToSave.getContactId());
     if (contact != null) {
       int contactIndex = this.contacts.indexOf(contact);
       this.contacts.set(contactIndex, contactToSave);
-    }
-    else {
+    } else {
       this.contacts.add(contactToSave);
     }
     // save any changes to the contact.
@@ -115,6 +126,7 @@ public class SupportNetworkService {
 
   /**
    * Saves the support contact and returns the contact that was saved.
+   *
    * @param contactToSave The contact to be saved with a valid id.
    * @return The saved contact.
    */
@@ -131,6 +143,7 @@ public class SupportNetworkService {
 
   /**
    * Returns the support network contact to call when the user is in crisis mode.
+   *
    * @return The support network to be called when in crisis mode.
    */
   public SupportContact getCrisisSupportContact() {
@@ -144,6 +157,7 @@ public class SupportNetworkService {
 
   /**
    * Returns all of the support contacts that are being tracked by this service.
+   *
    * @return List of support contacts that have been added.
    */
   public List<SupportContact> getSupportContactList() {
@@ -154,6 +168,7 @@ public class SupportNetworkService {
   /**
    * Returns the default phone device number.  On Android a null value will use whatever the
    * device SIM card has set for the phone number.
+   *
    * @return The device phone number, null for the default device number.
    */
   public String getDevicePhoneNumber() {
@@ -165,6 +180,7 @@ public class SupportNetworkService {
 
   /**
    * Returns the default sms text message to send when a person is in crisis mode.
+   *
    * @return The default string message.
    */
   public String getDefaultMessage() {
@@ -176,16 +192,17 @@ public class SupportNetworkService {
    * Obtain the contactID that was given
    * Search the arrayList of contacts for the contact ID
    * If that contactID is not present, then it has been removed.
-   * @param contactID The id of the contact to be removed
+   *
+   * @param contactId The id of the contact to be removed
    * @return The contact that was removed.
    */
-  public SupportContact removeSupportContact(String contactID){
+  public SupportContact removeSupportContact(String contactId) {
 
-    if (contactID == null) {
+    if (contactId == null) {
       throw new IllegalArgumentException("contactID must not be null");
     }
 
-    SupportContact contact = getContactById(contactID);
+    SupportContact contact = getContactById(contactId);
     if (contact != null) {
       if (this.contacts.remove(contact)) { // remove in memory
         this.storageSystem.removeContact(contact); // remove in the database
@@ -199,32 +216,38 @@ public class SupportNetworkService {
   /**
    * Given a unique id of a contact, return the SupportContact if we have one for that id.
    * If we don't have one then null is returned
-   * @param contactID The unique id of the contact we want to retrieve.
+   *
+   * @param contactId The unique id of the contact we want to retrieve.
    * @return The SupportContact saved in the system, or null if none was found.
    */
-  public SupportContact getContactById(String contactID) {
+  public SupportContact getContactById(String contactId) {
     for (SupportContact contact : getSupportContactList()) {
-      if (contactID.equals(contact.getContactID())) {
+      if (contactId.equals(contact.getContactId())) {
         return contact;
       }
     }
     return null;
   }
 
-  public void sendSMSTestMessage(String message) {
+  /**
+   * Sends out the passed in test sms message to all of our support network.
+   * @param message The message we want sent out.
+   */
+  public void sendSmsTestMessage(String message) {
     sendMessageToSupportNetwork(message);
   }
 
   /**
    * Given a message to send, it sends a SMS text to all of the phones for each support contact
    * we have.
-   * @param message  The message to be sent.
+   *
+   * @param message The message to be sent.
    */
   private void sendMessageToSupportNetwork(String message) {
     for (SupportContact contact : getSupportContactList()) {
       if (contact.getPhoneNumber() != null) {
-        smsManager.sendTextMessage(contact.getPhoneNumber(), getDevicePhoneNumber(), message
-            , null, null);
+        smsManager.sendTextMessage(contact.getPhoneNumber(), getDevicePhoneNumber(), message,
+            null, null);
       }
     }
   }

@@ -56,7 +56,7 @@ public class SupportContactStorageSystem {
    * @param contact The contact we want to be removed.  Must have a contactId set.
    */
   public void removeContact(SupportContact contact) {
-    String[] deletionArgs = new String[]{contact.getContactID()};
+    String[] deletionArgs = new String[]{contact.getContactId()};
     this.context.getContentResolver().delete(this.databaseSupportContactUri, IDENTITY_WHERE,
         deletionArgs);
     this.stopTrackingContact(contact);
@@ -71,7 +71,7 @@ public class SupportContactStorageSystem {
   public void persistContact(SupportContact contact) {
     // grab the contact from the database
     ContentValues values = new ContentValues();
-    values.put(SupportContactTable.COLUMN_NAME_ID, contact.getContactID());
+    values.put(SupportContactTable.COLUMN_NAME_ID, contact.getContactId());
     values.put(SupportContactTable.COLUMN_NAME_NAME, contact.getName());
     values.put(SupportContactTable.COLUMN_NAME_PHONE, contact.getPhoneNumber());
     if (contact.isCrisisContact()) {
@@ -81,7 +81,7 @@ public class SupportContactStorageSystem {
     }
 
     if (this.isTrackingContact(contact)) {
-      String[] updateArgs = new String[]{contact.getContactID()};
+      String[] updateArgs = new String[]{contact.getContactId()};
       this.context.getContentResolver().update(this.databaseSupportContactUri, values,
           IDENTITY_WHERE, updateArgs);
     } else {
@@ -121,7 +121,7 @@ public class SupportContactStorageSystem {
    */
   private SupportContact hydrateContactFromCursor(Cursor cursor) {
     SupportContact contact = new SupportContact();
-    contact.setContactID(cursor.getString(cursor
+    contact.setContactId(cursor.getString(cursor
         .getColumnIndex(SupportContactTable.COLUMN_NAME_ID)));
     contact.setName(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_NAME)));
     contact.setPhoneNumber(cursor.getString(cursor
@@ -133,14 +133,14 @@ public class SupportContactStorageSystem {
   }
 
   private void stopTrackingContact(SupportContact contact) {
-    this.managedContactIds.remove(contact.getContactID());
+    this.managedContactIds.remove(contact.getContactId());
   }
 
   private boolean isTrackingContact(SupportContact contact) {
-    return this.managedContactIds.contains(contact.getContactID());
+    return this.managedContactIds.contains(contact.getContactId());
   }
 
   private void trackContact(SupportContact contact) {
-    this.managedContactIds.add(contact.getContactID());
+    this.managedContactIds.add(contact.getContactId());
   }
 }

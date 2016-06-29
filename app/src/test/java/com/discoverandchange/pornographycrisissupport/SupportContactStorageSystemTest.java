@@ -74,7 +74,7 @@ public class SupportContactStorageSystemTest {
     assertThat("List should have loaded one contact from the database", list, notNullValue());
     assertThat("List should have loaded one contact from the database", list.size(), is(1));
     SupportContact contact = list.get(0);
-    assertThat("id should have been loaded", contact.getContactID(), is(id));
+    assertThat("id should have been loaded", contact.getContactId(), is(id));
     assertThat("name should have been loaded", contact.getName(), is(name));
     assertThat("phone should have been loaded", contact.getPhoneNumber(), is(phone));
     assertThat("isCrisis should have been set", contact.isCrisisContact(), is(true));

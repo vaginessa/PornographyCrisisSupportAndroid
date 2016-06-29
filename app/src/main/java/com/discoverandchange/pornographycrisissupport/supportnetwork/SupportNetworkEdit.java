@@ -10,8 +10,14 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 
+/**
+ * Handles the editing of a SupportContact.
+ */
 public class SupportNetworkEdit extends BaseNavigationActivity {
 
+  /**
+   * The SupportContact being edited.
+   */
   private SupportContact editContact = null;
 
   @Override
@@ -19,14 +25,15 @@ public class SupportNetworkEdit extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_edit);
 
-    Switch viewSwitch = (Switch) findViewById(R.id.contactCrisisSwitch);
-
     // Displaying information relating to the contact being edited
     Intent intent = getIntent();
-    editContact = (SupportContact) intent.getSerializableExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE);
+    editContact = (SupportContact) intent.getSerializableExtra(Constants
+        .SUPPORT_CONTACT_EDIT_MESSAGE);
     if (editContact == null) {
       // TODO: stephen, john handle null case
     }
+
+    Switch viewSwitch = (Switch) findViewById(R.id.contactCrisisSwitch);
 
     TextView nameText = (TextView) findViewById(R.id.contactNameText);
     nameText.setText(editContact.getName());

@@ -21,7 +21,7 @@ import java.util.List;
  * library resource activities when a user clicks on a library resource.
  */
 public class LibraryController extends BaseNavigationActivity
-  implements LibraryServiceObserver {
+    implements LibraryServiceObserver {
 
   /**
    * The list adapter that holds LibraryResources and handles displaying them.
@@ -38,7 +38,7 @@ public class LibraryController extends BaseNavigationActivity
     setContentView(R.layout.activity_library_controller);
 
     QuizService quizService = new QuizService(getBaseContext());
-    TextView latestScore = (TextView)findViewById(R.id.latestScore);
+    TextView latestScore = (TextView) findViewById(R.id.latestScore);
     latestScore.setText(Integer.toString(quizService.getLatestQuizScore()));
 
 
@@ -82,7 +82,8 @@ public class LibraryController extends BaseNavigationActivity
                               long id) {
         LibraryResource resourceToLoad = (LibraryResource) parent.getItemAtPosition(position);
         LibraryResourceActivityRegistry registry = LibraryResourceActivityRegistry.getInstance();
-        Class<? extends Activity> activityToLoad = registry.getActivityForResource(resourceToLoad.getClass());
+        Class<? extends Activity> activityToLoad = registry.getActivityForResource(
+            resourceToLoad.getClass());
         Intent intent = new Intent(getBaseContext(), activityToLoad);
         intent.putExtra(Constants.LIBRARY_RESOURCE_VIEW_MESSAGE, resourceToLoad);
         startActivity(intent);

@@ -1,13 +1,12 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 import android.media.MediaPlayer;
-import android.util.Log;
-import android.widget.MediaController;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
@@ -18,29 +17,30 @@ import com.discoverandchange.pornographycrisissupport.R;
  * Displays a video library resource
  * Controls interactions with video-
  * Returns to Library Screen.
+ *
  * @author john.okleberry@gmail.com
  */
 public class VideoActivityController extends BaseNavigationActivity {
 
-//  Requires Permissions: "android.permission.INTERNET" & "android.permission.WAKE_LOCK"
-//          *
-//          * Helpful Resources:
-//          *      https://developer.android.com/guide/topics/media/mediaplayer.html (Initial Setup)
-//          *      https://developer.android.com/guide/appendix/media-formats.html   (Compatible Media)
-//          *      https://youtu.be/IVGE5J7-3AQ                                      (Best Instructions)
-//          *      http://stackoverflow.com/questions/21849602/android-how-to-play-mp4-video-from-url/21849982#21849982
+  //  Requires Permissions: "android.permission.INTERNET" & "android.permission.WAKE_LOCK"
+  //          *
+  //          * Helpful Resources:
+  //          *      https://developer.android.com/guide/topics/media/mediaplayer.html (Initial Setup)
+  //          *      https://developer.android.com/guide/appendix/media-formats.html   (Compatible Media)
+  //          *      https://youtu.be/IVGE5J7-3AQ                                      (Best Instructions)
+  //          *      http://stackoverflow.com/questions/21849602/android-how-to-play-mp4-video-from-url/21849982#21849982
 
   // TODO: John Replace with mediaController in the stop controls?
   MediaPlayer mediaPlayer;
 
 
-    /**
-     * Creates a view for playback of video resource content and allows for playback controls to be
-     * implemented.
-     * @param savedInstanceState The information necessary to create this view
-     *
-     */
-    protected void onCreate(Bundle savedInstanceState) {
+  /**
+   * Creates a view for playback of video resource content and allows for playback controls to be
+   * implemented.
+   *
+   * @param savedInstanceState The information necessary to create this view
+   */
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     try {
 
@@ -52,12 +52,10 @@ public class VideoActivityController extends BaseNavigationActivity {
       Uri video = Uri.parse(link);
       videoView.setMediaController(mediaController);
       videoView.setVideoURI(video);
-    } catch (Exception e) {
+    } catch (Exception ex) {
       // TODO: John handle exception
-      Log.e(Constants.LOG_TAG,"Error Connecting");
+      Log.e(Constants.LOG_TAG, "Error Connecting", ex);
     }
-
-
 
 
     // Handling the play button
@@ -67,7 +65,7 @@ public class VideoActivityController extends BaseNavigationActivity {
       VideoView videoView = (VideoView) findViewById(R.id.videoView);
 
       @Override
-      public void onClick(View v) {
+      public void onClick(View view) {
         videoView.start();
       }
 
@@ -85,29 +83,29 @@ public class VideoActivityController extends BaseNavigationActivity {
       VideoView videoView = (VideoView) findViewById(R.id.videoView);
 
       @Override
-      public void onClick(View v) {
-        if(v != null && videoView.isPlaying()){
+      public void onClick(View view) {
+        if (view != null && videoView.isPlaying()) {
           videoView.stopPlayback();
-//          videoView.release();
+          // videoView.release();
         }
       }
     });
   }
 
   /**
-   * Handles the destruction of this activity to release media
+   * Handles the destruction of this activity to release media.
    */
   protected void onDestroy() {
 
-      VideoView videoView = (VideoView) findViewById(R.id.videoView);
+    VideoView videoView = (VideoView) findViewById(R.id.videoView);
 
-      if(videoView !=null && videoView.isPlaying()) {
-        videoView.stopPlayback();
-        videoView = null;
-      }
-      super.onDestroy();
-
+    if (videoView != null && videoView.isPlaying()) {
+      videoView.stopPlayback();
+      videoView = null;
     }
+    super.onDestroy();
+
+  }
 
 }
 

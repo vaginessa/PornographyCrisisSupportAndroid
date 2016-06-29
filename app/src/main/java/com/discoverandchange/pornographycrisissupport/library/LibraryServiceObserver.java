@@ -1,7 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 /**
- * Observer interface for those wanting to be notified of events from the ResourceLibraryService class.
+ * Observer interface for those wanting to be notified of events from the ResourceLibraryService
+ * class.
  */
 public interface LibraryServiceObserver {
 

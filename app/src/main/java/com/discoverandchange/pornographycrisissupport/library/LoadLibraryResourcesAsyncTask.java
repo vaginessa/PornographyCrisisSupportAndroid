@@ -20,17 +20,30 @@ import java.util.Map;
  * Created by snielson on 6/22/16.
  */
 public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
-    Map<Range, List<LibraryResource>>>{
+    Map<Range, List<LibraryResource>>> {
 
+  /**
+   * The service we will load resources into.
+   */
   private ResourceLibraryService service;
+
+  /**
+   * The loader that will retrieve the json document.
+   */
   private HttpJsonLoader jsonLoader;
+
+  /**
+   * The service that will convert the json document to java objects.
+   */
   private ResourceDeserializerService deserializerService;
 
   /**
    * Constructs the Async task to load resources into the passed in service using the given
    * json loader and the deserializer to hydrate the objects.
-   * @param service The service that we will be loading resources into.
-   * @param jsonLoader The object that will fetch the json document to turn into library resources.
+   *
+   * @param service             The service that we will be loading resources into.
+   * @param jsonLoader          The object that will fetch the json document to turn into library
+   *                            resources.
    * @param deserializerService The service that will turn json documents into library java objects.
    */
   public LoadLibraryResourcesAsyncTask(ResourceLibraryService service, HttpJsonLoader jsonLoader,
@@ -71,8 +84,7 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
       for (Range range : rangeListMap.keySet()) {
         service.addResources(range, rangeListMap.get(range));
       }
-    }
-    else {
+    } else {
       // so the app can continue with null resources we should mark the resources loaded
       // TODO: stephen perhaps have an resourcesFailed handler
     }

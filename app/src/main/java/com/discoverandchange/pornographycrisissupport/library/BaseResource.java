@@ -30,6 +30,7 @@ public class BaseResource implements LibraryResource {
 
   /**
    * Constructs the BaseResource with the given passed in type.
+   *
    * @param type The type of resource such as Audio, Video, etc.
    */
   public BaseResource(String type) {
@@ -59,7 +60,7 @@ public class BaseResource implements LibraryResource {
     this.type = type;
   }
 
-  public void setThumbnail(String thumbnail){
+  public void setThumbnail(String thumbnail) {
     this.thumbnail = thumbnail;
   }
 

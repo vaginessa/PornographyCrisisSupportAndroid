@@ -6,14 +6,14 @@ import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.library.json.HttpJsonLoader;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 
+import org.apache.commons.lang3.Range;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.lang3.Range;
 
 /**
  * Handles the storage and retrieval of LibraryResource objects and their associated mapping
@@ -22,7 +22,7 @@ import org.apache.commons.lang3.Range;
 public class ResourceLibraryService {
 
   /**
-   * Singleton reference
+   * Singleton reference.
    */
   private static ResourceLibraryService service;
 
@@ -44,9 +44,10 @@ public class ResourceLibraryService {
   /**
    * Returns the singleton instance of the ResourceLibraryService.  As this is synchronized
    * be careful calling this too often in threaded methods.
+   *
    * @return The fully instantiated instance of the ResourceLibraryService.
    */
-  public synchronized static ResourceLibraryService getInstance() {
+  public static synchronized ResourceLibraryService getInstance() {
     if (service == null) {
       service = new ResourceLibraryService();
     }
@@ -62,8 +63,9 @@ public class ResourceLibraryService {
   }
 
   /**
-   * Retrieves a list of resources that correspond to the given quiz score.  If there are no resources
-   * for that score then an empty list is returned.
+   * Retrieves a list of resources that correspond to the given quiz score.  If there are no
+   * resources for that score then an empty list is returned.
+   *
    * @param latestQuizScore The quiz score that we want to retrieve resources for.
    * @return Empty list if no resources match the quiz score, otherwise list of LibraryResources.
    */
@@ -83,9 +85,10 @@ public class ResourceLibraryService {
   /**
    * Given a quiz object, return the list of resources that correspond to the score of that quiz.
    * If there are no resources for that score than an empty list is returned.
+   *
    * @param quiz Quiz object containing the score we want resources for.  Can't be null.
    * @return The list of library resources if the score matches a range in the service,
-   *      empty list otherwise.
+   *         empty list otherwise.
    * @throws IllegalArgumentException if the quiz score is null.
    */
   public List<LibraryResource> getResourcesForQuiz(Quiz quiz) {
@@ -98,7 +101,8 @@ public class ResourceLibraryService {
 
   /**
    * For a given range add the list of LibraryResources for that range.
-   * @param range The range interval (min to max) that the resources should correspond to.
+   *
+   * @param range     The range interval (min to max) that the resources should correspond to.
    * @param resources The list of resources to add to the service for the passed in range.
    * @throws IllegalArgumentException if the range is null or the resources is null.
    */
@@ -118,8 +122,7 @@ public class ResourceLibraryService {
     List<LibraryResource> mapResources = new ArrayList<>();
     if (!resourcesByRange.containsKey(range)) {
       resourcesByRange.put(range, mapResources);
-    }
-    else {
+    } else {
       mapResources = resourcesByRange.get(range);
     }
     mapResources.addAll(resources);
@@ -127,7 +130,8 @@ public class ResourceLibraryService {
 
   /**
    * For a given range add the individual LibraryResource object to that range.
-   * @param range The range interval (min to max) that the resource should correspond to.
+   *
+   * @param range    The range interval (min to max) that the resource should correspond to.
    * @param resource The resource to add to the service for the passed in range.
    * @throws IllegalArgumentException if the range is null or the resource is null.
    */
@@ -135,8 +139,7 @@ public class ResourceLibraryService {
     List<LibraryResource> mapResources = new ArrayList<>();
     if (!resourcesByRange.containsKey(range)) {
       resourcesByRange.put(range, mapResources);
-    }
-    else {
+    } else {
       mapResources = resourcesByRange.get(range);
     }
     mapResources.add(resource);
@@ -145,6 +148,7 @@ public class ResourceLibraryService {
   /**
    * Adds a library service observer to be notified when resources change
    * in the library.  If the observer already is in the list, it is a noop.
+   *
    * @param observer The object implementing the observer resource you want to be notified.
    */
   public void registerObserver(LibraryServiceObserver observer) {
@@ -156,6 +160,7 @@ public class ResourceLibraryService {
   /**
    * Removes the library service observer.  If the observer is not observing
    * this object it is a noop.
+   *
    * @param observer The object implementing the observer resource you want to be notified.
    */
   public void removeObserver(LibraryServiceObserver observer) {
@@ -166,6 +171,7 @@ public class ResourceLibraryService {
 
   /**
    * Returns if the resources have been loaded from the external network.
+   *
    * @return true if the network resources have been loaded, false otherwise.
    */
   public boolean isResourcesLoaded() {
@@ -192,7 +198,7 @@ public class ResourceLibraryService {
     //HttpJsonLoader loader = new FakeHttpJsonLoader();
     HttpJsonLoader loader = new HttpJsonLoader(Constants.LIBRARY_RESOURCES_AUTH_TOKEN);
     LoadLibraryResourcesAsyncTask task = new LoadLibraryResourcesAsyncTask(this, loader,
-      ResourceDeserializerService.getInstance());
+        ResourceDeserializerService.getInstance());
     task.execute(Constants.LIBRARY_RESOURCES_ENDPOINT);
   }
 

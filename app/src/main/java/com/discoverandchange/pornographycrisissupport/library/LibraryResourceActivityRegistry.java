@@ -19,7 +19,7 @@ public class LibraryResourceActivityRegistry {
   Map<Class<? extends LibraryResource>, Class<? extends Activity>> activitiesMap;
 
   /**
-   * The singleton instance of the registry
+   * The singleton instance of the registry.
    */
   private static LibraryResourceActivityRegistry registry;
 
@@ -27,7 +27,8 @@ public class LibraryResourceActivityRegistry {
    * Returns the singleton instance of the registry.  This method should be used sparingly
    * in threads as it is synchronized and a performance penalty will occur if you frequently
    * call this method.
-   * @return  The registry to be used.
+   *
+   * @return The registry to be used.
    */
   public static synchronized LibraryResourceActivityRegistry getInstance() {
     if (registry == null) {
@@ -39,21 +40,23 @@ public class LibraryResourceActivityRegistry {
   /**
    * Maps a LibraryResource object with the activity that should be loaded when a user wants to
    * interact with it.
-   * @param resourceClass  The class of the library resource we are registering.
-   * @param activityClass  The class of the activity we want to launch for this resource.
+   *
+   * @param resourceClass The class of the library resource we are registering.
+   * @param activityClass The class of the activity we want to launch for this resource.
    */
   public void registerResource(Class<? extends LibraryResource> resourceClass,
-                               Class<? extends Activity> activityClass)
-  {
+                               Class<? extends Activity> activityClass) {
     activitiesMap.put(resourceClass, activityClass);
   }
 
   /**
    * Retrieves the Activity class that should be loaded for the given LibraryResource object.
+   *
    * @param resource The class of the LibraryResource we want the activity for.
-   * @return
+   * @return The Activity class that is connected with the passed in resource.
    */
-  public Class<? extends Activity> getActivityForResource(Class<? extends LibraryResource> resource) {
+  public Class<? extends Activity> getActivityForResource(Class<? extends LibraryResource>
+                                                              resource) {
     if (activitiesMap.containsKey(resource)) {
       return activitiesMap.get(resource);
     }

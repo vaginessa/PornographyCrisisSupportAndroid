@@ -9,13 +9,13 @@ import java.io.IOException;
 import static junit.framework.Assert.assertNotNull;
 
 /**
- * Tests the FakeHTTPJSONLoader class to make sure it returns a fake
+ * Tests the FakeHttpJsonLoader class to make sure it returns a fake
  * JSON string that our deserialization classes can use for testing w/o having
  * a fully implemented external JSON api.
- * @see FakeHTTPJSONLoader
+ * @see FakeHttpJsonLoader
  * @author Stephen Nielson <snielson@discoverandchange.com>
  */
-public class FakeHTTPJSONLoaderTest {
+public class FakeHttpJsonLoaderTest {
 
   @Test
   /**
@@ -23,7 +23,7 @@ public class FakeHTTPJSONLoaderTest {
    */
   public void testGet() throws IOException, JSONException {
     String url = "http://fakedomain.com/blah.json";
-    FakeHTTPJSONLoader loader = new FakeHTTPJSONLoader();
+    FakeHttpJsonLoader loader = new FakeHttpJsonLoader();
     String result = loader.get(url);
     assertNotNull("result should not be null");
     JSONObject obj = new JSONObject(result); // should be able to load it back into json

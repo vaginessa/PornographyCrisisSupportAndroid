@@ -7,12 +7,12 @@ import java.io.IOException;
  * when we don't have a network connection.
  * @author Stephen Nielson
  */
-public class FakeHTTPJSONLoader extends HTTPJSONLoader {
+public class FakeHttpJsonLoader extends HTTPJSONLoader {
 
   /**
    * Instantiates the json loader with a fake json auth token.
    */
-  public FakeHTTPJSONLoader() {
+  public FakeHttpJsonLoader() {
     super("");
   }
 

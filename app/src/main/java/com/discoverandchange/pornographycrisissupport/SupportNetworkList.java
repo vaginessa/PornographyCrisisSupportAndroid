@@ -1,20 +1,13 @@
 package com.discoverandchange.pornographycrisissupport;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,19 +20,27 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * Handles the display, removal, and addition of support contacts.
+ */
 public class SupportNetworkList extends BaseNavigationActivity {
 
+  /**
+   * Constant for identifying that we initiated the contact picker call.
+   */
   private static final int CONTACT_PICKER_RESULT = 1001;
+
+  /**
+   * Wraps around the support contacts to be displayed in a list on the view.
+   */
   private SupportContactsArrayAdapter contactArrayAdapter = null;
 
   /**
    * Refreshes the support network content on the page after a pause or startup.
    */
-    public void onResume() {  // After a pause OR at startup
+  public void onResume() {  // After a pause OR at startup
     super.onResume();
     //Refresh your stuff here
     setupSupportContactsList();
@@ -47,9 +48,10 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   /**
    * Used saved state data to put support network list into a view.
+   *
    * @param savedInstanceState This is necessary for displaying the support network list
-     */
-    protected void onCreate(Bundle savedInstanceState) {
+   */
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
   }
@@ -59,7 +61,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
    * Converts a list of support contacts into a list that is visible to the user and can be
    * interacted with.
    */
-    private void setupSupportContactsList() {
+  private void setupSupportContactsList() {
 
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     List<SupportContact> contactList = service.getSupportContactList();
@@ -72,7 +74,8 @@ public class SupportNetworkList extends BaseNavigationActivity {
       public void onItemClick(AdapterView<?> parent, View view, int position,
                               long id) {
         Intent intent = new Intent(getBaseContext(), SupportNetworkEdit.class);
-        intent.putExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE, (SupportContact) parent.getItemAtPosition(position));
+        intent.putExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE,
+            (SupportContact) parent.getItemAtPosition(position));
         startActivity(intent);
       }
     });
@@ -81,9 +84,10 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   /**
    * Opens up the contact app or notifies the user that the app does not exist on the device.
+   *
    * @param btn This is required for the contacts app to open
-     */
-    public void launchContactPicker(View btn) {
+   */
+  public void launchContactPicker(View btn) {
 
     Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
         ContactsContract.Contacts.CONTENT_URI);
@@ -99,9 +103,12 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   /**
    * Brings in data from the contacts application and stores it in the application data.
+   *
    * @param cid This is a unique identifier used by the contacts application to specify a contact
-     */
-    private void createContactFromSelection(String cid) {
+   */
+  private void createContactFromSelection(String cid) {
+    // TODO: john,stephen This method is pretty heavy and should probably be moved outside the
+    // controller and into a model method.
 
     ContentResolver cr = getContentResolver();
 
@@ -157,10 +164,13 @@ public class SupportNetworkList extends BaseNavigationActivity {
   /**
    * Allows a user to specify which phone number to save for a support network contact when multiple
    * numbers are associated with this contact in the Google Contacts application.
-   * @param contact The specific contact who possesses multiple phone numbers in the Contacts app
+   *
+   * @param contact         The specific contact who possesses multiple phone numbers in the
+   *                        Contacts app
    * @param potentialPhones A list of phone numbers associated with our selected contact
-     */
-    private void displayPhoneSelectionDialog(final SupportContact contact, final List<String> potentialPhones) {
+   */
+  private void displayPhoneSelectionDialog(final SupportContact contact,
+                                           final List<String> potentialPhones) {
 
     AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
     builderSingle.setIcon(android.R.drawable.ic_dialog_alert);
@@ -197,12 +207,13 @@ public class SupportNetworkList extends BaseNavigationActivity {
 
   /**
    * When a user selects a contact from the Contacts app contact picker, this
-   * adds the contacts information as a new contact in our support network list
+   * adds the contacts information as a new contact in our support network list.
+   *
    * @param requestCode Requests submitted to the Contacts app
    * @param resultCode  Results from the Contacts app request
-   * @param data Data returned from the Contacts app
-     */
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+   * @param data        Data returned from the Contacts app
+   */
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     if (resultCode == RESULT_OK && requestCode == CONTACT_PICKER_RESULT) {
       Uri result = data.getData();
@@ -234,8 +245,8 @@ public class SupportNetworkList extends BaseNavigationActivity {
   }
 
   /**
-   * Displays an Alert box representing an error. The error will containct the given title
-   * and message passed in from the resources string file. IE R.string.<title|message>
+   * Displays an Alert box representing an error. The error will contain the given title
+   * and message passed in from the resources string file. IE R.string.message.
    *
    * @param titleStringId   The resource string id for the alert title
    * @param messageStringId The resource string id for the alert message displayed.
@@ -254,16 +265,11 @@ public class SupportNetworkList extends BaseNavigationActivity {
         .show();
   }
 
-  // Adds a Support contact from the support contacts list
-  private void updateContactListWithContact(SupportContact contact) {
-    setupSupportContactsList();
-  }
-
-  // Removes a Support contact from the support contacts list
-  private void updateContactListRemoveContact(SupportContact contact) {
-    contactArrayAdapter.remove(contact);
-  }
-
+  /**
+   * Persists the contact out through our network service.
+   *
+   * @param contact The contact we want to save.
+   */
   private void saveContactData(SupportContact contact) {
     if (contact != null) {
       SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());

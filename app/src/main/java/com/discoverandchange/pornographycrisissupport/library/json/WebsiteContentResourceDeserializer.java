@@ -12,12 +12,12 @@ import org.json.JSONObject;
  */
 public class WebsiteContentResourceDeserializer extends BaseResourceDeserializer {
 
-  @Override
   /**
    * Converts a json object into an WebsiteContentResource object.
    * @param jsonResource The resource that will be converted into an WebsiteContentResource
    * @returns The deserialized LibraryResource
    */
+  @Override
   public LibraryResource deserialize(JSONObject jsonResource) {
     WebsiteContentResource websiteContent = new WebsiteContentResource();
     hydrateBaseResource(websiteContent, jsonResource);

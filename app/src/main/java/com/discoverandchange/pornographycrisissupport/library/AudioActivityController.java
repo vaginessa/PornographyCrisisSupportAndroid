@@ -24,11 +24,11 @@ public class AudioActivityController extends BaseNavigationActivity {
    */
   MediaPlayer mediaPlayer;
 
-  @Override
   /**
    * Loads up the audio view buttons and prepares the audio for playback.
    * @param savedInstanceState the saved data we want to restore from.
    */
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_audio_activity_controller);

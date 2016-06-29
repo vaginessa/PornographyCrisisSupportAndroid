@@ -50,13 +50,13 @@ public class SupportContactProvider extends ContentProvider {
         selection, selectionArgs, null, null, sortOrder);
   }
 
-  @Nullable
-  @Override
   /**
    * We don't use mime types here so no type is returned.
    * @param uri the uri to return the type for.
    * @return null as we don't deal with mime types.
    */
+  @Nullable
+  @Override
   public String getType(Uri uri) {
     // returns mime type, which is not used.
     return null;

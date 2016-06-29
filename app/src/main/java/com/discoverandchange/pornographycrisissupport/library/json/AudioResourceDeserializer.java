@@ -13,12 +13,12 @@ import org.json.JSONObject;
  */
 public class AudioResourceDeserializer extends MediaResourceDeserializer {
 
-  @Override
   /**
    * Converts a json object into an Audio Resource object.
    * @param jsonResource The resource that will be converted into an AudioResource
    * @returns The deserialized LibraryResource
    */
+  @Override
   public LibraryResource deserialize(JSONObject jsonResource) {
     AudioResource audio = new AudioResource();
     hydrateMedia(audio, jsonResource);

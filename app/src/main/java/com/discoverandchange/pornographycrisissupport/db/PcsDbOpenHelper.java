@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.discoverandchange.pornographycrisissupport.Constants;
 
 /**
- * Executes creation of the database and tables
+ * Executes creation of the database and tables.
  * @author Stephen Nielson
  */
 public class PcsDbOpenHelper extends SQLiteOpenHelper {

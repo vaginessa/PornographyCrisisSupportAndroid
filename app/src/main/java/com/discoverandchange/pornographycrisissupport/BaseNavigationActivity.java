@@ -93,7 +93,7 @@ public class BaseNavigationActivity extends AppCompatActivity
    * Adds items to the action bar if the action bar is present.
    *
    * @param menu The visible menu in our application
-   * @return Verifies if the menu / action bar is visible and active
+   * @return True if the menu / action bar is visible and active
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     // Inflate the menu; this adds items to the action bar if it is present.
@@ -106,7 +106,7 @@ public class BaseNavigationActivity extends AppCompatActivity
    * is specified.
    *
    * @param item The action bar item that the user has interacted with
-   * @return Confirms that an activity has been launched by the user
+   * @return True if an activity has been launched by the user
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     // Handle action bar item clicks here. The action bar will
@@ -142,7 +142,7 @@ public class BaseNavigationActivity extends AppCompatActivity
    * Handles navigation view item clicks.
    *
    * @param item The menu item that the user has interacted with
-   * @return Confirms that the user has interacted with a menu item
+   * @return True if the user has interacted with a menu item
    */
   public boolean onNavigationItemSelected(MenuItem item) {
 

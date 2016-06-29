@@ -24,7 +24,17 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
  */
 public class App extends Application {
 
+  /**
+   * The global application context for this android application.
+   */
   protected static Context context = null;
+
+  /**
+   * Constructs the app object.
+   */
+  App() {
+    super();
+  }
 
   @Override
   /**

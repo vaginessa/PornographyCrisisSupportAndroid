@@ -36,7 +36,7 @@ public class SupportContactProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    PCSDBOpenHelper helper = new PCSDBOpenHelper(getContext());
+    PcsDbOpenHelper helper = new PcsDbOpenHelper(getContext());
     database = helper.getWritableDatabase();
     return true;
   }

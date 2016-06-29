@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.discoverandchange.pornographycrisissupport.db.PCSDBOpenHelper;
+import com.discoverandchange.pornographycrisissupport.db.PcsDbOpenHelper;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 
 
@@ -24,7 +24,7 @@ public class QuizService extends ContextWrapper {
   /**
    * The Helper reference
    */
-  private PCSDBOpenHelper helper;
+  private PcsDbOpenHelper helper;
 
   public QuizService(Context base) {
     super(base);
@@ -37,7 +37,7 @@ public class QuizService extends ContextWrapper {
    */
   public boolean saveQuiz(Quiz quiz) {
     // get db
-    helper = new PCSDBOpenHelper(this);
+    helper = new PcsDbOpenHelper(this);
     db = helper.getReadableDatabase();
 
     // create ContentValues
@@ -65,7 +65,7 @@ public class QuizService extends ContextWrapper {
    */
   public int getLatestQuizScore() {
     // get db
-    helper = new PCSDBOpenHelper(this);
+    helper = new PcsDbOpenHelper(this);
     db = helper.getReadableDatabase();
 
     // build query
@@ -110,7 +110,7 @@ public class QuizService extends ContextWrapper {
     List<Quiz> quizzes = new LinkedList<Quiz>();
 
     // get db
-    helper = new PCSDBOpenHelper(this);
+    helper = new PcsDbOpenHelper(this);
     db = helper.getReadableDatabase();
 
     // build query and cursor
@@ -145,7 +145,7 @@ public class QuizService extends ContextWrapper {
    */
   public Cursor getAllQuizzes() {
     // get db
-    helper = new PCSDBOpenHelper(this);
+    helper = new PcsDbOpenHelper(this);
     db = helper.getReadableDatabase();
 
     // build query and cursor
@@ -179,7 +179,7 @@ public class QuizService extends ContextWrapper {
    */
   public int updateQuiz(Quiz quiz) {
     // get db
-    helper = new PCSDBOpenHelper(this);
+    helper = new PcsDbOpenHelper(this);
     db = helper.getWritableDatabase();
 
     // create ContentValues
@@ -205,7 +205,7 @@ public class QuizService extends ContextWrapper {
    */
   public void deleteQuiz(Quiz quiz) {
     // get db
-    helper = new PCSDBOpenHelper(this);
+    helper = new PcsDbOpenHelper(this);
     db = helper.getWritableDatabase();
 
     // delete the quiz from db

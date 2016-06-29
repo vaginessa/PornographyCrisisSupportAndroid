@@ -10,9 +10,9 @@ import com.discoverandchange.pornographycrisissupport.Constants;
  * Executes creation of the database and tables
  * Created by snielson on 6/16/16.
  */
-public class PCSDBOpenHelper extends SQLiteOpenHelper {
+public class PcsDbOpenHelper extends SQLiteOpenHelper {
 
-  public PCSDBOpenHelper(Context context) {
+  public PcsDbOpenHelper(Context context) {
     super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
   }
 

@@ -35,23 +35,25 @@ public class HttpJsonLoader {
   /**
    * Constructs the loader with the given authentication token to allow us to talk to the JSON
    * API.
-   * @param authToken the authentication token to use to allow api requests to be made for the library.
+   * @param authToken the authentication token to use to allow api requests to be made for the
+   *                  library.
    */
   public HttpJsonLoader(String authToken) {
-    // FUTURE: stephen eventually we want this to do some kind of oauth or JWT token to verify the user
-    // has access to the api.
+    // FUTURE: stephen eventually we want this to do some kind of oauth or JWT token to verify the
+    // user has access to the api.
     this.authToken = authToken;
   }
 
   /**
    * Given the API url to hit, it connects to the api passing the authentication token and retrieves
    * the json content as a string.
-   * @param apiURL The URL to connect to.
+   * @param apiUrl The URL to connect to.
    * @return The retrieved json data, or null if nothing was retrieved.
-   * @throws IOException An exception if we can't connect to the api or anything fails while reading from it.
+   * @throws IOException An exception if we can't connect to the api or anything fails while
+   *         reading from it.
    */
-  public String get(String apiURL) throws IOException {
-    String destinationUrl = apiURL + "?token=" + this.authToken;
+  public String get(String apiUrl) throws IOException {
+    String destinationUrl = apiUrl + "?token=" + this.authToken;
     InputStream is = null;
 
     try {

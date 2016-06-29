@@ -8,7 +8,7 @@ import com.discoverandchange.pornographycrisissupport.Constants;
 
 /**
  * Executes creation of the database and tables
- * Created by snielson on 6/16/16.
+ * @author Stephen Nielson
  */
 public class PcsDbOpenHelper extends SQLiteOpenHelper {
 

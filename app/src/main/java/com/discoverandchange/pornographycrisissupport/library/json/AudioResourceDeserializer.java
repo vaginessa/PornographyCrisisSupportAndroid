@@ -8,6 +8,7 @@ import org.json.JSONObject;
 /**
  * Converts a JSON object to an Audio Resource object.
  * Used with the ResourceDeserializerService.
+ *
  * @author Stephen Nielson
  */
 public class AudioResourceDeserializer extends MediaResourceDeserializer {

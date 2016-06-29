@@ -5,6 +5,7 @@ import java.io.IOException;
 /**
  * Used for faking an actual HTTP request for the library JSON
  * when we don't have a network connection.
+ *
  * @author Stephen Nielson
  */
 public class FakeHttpJsonLoader extends HTTPJSONLoader {
@@ -17,7 +18,7 @@ public class FakeHttpJsonLoader extends HTTPJSONLoader {
   }
 
   @Override
-  public String get(String apiURL) throws IOException {
+  public String get(String apiUrl) throws IOException {
 
     StringBuilder sb = new StringBuilder();
     sb.append("{");
@@ -48,12 +49,12 @@ public class FakeHttpJsonLoader extends HTTPJSONLoader {
   }
 
   private void appendTestVideo(StringBuilder sb) {
-      sb.append("{");
-      appendKeyValue(sb, "type", "Video");
-      sb.append(",");
-      appendTestMediaResource(sb, "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
-          + "DiscoverAndChangeIntroVideo.mp4", "Test Video", "Sample video description", "thumb.png");
-      sb.append("}");
+    sb.append("{");
+    appendKeyValue(sb, "type", "Video");
+    sb.append(",");
+    appendTestMediaResource(sb, "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
+        + "DiscoverAndChangeIntroVideo.mp4", "Test Video", "Sample video description", "thumb.png");
+    sb.append("}");
   }
 
   private void appendTestAudio(StringBuilder sb) {
@@ -70,7 +71,8 @@ public class FakeHttpJsonLoader extends HTTPJSONLoader {
     appendKeyValue(sb, "type", "ExternalWebsite");
     sb.append(",");
     appendTestMediaResource(sb, "https://www.discoverandchange.com/wp-content/uploads/2016/02/"
-        + "DiscoverAndChangeIntroVideo.mp4", "Test Website", "Sample website description", "thumb.png");
+        + "DiscoverAndChangeIntroVideo.mp4", "Test Website", "Sample website description",
+        "thumb.png");
 
     sb.append("}");
   }
@@ -93,7 +95,8 @@ public class FakeHttpJsonLoader extends HTTPJSONLoader {
     appendTestBaseResource(sb, title, description, thumbnail);
   }
 
-  private void appendTestBaseResource(StringBuilder sb, String title, String description, String thumbnail) {
+  private void appendTestBaseResource(StringBuilder sb, String title, String description,
+                                      String thumbnail) {
     appendKeyValue(sb, "title", title);
     sb.append(",");
     appendKeyValue(sb, "description", description);

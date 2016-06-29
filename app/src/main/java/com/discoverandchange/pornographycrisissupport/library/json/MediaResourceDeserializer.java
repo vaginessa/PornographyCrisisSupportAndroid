@@ -12,8 +12,8 @@ import org.json.JSONObject;
 public abstract class MediaResourceDeserializer extends BaseResourceDeserializer {
 
   /**
-   * This will copy all of the Media and BaseResource properties that are in the primitive form in the
-   * JSONObject onto the MediaResource object provided.  Essentially hydrating the object.
+   * This will copy all of the Media and BaseResource properties that are in the primitive form in
+   * the JSONObject onto the MediaResource object provided.  Essentially hydrating the object.
    * @param media The resource that we want to be populated with media values.
    * @param jsonResource The javascript object notation values for this object.
    */

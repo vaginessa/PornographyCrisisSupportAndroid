@@ -17,7 +17,7 @@ public class PcsDbOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Creates the tables in the database
+   * Creates the tables in the database.
    * @param db The reference to the database
    */
   @Override
@@ -27,7 +27,7 @@ public class PcsDbOpenHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * Drops the tables and then recreates the tables in the database
+   * Drops the tables and then recreates the tables in the database.
    * @param db The reference to the database
    */
   @Override

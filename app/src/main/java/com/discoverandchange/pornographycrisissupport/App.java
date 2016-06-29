@@ -40,15 +40,18 @@ public class App extends Application {
     LibraryResourceActivityRegistry registry = LibraryResourceActivityRegistry.getInstance();
     registry.registerResource(AudioResource.class, AudioActivityController.class);
     registry.registerResource(VideoResource.class, VideoActivityController.class);
-    registry.registerResource(ExternalWebsiteResource.class, ExternalWebsiteActivityController.class);
+    registry.registerResource(ExternalWebsiteResource.class,
+        ExternalWebsiteActivityController.class);
     registry.registerResource(WebsiteContentResource.class, WebsiteActivityController.class);
 
     // setup the deserializer
     ResourceDeserializerService deserializerService = ResourceDeserializerService.getInstance();
     deserializerService.registerDeserializer("Video", new VideoResourceDeserializer());
     deserializerService.registerDeserializer("Audio", new AudioResourceDeserializer());
-    deserializerService.registerDeserializer("WebsiteContent", new WebsiteContentResourceDeserializer());
-    deserializerService.registerDeserializer("ExternalWebsite", new ExternalWebsiteResourceDeserializer());
+    deserializerService.registerDeserializer("WebsiteContent",
+        new WebsiteContentResourceDeserializer());
+    deserializerService.registerDeserializer("ExternalWebsite",
+        new ExternalWebsiteResourceDeserializer());
 
   }
 

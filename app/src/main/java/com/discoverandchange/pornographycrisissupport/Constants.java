@@ -8,7 +8,7 @@ package com.discoverandchange.pornographycrisissupport;
  */
 public class Constants {
   /**
-   * Represents the android logging tag for regular messages
+   * Represents the android logging tag for regular messages.
    */
   public static final String LOG_TAG = "pcs";
 
@@ -29,7 +29,7 @@ public class Constants {
   public static final String SUPPORT_CONTACT_EDIT_MESSAGE = "supportNetwork.edit";
 
   /**
-   * Represents the android logging tag for debug type messages
+   * Represents the android logging tag for debug type messages.
    */
   public static final String LOG_TAG_DEBUG  = "pcs.debug";
 
@@ -41,7 +41,7 @@ public class Constants {
   //    "https://api.discoverandchange.com/api/v1/psa/libraryresources/";
 
   /**
-   * The URL that the app retrieves it's network resources from
+   * The URL that the app retrieves it's network resources from.
    */
   public static final String LIBRARY_RESOURCES_ENDPOINT =
       "https://api-stage.discoverandchange.com/api/v1/psa/libraryresources/";

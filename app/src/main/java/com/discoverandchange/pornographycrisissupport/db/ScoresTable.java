@@ -11,15 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ScoresTable {
 
   /**
-   * Database name.
-   */
-  private static final String DATABASE_NAME = "pcs.db";
-  /**
-   * Database version.
-   */
-  private static final int DATABASE_VERSION = 1;
-
-  /**
    * Scores Table name.
    */
   public static final String TBL_SCORES = "tbl_scores";

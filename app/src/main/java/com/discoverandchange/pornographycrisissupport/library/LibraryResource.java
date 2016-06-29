@@ -25,20 +25,20 @@ public interface LibraryResource extends Serializable {
 
   /**
    * The human readable display title of this resource.
-   * @return
+   * @return the resource title
    */
   String getTitle();
 
   /**
    * The human readable description of this resource.
-   * @return
+   * @return the string description
    */
   String getDescription();
 
   /**
    * Returns the default thumbnail resource id to use if
    * there is no external thumbnail url.
-   * @return
+   * @return a android drawable resource id
    */
   int getDefaultThumbnailResource();
 }

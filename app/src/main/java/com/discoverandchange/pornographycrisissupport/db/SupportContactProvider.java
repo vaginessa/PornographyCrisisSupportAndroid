@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 /**
  * Contact provider for CRUD on the SupportContact entities.
+ * @author Stephen Nielson
  */
 public class SupportContactProvider extends ContentProvider {
 
@@ -43,7 +44,8 @@ public class SupportContactProvider extends ContentProvider {
 
   @Nullable
   @Override
-  public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+  public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+                      String sortOrder) {
     return database.query(SupportContactTable.TABLE_NAME, projection,
         selection, selectionArgs, null, null, sortOrder);
   }

@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Handles CRUD for the SupportContact
+ * Handles CRUD for the SupportContact.
+ * @author Stephen Nielson
  */
 public class SupportContactStorageSystem {
 
@@ -23,7 +24,7 @@ public class SupportContactStorageSystem {
   private Context context = null;
 
   /**
-   * The where clause for retrieving a specific SupportContact
+   * The where clause for retrieving a specific SupportContact.
    */
   private static final String IDENTITY_WHERE = SupportContactTable.COLUMN_NAME_ID + " = ?";
 
@@ -32,12 +33,15 @@ public class SupportContactStorageSystem {
    */
   private Uri databaseSupportContactUri;
 
-  /** Contains the list of support contacts that have already been inserted into the database **/
+  /**
+   * Contains the list of support contacts that have already been inserted into the database.
+   **/
   private Set<String> managedContactIds;
 
   /**
    * Instantiates the storage system and prepares it to start working with data.
-   * @param context The application context we are working in.
+   *
+   * @param context    The application context we are working in.
    * @param contactUri The unique support contact URI for working with data in the database.
    */
   public SupportContactStorageSystem(Context context, Uri contactUri) {
@@ -48,16 +52,19 @@ public class SupportContactStorageSystem {
 
   /**
    * Removes a SupportContact from the database.
+   *
    * @param contact The contact we want to be removed.  Must have a contactId set.
    */
   public void removeContact(SupportContact contact) {
-    String[] deletionArgs = new String[] {contact.getContactID()};
-    this.context.getContentResolver().delete(this.databaseSupportContactUri,IDENTITY_WHERE,deletionArgs);
+    String[] deletionArgs = new String[]{contact.getContactID()};
+    this.context.getContentResolver().delete(this.databaseSupportContactUri, IDENTITY_WHERE,
+        deletionArgs);
     this.stopTrackingContact(contact);
   }
 
   /**
-   * Saves the contact to the database.  If the contact already exists in the database it is updated.
+   * Saves the contact to the database.  If the contact already exists in the database it is
+   * updated.
    *
    * @param contact The contact we want saved.
    */
@@ -69,17 +76,15 @@ public class SupportContactStorageSystem {
     values.put(SupportContactTable.COLUMN_NAME_PHONE, contact.getPhoneNumber());
     if (contact.isCrisisContact()) {
       values.put(SupportContactTable.COLUMN_NAME_IS_CRISIS, 1);
-    }
-    else {
+    } else {
       values.put(SupportContactTable.COLUMN_NAME_IS_CRISIS, 0);
     }
 
     if (this.isTrackingContact(contact)) {
-      String[] updateArgs = new String[] {contact.getContactID()};
-      this.context.getContentResolver().update(this.databaseSupportContactUri,values,
+      String[] updateArgs = new String[]{contact.getContactID()};
+      this.context.getContentResolver().update(this.databaseSupportContactUri, values,
           IDENTITY_WHERE, updateArgs);
-    }
-    else {
+    } else {
       this.context.getContentResolver().insert(this.databaseSupportContactUri, values);
       this.trackContact(contact);
     }
@@ -87,6 +92,7 @@ public class SupportContactStorageSystem {
 
   /**
    * Retrieves all of the support contacts from the database.
+   *
    * @return The list of support contacts stored in the database.
    */
   public List<SupportContact> retrieveSupportContactsFromStorage() {
@@ -107,11 +113,19 @@ public class SupportContactStorageSystem {
     return supportContacts;
   }
 
+  /**
+   * Given a Cursor object convert it into a SupportContact object.
+   *
+   * @param cursor The cursor pointing to the contact data
+   * @return The populated SupportContact object.
+   */
   private SupportContact hydrateContactFromCursor(Cursor cursor) {
     SupportContact contact = new SupportContact();
-    contact.setContactID(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_ID)));
+    contact.setContactID(cursor.getString(cursor
+        .getColumnIndex(SupportContactTable.COLUMN_NAME_ID)));
     contact.setName(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_NAME)));
-    contact.setPhoneNumber(cursor.getString(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_PHONE)));
+    contact.setPhoneNumber(cursor.getString(cursor
+        .getColumnIndex(SupportContactTable.COLUMN_NAME_PHONE)));
     // database holds boolean values as integers, 1 for true, 0 for false.
     int isCrisis = cursor.getInt(cursor.getColumnIndex(SupportContactTable.COLUMN_NAME_IS_CRISIS));
     contact.setIsCrisisContact(isCrisis == 1);

@@ -8,27 +8,28 @@ import com.discoverandchange.pornographycrisissupport.Constants;
 
 /**
  * Helper class representing column and sql commands for the support contact sqlite database table.
+ * @author Stephen Nielson
  */
 public class SupportContactTable {
 
 
   /**
-   * The column name for the contact id
+   * The column name for the contact id.
    */
   public static final String COLUMN_NAME_ID = "id";
 
   /**
-   * The column name for the contact name
+   * The column name for the contact name.
    */
   public static final String COLUMN_NAME_NAME = "name";
 
   /**
-   * The column name for the contact phone
+   * The column name for the contact phone.
    */
   public static final String COLUMN_NAME_PHONE = "phone";
 
   /**
-   * The column name for the contact crisis field
+   * The column name for the contact crisis field.
    */
   public static final String COLUMN_NAME_IS_CRISIS = "is_crisis";
 

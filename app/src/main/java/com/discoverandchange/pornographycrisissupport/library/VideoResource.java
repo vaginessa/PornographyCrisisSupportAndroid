@@ -11,9 +11,6 @@ import com.discoverandchange.pornographycrisissupport.R;
  */
 public class VideoResource extends MediaResource {
 
-  private String url;
-
-
   // constructors
   public VideoResource() {
     super("Video");
@@ -21,15 +18,6 @@ public class VideoResource extends MediaResource {
 
 
   // methods
-
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String newUrl) {
-    this.url = newUrl;
-  }
-
   public int getDefaultThumbnailResource() {
     return R.drawable.ic_videocam_black_48dp;
   }

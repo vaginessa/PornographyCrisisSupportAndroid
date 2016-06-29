@@ -6,7 +6,7 @@ import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
 import org.json.JSONObject;
 
 /**
- * Converts a JSON object to an Audio Resource object.
+ * Converts a JSON object to an AudioResource object.
  * Used with the ResourceDeserializerService.
  *
  * @author Stephen Nielson

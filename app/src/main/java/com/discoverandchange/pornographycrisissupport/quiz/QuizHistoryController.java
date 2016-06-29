@@ -11,7 +11,7 @@ import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 
 /**
- * QuizHistoryController displays all quiz scores in a list
+ * QuizHistoryController displays all quiz scores in a list.
  * @author Keith Higbee
  */
 public class QuizHistoryController extends BaseNavigationActivity {

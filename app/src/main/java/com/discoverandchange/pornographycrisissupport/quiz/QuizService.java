@@ -12,17 +12,18 @@ import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 
 
 /**
- * Connects to the SQLite database and performs CRUD operations with the data
+ * Connects to the SQLite database and performs CRUD operations with the data.
+ *
  * @author Keith Higbee
  */
 public class QuizService extends ContextWrapper {
 
   /**
-   * The database reference
+   * The database reference.
    */
   private SQLiteDatabase db;
   /**
-   * The Helper reference
+   * The Helper reference.
    */
   private PcsDbOpenHelper helper;
 
@@ -31,7 +32,8 @@ public class QuizService extends ContextWrapper {
   }
 
   /**
-   * Gets data from the quiz and saves it to the database
+   * Gets data from the quiz and saves it to the database.
+   *
    * @param quiz The quiz object that contains the data to be saved
    * @return Returns true if the score is a crisis score
    */
@@ -60,7 +62,8 @@ public class QuizService extends ContextWrapper {
   }
 
   /**
-   * Gets the latest quiz from the database and saves it to a quiz object/
+   * Gets the latest quiz from the database and saves it to a quiz object.
+   *
    * @return The most recent quiz score
    */
   public int getLatestQuizScore() {
@@ -71,20 +74,21 @@ public class QuizService extends ContextWrapper {
     // build query
     Cursor cursor =
         db.query(ScoresTable.TBL_SCORES,    // table
-        //null, //ScoresTable.ALL_COLUMNS,  // columns
-        ScoresTable.ALL_COLUMNS,            // columns
-        //"column=?",//null,                // selections
-        null,                               // selections
-        //new String[] {"score"},//null,    // selection args
-        null,                               // selection args
-        null,                               // group by
-        null,                               // having
-        ScoresTable.DATE_CREATED + " DESC", // order by
-        "0,1");                             // limit
+            //null, //ScoresTable.ALL_COLUMNS,  // columns
+            ScoresTable.ALL_COLUMNS,            // columns
+            //"column=?",//null,                // selections
+            null,                               // selections
+            //new String[] {"score"},//null,    // selection args
+            null,                               // selection args
+            null,                               // group by
+            null,                               // having
+            ScoresTable.DATE_CREATED + " DESC", // order by
+            "0,1");                             // limit
 
     // move cursor to first result
-    if (cursor != null)
+    if (cursor != null) {
       cursor.moveToFirst();
+    }
 
     // build quiz
     Quiz quiz = new Quiz();
@@ -93,9 +97,9 @@ public class QuizService extends ContextWrapper {
     quiz.setDate(cursor.getString(2));                    // 2 = column dateCreated
 
     Log.d("getLatestQuiz",
-        "ID:" + quiz.getId() +
-        " Score:" + quiz.getScore() +
-        " Date:" + quiz.getDate());
+        "ID:" + quiz.getId()
+            + " Score:" + quiz.getScore()
+            + " Date:" + quiz.getDate());
 
     // close the cursor
     cursor.close();
@@ -106,7 +110,8 @@ public class QuizService extends ContextWrapper {
     return quiz.getScore();
   }
 
-/*  public List<Quiz> getAllQuizzes() {
+  /*
+  public List<Quiz> getAllQuizzes() {
     List<Quiz> quizzes = new LinkedList<Quiz>();
 
     // get db
@@ -140,7 +145,8 @@ public class QuizService extends ContextWrapper {
   }*/
 
   /**
-   * Gets all quizzes from the database
+   * Gets all quizzes from the database.
+   *
    * @return The cursor data from the query
    */
   public Cursor getAllQuizzes() {
@@ -149,8 +155,8 @@ public class QuizService extends ContextWrapper {
     db = helper.getReadableDatabase();
 
     // build query and cursor
-    String query = "SELECT * FROM " + ScoresTable.TBL_SCORES +
-        " ORDER BY " + ScoresTable.DATE_CREATED + " DESC";
+    String query = "SELECT * FROM " + ScoresTable.TBL_SCORES
+        + " ORDER BY " + ScoresTable.DATE_CREATED + " DESC";
     Cursor cursor = db.rawQuery(query, null);
 
     // iterate through each row, add to the list
@@ -173,7 +179,8 @@ public class QuizService extends ContextWrapper {
   }
 
   /**
-   * Updates a quiz score based on id number
+   * Updates a quiz score based on id number.
+   *
    * @param quiz The quiz to be updated
    * @return The value of the quiz id
    */
@@ -187,20 +194,21 @@ public class QuizService extends ContextWrapper {
     values.put(ScoresTable.SCORE, quiz.getScore());
 
     // update the db
-    int i = db.update(ScoresTable.TBL_SCORES,           // table
+    int id = db.update(ScoresTable.TBL_SCORES,           // table
         values,                                         // column:value
-        ScoresTable.SCORE_ID+" = ?",                    // selection
-        new String[] { String.valueOf(quiz.getId()) }); // selectionArgs
+        ScoresTable.SCORE_ID + " = ?",                    // selection
+        new String[]{String.valueOf(quiz.getId())}); // selectionArgs
 
     // close the db
     db.close();
 
     // return quizzes
-    return i;
+    return id;
   }
 
   /**
-   * Deletes a quiz based on id number
+   * Deletes a quiz based on id number.
+   *
    * @param quiz The quiz to be deleted
    */
   public void deleteQuiz(Quiz quiz) {
@@ -210,8 +218,8 @@ public class QuizService extends ContextWrapper {
 
     // delete the quiz from db
     db.delete(ScoresTable.TBL_SCORES,                   // table
-        ScoresTable.SCORE_ID+" = ?",                    // selections
-        new String[] { String.valueOf(quiz.getId()) }); // selectionArgs
+        ScoresTable.SCORE_ID + " = ?",                    // selections
+        new String[]{String.valueOf(quiz.getId())}); // selectionArgs
 
     // close the db
     db.close();

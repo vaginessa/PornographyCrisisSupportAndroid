@@ -1,11 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneStateListener;
@@ -27,6 +23,7 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
 /**
  * Controls the quiz and actions taken after saving a quiz score.
  * Actions are either launching the dialer or launching the library.
+ *
  * @author Keith Higbee
  */
 public class QuizController extends BaseNavigationActivity {
@@ -35,6 +32,7 @@ public class QuizController extends BaseNavigationActivity {
 
   /**
    * Creates the initial arrays and cursorAdapter for communicating with the database.
+   *
    * @param savedInstanceState Any saved data needed for this activity.
    */
   @Override
@@ -55,16 +53,17 @@ public class QuizController extends BaseNavigationActivity {
   /**
    * Handles the flow of saving a quiz score.  If the score is a crisis score, it
    * launches the dialer.  Otherwise, it launches the library
+   *
    * @param btn Used for determining debugging
    */
   public void handleSubmitQuizClick(View btn) {
-    SeekBar slider = (SeekBar)findViewById(R.id.cravingsLevelSlider);
+    SeekBar slider = (SeekBar) findViewById(R.id.cravingsLevelSlider);
     if (slider == null) {
       throw new RuntimeException("Could not find slider.  Check id is named properly");
     }
 
-    Log.d("PornAddictionSupport", "handleSubmitQuizClick() called with: " +
-        "btn = [" + btn + "]" + " slider equal to " + slider.getProgress());
+    Log.d("PornAddictionSupport", "handleSubmitQuizClick() called with: "
+        + "btn = [" + btn + "]" + " slider equal to " + slider.getProgress());
 
     // save slider value to new Quiz
     Quiz quiz = new Quiz();
@@ -82,8 +81,7 @@ public class QuizController extends BaseNavigationActivity {
 
       // After saving quiz, launch the dialer
       launchDialer();
-    }
-    else {
+    } else {
       launchLibrary();
     }
   }
@@ -107,21 +105,20 @@ public class QuizController extends BaseNavigationActivity {
    * Launches the dialer if the support network has been created.
    */
   public void launchDialer() {
-    //EndCallListenerTest listener = new EndCallListenerTest();
     SupportNetworkService service = SupportNetworkService.getInstance(getBaseContext());
     SupportContact contact = service.getCrisisSupportContact();
 
     if (contact != null) {
       EndCallListener listener = new EndCallListener();
-      TelephonyManager mTM = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-      mTM.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
+      TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context
+          .TELEPHONY_SERVICE);
+      telephonyManager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
 
       Uri call = Uri.parse("tel:" + contact.getPhoneNumber());
-      Intent intent = new Intent(Intent.ACTION_DIAL, call) ;
+      Intent intent = new Intent(Intent.ACTION_DIAL, call);
       startActivity(intent);
-    }
-    // if we don't have a crisis contact then we should just launch the library
-    else {
+    } else {
+      // if we don't have a crisis contact then we should just launch the library
       Log.d(Constants.LOG_TAG, "SupportContact crisis not found, launching library");
       launchLibrary();
     }

@@ -1,27 +1,27 @@
 package com.discoverandchange.pornographycrisissupport.quiz;
 
 /**
- * Holds a quiz object and its properties
+ * Holds a quiz object and its properties.
+ *
  * @author Keith Higbee
  */
 public class Quiz {
 
   /**
-   * The id of the quiz from the database
+   * The id of the quiz from the database.
    */
   private int id;
   /**
-   *  The score of the quiz from the database
+   * The score of the quiz from the database.
    */
   private int score;
   /**
-   * The date the quiz was taken
+   * The date the quiz was taken.
    */
   private String date;
 
   // constructors
-  public Quiz(int score)
-  {
+  public Quiz(int score) {
     this.score = score;
   }
 

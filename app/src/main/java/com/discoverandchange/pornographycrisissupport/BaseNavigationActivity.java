@@ -16,7 +16,7 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
 
 /**
  * Shares common code for the menu navigation items.
- * @author snielson
+ * @author Stephen Nielson
  */
 public class BaseNavigationActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener{
@@ -26,7 +26,14 @@ public class BaseNavigationActivity extends AppCompatActivity
   *  and here: http://stackoverflow.com/questions/30822326/sharing-navigationview-with-all-the-activities
    */
 
+  /**
+   * Holds a reference to the entire activity drawer layout
+   */
   protected DrawerLayout fullLayout;
+
+  /**
+   * Holds a reference to the inner frame that all inherited activities views will be stored into.
+   */
   protected FrameLayout frameLayout;
 
   /**

@@ -3,6 +3,7 @@ package com.discoverandchange.pornographycrisissupport.library;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,43 +29,55 @@ public class LibraryController extends BaseNavigationActivity
    */
   private LibraryResourceListAdapter libraryResourceListAdapter;
 
-  @Override
   /**
    * Creates the library list and displays the current quiz score on the activity
-   * @param savedInstancedState the information saved for this activity.
+   * @param savedInstanceState {@inheritDoc}
    */
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_library_controller);
-
-    QuizService quizService = new QuizService(getBaseContext());
-    TextView latestScore = (TextView) findViewById(R.id.latestScore);
-    latestScore.setText(Integer.toString(quizService.getLatestQuizScore()));
-
-
-    ResourceLibraryService service = ResourceLibraryService.getInstance();
-    setupListAdapter(service, quizService);
   }
 
-  @Override
   /**
    * Starts the activity and begins the loading of the library resources if they are not loaded
    * already.
    */
+  @Override
   protected void onStart() {
     super.onStart();
 
+    Log.d(Constants.LOG_TAG, "starting library");
+
+    QuizService quizService = new QuizService(getBaseContext());
     ResourceLibraryService service = ResourceLibraryService.getInstance();
     service.registerObserver(this);
     if (!service.isResourcesLoaded()) {
       service.loadResources();
     }
+    else {
+      // setup our text view and setup our list adapter.
+      setupListAdapter(service, quizService);
+    }
+    TextView latestScore = (TextView) findViewById(R.id.latestScore);
+    int score = quizService.getLatestQuizScore();
+
+    Log.d(Constants.LOG_TAG, "setting latest score view: " + score);
+    latestScore.setText(Integer.toString(score));
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    Log.d(Constants.LOG_TAG, "resuming library");
   }
 
   private void setupListAdapter(ResourceLibraryService service, QuizService quizService) {
     List<LibraryResource> resources = new ArrayList<>();
     if (service.isResourcesLoaded()) {
-      resources = service.getResourcesForQuizScore(quizService.getLatestQuizScore());
+      int latestScore = quizService.getLatestQuizScore();
+      Log.d(Constants.LOG_TAG, "retrieving resources for score: " + latestScore);
+      resources = service.getResourcesForQuizScore(latestScore);
     }
 
     libraryResourceListAdapter = new LibraryResourceListAdapter(getBaseContext(), resources);
@@ -99,6 +112,7 @@ public class LibraryController extends BaseNavigationActivity
     super.onStop();
     ResourceLibraryService service = ResourceLibraryService.getInstance();
     service.removeObserver(this); // remove ourselves so we don't have memory leaks.
+    Log.d(Constants.LOG_TAG, "stopping library");
   }
 
   @Override

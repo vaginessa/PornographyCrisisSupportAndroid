@@ -19,25 +19,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="92dp"/>
 
-    <Button
-        android:id="@+id/play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PLAY"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/stop"
-        android:layout_toStartOf="@+id/stop"
-        android:layout_marginBottom="44dp" />
+    <!--<Button-->
+        <!--android:id="@+id/play"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="PLAY"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_toLeftOf="@+id/stop"-->
+        <!--android:layout_toStartOf="@+id/stop"-->
+        <!--android:layout_marginBottom="44dp" />-->
 
 
-    <Button
-        android:id="@+id/stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STOP"
-        android:layout_alignTop="@+id/play"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+    <!--<Button-->
+        <!--android:id="@+id/stop"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="STOP"-->
+        <!--android:layout_alignTop="@+id/play"-->
+        <!--android:layout_toRightOf="@+id/textView2"-->
+        <!--android:layout_toEndOf="@+id/textView2" />-->
 
     <VideoView
         android:layout_width="fill_parent"

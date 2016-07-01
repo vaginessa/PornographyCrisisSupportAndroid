@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -60,7 +61,7 @@ public class AudioActivityController extends BaseNavigationActivity {
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepare(); // might take long for buffering, etc.
           } catch (IOException ex) {
-            ex.printStackTrace();
+            Log.e(Constants.LOG_TAG, "Error Connecting", ex);
           }
           mediaPlayer.start();
         }

@@ -64,6 +64,7 @@ public class VideoActivityController extends BaseNavigationActivity {
       Uri video = Uri.parse(link);
       videoView.setMediaController(mediaController);
       videoView.setVideoURI(video);
+      videoView.start();
     } catch (Exception ex) {
       // TODO: John handle exception
       Log.e(Constants.LOG_TAG, "Error Connecting", ex);
@@ -71,17 +72,17 @@ public class VideoActivityController extends BaseNavigationActivity {
 
 
     // Handling the play button
-    Button play = (Button) findViewById(R.id.play);
-    play.setOnClickListener(new View.OnClickListener() {
-
-      VideoView videoView = (VideoView) findViewById(R.id.videoView);
-
-      @Override
-      public void onClick(View view) {
-        videoView.start();
-      }
-
-    });
+//    Button play = (Button) findViewById(R.id.play);
+//    play.setOnClickListener(new View.OnClickListener() {
+//
+//      VideoView videoView = (VideoView) findViewById(R.id.videoView);
+//
+//      @Override
+//      public void onClick(View view) {
+//        videoView.start();
+//      }
+//
+//    });
 
 
     //
@@ -89,19 +90,19 @@ public class VideoActivityController extends BaseNavigationActivity {
     //
 
     // Handling the stop button
-    Button stop = (Button) findViewById(R.id.stop);
-    stop.setOnClickListener(new View.OnClickListener() {
-
-      VideoView videoView = (VideoView) findViewById(R.id.videoView);
-
-      @Override
-      public void onClick(View view) {
-        if (view != null && videoView.isPlaying()) {
-          videoView.stopPlayback();
-          // videoView.release();
-        }
-      }
-    });
+//    Button stop = (Button) findViewById(R.id.stop);
+//    stop.setOnClickListener(new View.OnClickListener() {
+//
+//      VideoView videoView = (VideoView) findViewById(R.id.videoView);
+//
+//      @Override
+//      public void onClick(View view) {
+//        if (view != null && videoView.isPlaying()) {
+//          videoView.stopPlayback();
+//          // videoView.release();
+//        }
+//      }
+//    });
   }
 
   /**

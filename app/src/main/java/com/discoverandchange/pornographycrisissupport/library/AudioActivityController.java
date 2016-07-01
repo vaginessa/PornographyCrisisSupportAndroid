@@ -1,5 +1,6 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
+import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 
 import java.io.IOException;
@@ -16,13 +18,12 @@ import java.io.IOException;
  */
 public class AudioActivityController extends BaseNavigationActivity {
 
+  // The android media player resource for our audio file.
 
-  // TODO: john Add in pause button for better playback options if there's time
-
-  /**
-   * The android media player resource for our audio file.
-   */
   MediaPlayer mediaPlayer;
+
+  // A variable to hold our video to play
+  private AudioResource audioResource = null;
 
   /**
    * Loads up the audio view buttons and prepares the audio for playback.
@@ -33,6 +34,15 @@ public class AudioActivityController extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_audio_activity_controller);
 
+    // To utilize link data from the selected audioResource
+    Intent intent = getIntent();
+    audioResource = (AudioResource) intent.getSerializableExtra(Constants
+            .LIBRARY_RESOURCE_VIEW_MESSAGE);
+    if (audioResource == null) {
+      // TODO: stephen, john handle null case
+    }
+
+
     // Handling the play button
     Button play = (Button) findViewById(R.id.play);
     play.setOnClickListener(new View.OnClickListener() {
@@ -40,19 +50,20 @@ public class AudioActivityController extends BaseNavigationActivity {
 
       @Override
       public void onClick(View view) {
-        String url = "https://www.discoverandchange.com/wp-content/uploads/2016/04/"
-            + "Relapse-Prevention-Strategies.mp3";
+        String url = audioResource.getUrl();
 
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-          mediaPlayer.setDataSource(url);
-          mediaPlayer.prepare(); // might take long for buffering, etc.
-        } catch (IOException ex) {
-          ex.printStackTrace();
+        if (mediaPlayer == null) {
+          mediaPlayer = new MediaPlayer();
+
+          mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+          try {
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare(); // might take long for buffering, etc.
+          } catch (IOException ex) {
+            ex.printStackTrace();
+          }
+          mediaPlayer.start();
         }
-        mediaPlayer.start();
-
       }
     });
 
@@ -61,12 +72,12 @@ public class AudioActivityController extends BaseNavigationActivity {
     Button stop = (Button) findViewById(R.id.stop);
     stop.setOnClickListener(new View.OnClickListener() {
 
-
       @Override
       public void onClick(View view) {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
           mediaPlayer.stop();
           mediaPlayer.release();
+          mediaPlayer = null;
         }
       }
     });
@@ -76,8 +87,7 @@ public class AudioActivityController extends BaseNavigationActivity {
    * Handling destruction of this activity to release media.
    */
   protected void onDestroy() {
-    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-      mediaPlayer.stop();
+    if (mediaPlayer != null) {
       mediaPlayer.release();
       mediaPlayer = null;
     }

@@ -1,5 +1,6 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.VideoView;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 
 /**
  * Displays a video library resource
@@ -30,8 +32,8 @@ public class VideoActivityController extends BaseNavigationActivity {
   //          *      https://youtu.be/IVGE5J7-3AQ                                      (Best Instructions)
   //          *      http://stackoverflow.com/questions/21849602/android-how-to-play-mp4-video-from-url/21849982#21849982
 
-  // TODO: John Replace with mediaController in the stop controls?
-  MediaPlayer mediaPlayer;
+  // A variable to hold our video to play
+  private VideoResource videoResource = null;
 
 
   /**
@@ -45,7 +47,17 @@ public class VideoActivityController extends BaseNavigationActivity {
     try {
 
       setContentView(R.layout.activity_video_activity_controller);
-      String link = "https://www.discoverandchange.com/wp-content/uploads/2016/02/DiscoverAndChangeIntroVideo.mp4";
+
+      // To utilize link data from the selected videoResource
+      Intent intent = getIntent();
+      videoResource = (VideoResource) intent.getSerializableExtra(Constants
+              .LIBRARY_RESOURCE_VIEW_MESSAGE);
+      if (videoResource == null) {
+        // TODO: stephen, john handle null case
+      }
+
+      // Uses the URL attached to the videoResource
+      String link = videoResource.getUrl();
       VideoView videoView = (VideoView) findViewById(R.id.videoView);
       MediaController mediaController = new MediaController(VideoActivityController.this);
       mediaController.setAnchorView(videoView);

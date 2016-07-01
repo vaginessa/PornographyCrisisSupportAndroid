@@ -40,11 +40,10 @@
         android:layout_toEndOf="@+id/textView2" />
 
     <VideoView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/videoView"
-        android:layout_above="@+id/play"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

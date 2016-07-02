@@ -1,5 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.library.json;
 
+import android.util.Log;
+
+import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
 
@@ -25,6 +28,8 @@ public class ExternalWebsiteResourceDeserializer extends MediaResourceDeserializ
 
     String url = jsonResource.optString("url", null);
     externalWebsite.setUrl(url);
+    Log.d(Constants.LOG_TAG, "External Website[" + externalWebsite.getTitle()
+        + "] deserialized with url " + externalWebsite.getUrl());
     return externalWebsite;
   }
 }

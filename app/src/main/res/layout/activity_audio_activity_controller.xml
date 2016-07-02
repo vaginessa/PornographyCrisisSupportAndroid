@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Audio Controller"
-        android:id="@+id/textView6"
+        android:text="Play Audio"
+        android:id="@+id/audioTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"/>
@@ -25,9 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PLAY"
-        android:layout_marginTop="70dp"
-        android:layout_below="@+id/textView6"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="67dp"
+        android:layout_below="@+id/audioTitle"
+        android:layout_centerHorizontal="true"/>
 
 
     <Button
@@ -35,8 +35,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="STOP"
-        android:layout_below="@+id/textView6"
-        android:layout_alignLeft="@+id/play"
-        android:layout_alignStart="@+id/play"
-        android:layout_marginTop="146dp" />
+        android:layout_below="@+id/play"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

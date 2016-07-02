@@ -40,7 +40,7 @@
         </activity>
         <activity android:name=".library.AudioActivityController">
         </activity>
-        <activity android:name=".library.ExternalWebsiteActivityController">
+        <activity android:name=".library.ExternalWebsiteActivityController" android:noHistory="true">
         </activity>
         <activity android:name=".library.WebsiteActivityController">
         </activity>

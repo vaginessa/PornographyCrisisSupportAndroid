@@ -1,9 +1,12 @@
 package com.discoverandchange.pornographycrisissupport;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,11 +57,17 @@ public class QuizServiceTest {
 
   @Test
   public void testUpdateQuiz() {
+    QuizService service = new QuizService(context);
 
+    // get data from db
+    Cursor cursor = service.getAllQuizzes();
+
+    // verify rows returned is greater than 0
+    assertTrue("Rows returned is greater than 0", cursor.getCount() > 0);
   }
 
   @Test
   public void testDeleteQuiz() {
-
+    // QuizService.deleteQuiz not yet implemented
   }
 }

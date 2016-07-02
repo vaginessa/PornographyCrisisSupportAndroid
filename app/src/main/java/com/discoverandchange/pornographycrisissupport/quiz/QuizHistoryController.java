@@ -32,11 +32,11 @@ public class QuizHistoryController extends BaseNavigationActivity {
     String[] from = { ScoresTable.SCORE, ScoresTable.DATE_CREATED };
 
     // what is displaying the data
-    int[] to = { android.R.id.text1 };
+    int[] to = { R.id.quizHistoryScore, R.id.quizHistoryDate };
 
     // cursor adapter wrapped around the cursor
     CursorAdapter cursorAdapter = new SimpleCursorAdapter(this,
-        android.R.layout.simple_list_item_1, cursor, from, to, 0);
+        R.layout.item_quiz_history, cursor, from, to, 0);
 
     // get reference to the ListView
     ListView list = (ListView) findViewById(android.R.id.list);

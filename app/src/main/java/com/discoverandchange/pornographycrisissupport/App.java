@@ -32,7 +32,7 @@ public class App extends Application {
   /**
    * Constructs the app object.
    */
-  App() {
+  public App() {
     super();
   }
 

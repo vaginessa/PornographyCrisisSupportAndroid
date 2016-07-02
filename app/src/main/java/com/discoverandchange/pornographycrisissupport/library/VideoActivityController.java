@@ -53,7 +53,9 @@ public class VideoActivityController extends BaseNavigationActivity {
       videoResource = (VideoResource) intent.getSerializableExtra(Constants
               .LIBRARY_RESOURCE_VIEW_MESSAGE);
       if (videoResource == null) {
-        // TODO: stephen, john handle null case
+        Log.wtf(Constants.LOG_TAG, "Sent null video resource when we shouldn't have");
+        finish();
+        return;
       }
 
       // Uses the URL attached to the videoResource

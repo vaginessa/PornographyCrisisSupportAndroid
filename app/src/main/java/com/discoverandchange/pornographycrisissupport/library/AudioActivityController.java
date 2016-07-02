@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
@@ -40,9 +41,13 @@ public class AudioActivityController extends BaseNavigationActivity {
     audioResource = (AudioResource) intent.getSerializableExtra(Constants
             .LIBRARY_RESOURCE_VIEW_MESSAGE);
     if (audioResource == null) {
-      // TODO: stephen, john handle null case
+      Log.wtf(Constants.LOG_TAG, "Sent null audio resource when we shouldn't have");
+      finish();
+      return;
     }
 
+    TextView title = (TextView)findViewById(R.id.audioTitle);
+    title.setText(audioResource.getTitle());
 
     // Handling the play button
     Button play = (Button) findViewById(R.id.play);

@@ -16,12 +16,15 @@ public class ExternalWebsiteResourceDeserializer extends MediaResourceDeserializ
   /**
    * Converts a json object into an ExternalWebsiteResource object.
    * @param jsonResource The resource that will be converted into an ExternalWebsiteResource
-   * @returns The deserialized LibraryResource with it's properties filled in.
+   * @return The deserialized LibraryResource with it's properties filled in.
    */
   @Override
   public LibraryResource deserialize(JSONObject jsonResource) throws JSONException {
     ExternalWebsiteResource externalWebsite = new ExternalWebsiteResource();
     hydrateMedia(externalWebsite, jsonResource);
+
+    String url = jsonResource.optString("url", null);
+    externalWebsite.setUrl(url);
     return externalWebsite;
   }
 }

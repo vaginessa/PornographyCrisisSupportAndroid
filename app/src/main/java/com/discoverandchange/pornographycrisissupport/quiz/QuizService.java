@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.db.PcsDbOpenHelper;
@@ -58,7 +59,7 @@ public class QuizService extends ContextWrapper {
     Log.d("saveQuiz", "Score: " + quiz.getScore());
 
     // determine ifCrisisQuizScore
-    return quiz.getScore() > 7;
+    return quiz.getScore() >= 7;
   }
 
   /**
@@ -67,46 +68,58 @@ public class QuizService extends ContextWrapper {
    * @return The most recent quiz score
    */
   public int getLatestQuizScore() {
-    // get db
-    helper = new PcsDbOpenHelper(this);
-    db = helper.getReadableDatabase();
+    try {
+      // get db
+      helper = new PcsDbOpenHelper(this);
+      db = helper.getReadableDatabase();
 
-    // build query
-    Cursor cursor =
-        db.query(ScoresTable.TBL_SCORES,    // table
-            //null, //ScoresTable.ALL_COLUMNS,  // columns
-            ScoresTable.ALL_COLUMNS,            // columns
-            //"column=?",//null,                // selections
-            null,                               // selections
-            //new String[] {"score"},//null,    // selection args
-            null,                               // selection args
-            null,                               // group by
-            null,                               // having
-            ScoresTable.DATE_CREATED + " DESC", // order by
-            "0,1");                             // limit
-
-    // move cursor to first result
-    if (cursor != null) {
-      cursor.moveToFirst();
+    }
+    catch (SQLiteException ex) {
+      return 0;
     }
 
-    // build quiz
     Quiz quiz = new Quiz();
-    quiz.setId(Integer.parseInt(cursor.getString(0)));    // 0 = column _id
-    quiz.setScore(Integer.parseInt(cursor.getString(1))); // 1 = column score
-    quiz.setDate(cursor.getString(2));                    // 2 = column dateCreated
+    if (db != null) {
 
-    Log.d("getLatestQuiz",
-        "ID:" + quiz.getId()
-            + " Score:" + quiz.getScore()
-            + " Date:" + quiz.getDate());
+      // build query
+      Cursor cursor =
+          db.query(ScoresTable.TBL_SCORES,        // table
+              //null, //ScoresTable.ALL_COLUMNS,  // columns
+              ScoresTable.ALL_COLUMNS,            // columns
+              //"column=?",//null,                // selections
+              null,                               // selections
+              //new String[] {"score"},//null,    // selection args
+              null,                               // selection args
+              null,                               // group by
+              null,                               // having
+              ScoresTable.DATE_CREATED + " DESC", // order by
+              "0,1");                             // limit
 
-    // close the cursor
-    cursor.close();
+      // move cursor to first result
+      if (cursor != null) {
+        cursor.moveToFirst();
+      }
 
-    // close the db
-    db.close();
 
+      if (cursor.getCount() != 0) {
+        // build quiz
+        quiz.setId(Integer.parseInt(cursor.getString(0)));    // 0 = column _id
+        quiz.setScore(Integer.parseInt(cursor.getString(1))); // 1 = column score
+        quiz.setDate(cursor.getString(2));                    // 2 = column dateCreated
+
+        Log.d("getLatestQuiz",
+            "ID:" + quiz.getId()
+                + " Score:" + quiz.getScore()
+                + " Date:" + quiz.getDate());
+      }
+
+
+      // close the cursor
+      cursor.close();
+
+      // close the db
+      db.close();
+    }
     return quiz.getScore();
   }
 

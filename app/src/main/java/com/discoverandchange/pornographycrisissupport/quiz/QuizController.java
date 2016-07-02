@@ -45,9 +45,6 @@ public class QuizController extends BaseNavigationActivity {
     int[] to = {android.R.id.text1};
     cursorAdapter = new SimpleCursorAdapter(this,
         android.R.layout.simple_list_item_1, null, from, to, 0);
-
-    // initiates the Loader--gets the data asynchronously
-    //getLoaderManager().initLoader(0, null, this);
   }
 
   /**
@@ -124,20 +121,4 @@ public class QuizController extends BaseNavigationActivity {
     }
 
   }
-
-  /*@Override
-  public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-    return new CursorLoader(this, ScoresProvider.CONTENT_URI,
-        null, null, null, null);
-  }
-
-  @Override
-  public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-    cursorAdapter.swapCursor(data);
-  }
-
-  @Override
-  public void onLoaderReset(Loader<Cursor> loader) {
-    cursorAdapter.swapCursor(null);
-  }*/
 }

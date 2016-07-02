@@ -8,8 +8,21 @@ import com.discoverandchange.pornographycrisissupport.R;
  */
 public class ExternalWebsiteResource extends MediaResource {
 
+  /**
+   * The content for the website.
+   */
+  private String url;
+
   public ExternalWebsiteResource() {
     super("ExternalWebsite");
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public String getUrl() {
+    return url;
   }
 
   public int getDefaultThumbnailResource() {

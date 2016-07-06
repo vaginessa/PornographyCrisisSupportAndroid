@@ -23,7 +23,7 @@
             <category android:name="android.intent.category.LAUNCHER"/>
         </intent-filter>
         </activity>
-        <activity android:name=".supportnetwork.controllers.SupportNetworkList">
+        <activity android:name=".supportnetwork.controllers.SupportNetworkListController">
         </activity>
         <activity android:name=".library.controllers.LibraryController">
         </activity>
@@ -33,7 +33,7 @@
             android:authorities="com.discoverandchange.pornographycrisissupport.SupportContactProvider"
             android:exported="false"/>
 
-        <activity android:name=".supportnetwork.controllers.SupportNetworkEdit"/>
+        <activity android:name=".supportnetwork.controllers.SupportNetworkEditController"/>
         <activity android:name=".quiz.controllers.QuizHistoryController">
         </activity>
         <activity android:name=".library.controllers.VideoActivityController">

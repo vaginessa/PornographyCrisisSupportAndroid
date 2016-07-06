@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizHistoryController;
-import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers.SupportNetworkList;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers.SupportNetworkListController;
 
 /**
  * Shares common code for the menu navigation items.
@@ -117,7 +117,7 @@ public class BaseNavigationActivity extends AppCompatActivity
 
     switch (id) {
       case R.id.action_support_network: {
-        this.launchActivity(SupportNetworkList.class);
+        this.launchActivity(SupportNetworkListController.class);
         return true;
       }
       case R.id.action_quiz: {
@@ -151,7 +151,7 @@ public class BaseNavigationActivity extends AppCompatActivity
 
     switch (id) {
       case R.id.nav_support_network: {
-        this.launchActivity(SupportNetworkList.class);
+        this.launchActivity(SupportNetworkListController.class);
       }
       break;
       case R.id.nav_quiz: {

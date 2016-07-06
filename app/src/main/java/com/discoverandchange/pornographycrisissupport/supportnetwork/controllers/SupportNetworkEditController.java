@@ -15,7 +15,7 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
 /**
  * Handles the editing of a SupportContact.
  */
-public class SupportNetworkEdit extends BaseNavigationActivity {
+public class SupportNetworkEditController extends BaseNavigationActivity {
 
   /**
    * The SupportContact being edited.

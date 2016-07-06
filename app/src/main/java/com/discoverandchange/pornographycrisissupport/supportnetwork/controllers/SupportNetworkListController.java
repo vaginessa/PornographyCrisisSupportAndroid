@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Handles the display, removal, and addition of support contacts.
  */
-public class SupportNetworkList extends BaseNavigationActivity {
+public class SupportNetworkListController extends BaseNavigationActivity {
 
   /**
    * Constant for identifying that we initiated the contact picker call.
@@ -76,7 +76,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position,
                               long id) {
-        Intent intent = new Intent(getBaseContext(), SupportNetworkEdit.class);
+        Intent intent = new Intent(getBaseContext(), SupportNetworkEditController.class);
         intent.putExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE,
             (SupportContact) parent.getItemAtPosition(position));
         startActivity(intent);

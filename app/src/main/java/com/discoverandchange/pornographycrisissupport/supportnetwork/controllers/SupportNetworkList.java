@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport;
+package com.discoverandchange.pornographycrisissupport.supportnetwork.controllers;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -14,9 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
+import com.discoverandchange.pornographycrisissupport.Constants;
+import com.discoverandchange.pornographycrisissupport.IntentChecker;
+import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
-import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 import java.util.ArrayList;

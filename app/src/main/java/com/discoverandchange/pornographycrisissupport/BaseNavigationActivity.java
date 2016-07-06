@@ -9,9 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.discoverandchange.pornographycrisissupport.library.LibraryController;
-import com.discoverandchange.pornographycrisissupport.quiz.QuizController;
-import com.discoverandchange.pornographycrisissupport.quiz.QuizHistoryController;
+import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
+import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
+import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizHistoryController;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers.SupportNetworkList;
 
 /**
  * Shares common code for the menu navigation items.

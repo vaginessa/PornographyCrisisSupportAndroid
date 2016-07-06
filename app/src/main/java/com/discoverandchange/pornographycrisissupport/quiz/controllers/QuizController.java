@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.quiz;
+package com.discoverandchange.pornographycrisissupport.quiz.controllers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,10 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
-import com.discoverandchange.pornographycrisissupport.library.LibraryController;
+import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
+import com.discoverandchange.pornographycrisissupport.quiz.EndCallListener;
+import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
+import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 

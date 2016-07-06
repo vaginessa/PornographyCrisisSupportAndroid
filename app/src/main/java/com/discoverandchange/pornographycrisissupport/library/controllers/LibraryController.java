@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.library;
+package com.discoverandchange.pornographycrisissupport.library.controllers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
+import com.discoverandchange.pornographycrisissupport.library.LibraryResourceActivityRegistry;
+import com.discoverandchange.pornographycrisissupport.library.LibraryResourceListAdapter;
+import com.discoverandchange.pornographycrisissupport.library.LibraryServiceObserver;
+import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.library;
+package com.discoverandchange.pornographycrisissupport.library.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.webkit.WebView;
 
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.library.WebsiteContentResource;
 
 import org.apache.commons.lang3.StringUtils;
 

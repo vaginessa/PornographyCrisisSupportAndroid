@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.library;
+package com.discoverandchange.pornographycrisissupport.library.controllers;
 
 import android.content.Intent;
 import android.media.AudioManager;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.library.AudioResource;
 
 import java.io.IOException;
 

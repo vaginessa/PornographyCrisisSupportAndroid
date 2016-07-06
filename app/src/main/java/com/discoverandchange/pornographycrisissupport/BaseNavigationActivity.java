@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizHistoryController;
+import com.discoverandchange.pornographycrisissupport.settings.controllers.SettingsController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers.SupportNetworkListController;
 
 /**
@@ -130,6 +131,10 @@ public class BaseNavigationActivity extends AppCompatActivity
       }
       case R.id.action_quiz_history: {
         this.launchActivity(QuizHistoryController.class);
+        return true;
+      }
+      case R.id.action_settings: {
+        this.launchActivity(SettingsController.class);
         return true;
       }
       default: {

@@ -47,7 +47,7 @@ public class SettingsService {
    */
   public String getInspirationalQuote() {
     //
-    return null;
+    return "This is my test inspirational quote";
   }
 
   /**

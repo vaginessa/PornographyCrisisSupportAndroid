@@ -18,6 +18,7 @@ import com.discoverandchange.pornographycrisissupport.library.LibraryResourceLis
 import com.discoverandchange.pornographycrisissupport.library.LibraryServiceObserver;
 import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
+import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +80,15 @@ public class LibraryController extends BaseNavigationActivity
 
   private void setupListAdapter(ResourceLibraryService service, QuizService quizService) {
     List<LibraryResource> resources = new ArrayList<>();
+
+    // load in the resources from the settings if we have any.
+    SettingsService settingsService = SettingsService.getInstance();
+    resources.addAll(settingsService.getSettingsResources());
+
     if (service.isResourcesLoaded()) {
       int latestScore = quizService.getLatestQuizScore();
       Log.d(Constants.LOG_TAG, "retrieving resources for score: " + latestScore);
-      resources = service.getResourcesForQuizScore(latestScore);
+      resources.addAll(service.getResourcesForQuizScore(latestScore));
     }
 
     libraryResourceListAdapter = new LibraryResourceListAdapter(getBaseContext(), resources);

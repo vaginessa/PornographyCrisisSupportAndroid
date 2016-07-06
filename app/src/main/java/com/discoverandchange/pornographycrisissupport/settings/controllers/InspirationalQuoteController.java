@@ -11,6 +11,7 @@ import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.library.InspirationalQuoteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
 import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
+import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
 
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,15 @@ public class InspirationalQuoteController extends BaseNavigationActivity {
   }
 
   public void handleSaveQuote(View btn) {
-    
+    EditText editText = (EditText)findViewById(R.id.editTextInspirationalQuote);
+    String text = editText.getText().toString().trim();
+
+    if (StringUtils.isEmpty(text)) {
+      // TODO: stephen display message if text is empty.
+      return;
+    }
+
+    SettingsService service = SettingsService.getInstance();
+    service.saveInspirationalQuote(text);
   }
 }

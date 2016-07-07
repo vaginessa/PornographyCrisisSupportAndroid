@@ -51,6 +51,8 @@
         </activity>
         <activity android:name=".settings.controllers.InspirationalQuoteSettingsController">
         </activity>
+        <activity android:name=".library.controllers.InspirationalQuoteController">
+        </activity>
     </application>
 
 </manifest>

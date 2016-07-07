@@ -49,7 +49,7 @@
         </activity>
         <activity android:name=".settings.controllers.MeaningfulPictureController">
         </activity>
-        <activity android:name=".settings.controllers.InspirationalQuoteController">
+        <activity android:name=".settings.controllers.InspirationalQuoteSettingsController">
         </activity>
     </application>
 

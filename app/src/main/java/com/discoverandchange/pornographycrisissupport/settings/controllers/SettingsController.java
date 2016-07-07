@@ -1,7 +1,6 @@
 package com.discoverandchange.pornographycrisissupport.settings.controllers;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -33,7 +32,7 @@ public class SettingsController extends BaseNavigationActivity {
    * @param btn The button that was clicked on.
    */
   public void openInspirationalQuote(View btn) {
-    Intent intent = new Intent(getBaseContext(), InspirationalQuoteController.class);
+    Intent intent = new Intent(getBaseContext(), InspirationalQuoteSettingsController.class);
     startActivity(intent);
   }
 }

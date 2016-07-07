@@ -82,7 +82,7 @@ public class LibraryController extends BaseNavigationActivity
     List<LibraryResource> resources = new ArrayList<>();
 
     // load in the resources from the settings if we have any.
-    SettingsService settingsService = SettingsService.getInstance();
+    SettingsService settingsService = SettingsService.getInstance(getBaseContext());
     resources.addAll(settingsService.getSettingsResources());
 
     if (service.isResourcesLoaded()) {

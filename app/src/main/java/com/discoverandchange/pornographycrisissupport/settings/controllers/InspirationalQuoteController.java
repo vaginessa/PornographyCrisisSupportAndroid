@@ -22,6 +22,13 @@ public class InspirationalQuoteController extends BaseNavigationActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_inspirational_quote_controller);
+
+    SettingsService service = SettingsService.getInstance(getBaseContext());
+    String text = service.getInspirationalQuote();
+    if (!StringUtils.isEmpty(text)) {
+      EditText editText = (EditText)findViewById(R.id.editTextInspirationalQuote);
+      editText.setText(text);
+    }
   }
 
   public void handleSaveQuote(View btn) {
@@ -33,7 +40,14 @@ public class InspirationalQuoteController extends BaseNavigationActivity {
       return;
     }
 
-    SettingsService service = SettingsService.getInstance();
+    SettingsService service = SettingsService.getInstance(getBaseContext());
     service.saveInspirationalQuote(text);
+  }
+
+  public void handleClearQuote(View btn) {
+    SettingsService service = SettingsService.getInstance(getBaseContext());
+    service.clearInspirationalQuote();
+    EditText editText = (EditText)findViewById(R.id.editTextInspirationalQuote);
+    editText.setText("");
   }
 }

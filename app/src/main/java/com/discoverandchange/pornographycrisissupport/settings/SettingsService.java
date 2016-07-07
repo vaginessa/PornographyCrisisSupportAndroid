@@ -1,5 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.settings;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.discoverandchange.pornographycrisissupport.library.InspirationalQuoteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
 
@@ -9,19 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by snielson on 7/6/16.
+ * Responsible for saving and retrieving global user provided settings.
+ * @author Stephen Nielson
  */
 public class SettingsService {
+  private static final String SETTINGS_PREFERENCES = "Settings";
+  private static final String INSPIRATIONAL_QUOTE_SETTING = "InspirationalQuote";
+  private static final String MEANINGFUL_PICTURE_SETTING = "MeaningfulPicture";
   private static SettingsService service;
+  private static Context context;
 
-  public synchronized static SettingsService getInstance() {
+  public synchronized static SettingsService getInstance(Context context) {
     if (service == null) {
-      service = new SettingsService();
+      service = new SettingsService(context.getApplicationContext());
     }
     return service;
   }
 
-  public SettingsService() {
+  public SettingsService(Context context) {
+    this.context = context;
   }
 
   /**
@@ -30,7 +39,10 @@ public class SettingsService {
    * @param quote  The quote
    */
   public void saveInspirationalQuote(String quote) {
-
+    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.putString(INSPIRATIONAL_QUOTE_SETTING, quote);
+    editor.apply();
   }
 
   /**
@@ -38,7 +50,12 @@ public class SettingsService {
    * has been removed.
    */
   public void clearInspirationalQuote() {
-
+    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
+    if (preferences.contains(INSPIRATIONAL_QUOTE_SETTING)) {
+      SharedPreferences.Editor editor = preferences.edit();
+      editor.remove(INSPIRATIONAL_QUOTE_SETTING);
+      editor.apply();
+    }
   }
 
   /**
@@ -46,8 +63,8 @@ public class SettingsService {
    * @return The saved inspirational quote or null if there isn't one.
    */
   public String getInspirationalQuote() {
-    //
-    return "This is my test inspirational quote";
+    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
+    return preferences.getString(INSPIRATIONAL_QUOTE_SETTING, null);
   }
 
   /**

@@ -16,11 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".quiz.controllers.QuizController">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".supportnetwork.controllers.SupportNetworkListController">
         </activity>
@@ -47,11 +43,18 @@
         </activity>
         <activity android:name=".settings.controllers.SettingsController">
         </activity>
-        <activity android:name=".settings.controllers.MeaningfulPictureController">
+        <activity android:name=".settings.controllers.MeaningfulPictureSettingsController">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".settings.controllers.InspirationalQuoteSettingsController">
         </activity>
         <activity android:name=".library.controllers.InspirationalQuoteController">
+        </activity>
+        <activity android:name=".library.controllers.MeaningfulPictureController">
         </activity>
     </application>
 

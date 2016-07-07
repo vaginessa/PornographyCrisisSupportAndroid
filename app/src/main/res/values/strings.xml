@@ -38,5 +38,6 @@
     <string name="inspirational_quote_missing">The inspirational quote cannot be empty to save. Please enter in a message to save.</string>
     <string name="settings_inspirational_quote_instructions">Enter a inspirational quote that you will see in your library when you need help.</string>
     <string name="inspirational_quote_title">Inspirational Quote</string>
+    <string name="meaningful_picture_title">Meaningful Picture</string>
 
 </resources>

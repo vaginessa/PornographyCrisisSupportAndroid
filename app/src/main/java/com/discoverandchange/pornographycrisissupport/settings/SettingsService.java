@@ -2,6 +2,7 @@ package com.discoverandchange.pornographycrisissupport.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.discoverandchange.pornographycrisissupport.library.InspirationalQuoteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
@@ -21,6 +22,7 @@ public class SettingsService {
   private static final String MEANINGFUL_PICTURE_SETTING = "MeaningfulPicture";
   private static SettingsService service;
   private static Context context;
+  private Uri meaningfulPictureUri;
 
   public synchronized static SettingsService getInstance(Context context) {
     if (service == null) {
@@ -50,12 +52,7 @@ public class SettingsService {
    * has been removed.
    */
   public void clearInspirationalQuote() {
-    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
-    if (preferences.contains(INSPIRATIONAL_QUOTE_SETTING)) {
-      SharedPreferences.Editor editor = preferences.edit();
-      editor.remove(INSPIRATIONAL_QUOTE_SETTING);
-      editor.apply();
-    }
+    this.clearSetting(INSPIRATIONAL_QUOTE_SETTING);
   }
 
   /**
@@ -63,8 +60,7 @@ public class SettingsService {
    * @return The saved inspirational quote or null if there isn't one.
    */
   public String getInspirationalQuote() {
-    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
-    return preferences.getString(INSPIRATIONAL_QUOTE_SETTING, null);
+    return getStringSetting(INSPIRATIONAL_QUOTE_SETTING, null);
   }
 
   /**
@@ -84,5 +80,63 @@ public class SettingsService {
       resources.add(quoteResource);
     }
     return resources;
+  }
+
+  /**
+   * Takes the passed in URI and saves it to the app settings. Since this is a URI it can be
+   * a reference to a gallery picture, google drive picture, sd card, etc.
+   * @param uri The unique resource identifier for the meaninigful picture.
+   */
+  public void saveMeaningfulPicture(Uri uri) {
+    String uriString = uri.toString();
+    this.saveStringSetting(MEANINGFUL_PICTURE_SETTING, uriString);
+  }
+
+  /**
+   * Removes the meaningfull picture setting from the app.
+   */
+  public void clearMeaningfulPicture() {
+    this.clearSetting(MEANINGFUL_PICTURE_SETTING);
+  }
+
+  /**
+   * Returns the unique resource identifier for the meaningful picture.
+   * @return A URI that points to a picture image.
+   */
+  public Uri getMeaningfulPictureUri() {
+    String pictureUri = getStringSetting(MEANINGFUL_PICTURE_SETTING, null);
+    if (StringUtils.isEmpty(pictureUri)) {
+      return null;
+    }
+    return Uri.parse(pictureUri);
+  }
+
+  /**
+   * Returns a setting for the passed in key in our shared preferences.  If the setting does not
+   * exist it returns the default value.
+   * @param key The unique settings key to return.
+   * @param defaultValue the default value to return if the key does not exist in.
+   * @return The settings value if the key exists, or the value passed in defaultValue
+   */
+  private String getStringSetting(String key, String defaultValue) {
+    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
+    return preferences.getString(key, defaultValue);
+  }
+
+  // TODO: stephen finish documentating this class.
+  private void saveStringSetting(String key, String value) {
+    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.putString(key, value);
+    editor.apply();
+  }
+
+  private void clearSetting(String key) {
+    SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
+    if (preferences.contains(key)) {
+      SharedPreferences.Editor editor = preferences.edit();
+      editor.remove(key);
+      editor.apply();
+    }
   }
 }

@@ -23,7 +23,7 @@ public class SettingsController extends BaseNavigationActivity {
    * @param btn the button that was clicked on.
    */
   public void openMeaningfulPicture(View btn) {
-    Intent intent = new Intent(getBaseContext(), MeaningfulPictureController.class);
+    Intent intent = new Intent(getBaseContext(), MeaningfulPictureSettingsController.class);
     startActivity(intent);
   }
 

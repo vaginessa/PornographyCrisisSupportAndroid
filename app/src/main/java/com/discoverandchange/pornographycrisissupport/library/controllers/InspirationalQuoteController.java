@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.library.InspirationalQuoteResource;
 
-public class InspirationalQuoteController extends AppCompatActivity {
+/**
+ * Displays the inspirational quote resource sent via the LibraryController.
+ */
+public class InspirationalQuoteController extends BaseNavigationActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

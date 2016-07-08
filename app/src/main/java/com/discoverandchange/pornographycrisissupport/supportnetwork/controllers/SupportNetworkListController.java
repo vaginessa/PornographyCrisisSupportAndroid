@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport;
+package com.discoverandchange.pornographycrisissupport.supportnetwork.controllers;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -14,9 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
+import com.discoverandchange.pornographycrisissupport.Constants;
+import com.discoverandchange.pornographycrisissupport.IntentChecker;
+import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
-import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkEdit;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import java.util.List;
 /**
  * Handles the display, removal, and addition of support contacts.
  */
-public class SupportNetworkList extends BaseNavigationActivity {
+public class SupportNetworkListController extends BaseNavigationActivity {
 
   /**
    * Constant for identifying that we initiated the contact picker call.
@@ -73,7 +76,7 @@ public class SupportNetworkList extends BaseNavigationActivity {
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position,
                               long id) {
-        Intent intent = new Intent(getBaseContext(), SupportNetworkEdit.class);
+        Intent intent = new Intent(getBaseContext(), SupportNetworkEditController.class);
         intent.putExtra(Constants.SUPPORT_CONTACT_EDIT_MESSAGE,
             (SupportContact) parent.getItemAtPosition(position));
         startActivity(intent);

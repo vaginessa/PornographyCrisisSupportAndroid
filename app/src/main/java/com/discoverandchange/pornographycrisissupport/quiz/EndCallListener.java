@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.discoverandchange.pornographycrisissupport.App;
 import com.discoverandchange.pornographycrisissupport.Constants;
-import com.discoverandchange.pornographycrisissupport.library.LibraryController;
+import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 
 /**
  * Listens for phone call status and determines its state.

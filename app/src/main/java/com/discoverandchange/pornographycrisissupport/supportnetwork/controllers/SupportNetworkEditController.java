@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.supportnetwork;
+package com.discoverandchange.pornographycrisissupport.supportnetwork.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,13 @@ import android.widget.TextView;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
+import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 /**
  * Handles the editing of a SupportContact.
  */
-public class SupportNetworkEdit extends BaseNavigationActivity {
+public class SupportNetworkEditController extends BaseNavigationActivity {
 
   /**
    * The SupportContact being edited.

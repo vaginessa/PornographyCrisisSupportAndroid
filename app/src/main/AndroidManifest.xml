@@ -16,16 +16,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".quiz.QuizController">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity android:name=".quiz.controllers.QuizController">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
         </activity>
-        <activity android:name=".SupportNetworkList">
+        <activity android:name=".supportnetwork.controllers.SupportNetworkListController">
         </activity>
-        <activity android:name=".library.LibraryController">
+        <activity android:name=".library.controllers.LibraryController">
         </activity>
 
         <provider
@@ -33,17 +33,16 @@
             android:authorities="com.discoverandchange.pornographycrisissupport.SupportContactProvider"
             android:exported="false"/>
 
-        <activity android:name=".supportnetwork.SupportNetworkEdit"/>
-        <activity android:name=".quiz.QuizHistoryController">
+        <activity android:name=".supportnetwork.controllers.SupportNetworkEditController"/>
+        <activity android:name=".quiz.controllers.QuizHistoryController">
         </activity>
-        <activity android:name=".library.VideoActivityController">
+        <activity android:name=".library.controllers.VideoActivityController">
         </activity>
-        <activity android:name=".library.AudioActivityController">
+        <activity android:name=".library.controllers.AudioActivityController">
         </activity>
-        <activity android:name=".library.ExternalWebsiteActivityController"
-                  android:noHistory="true">
+        <activity android:name=".library.controllers.ExternalWebsiteActivityController" android:noHistory="true">
         </activity>
-        <activity android:name=".library.WebsiteActivityController">
+        <activity android:name=".library.controllers.WebsiteActivityController">
         </activity>
 
         <receiver android:name=".CrisisAppWidget">

@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport.quiz;
+package com.discoverandchange.pornographycrisissupport.quiz.controllers;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
+import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 
 /**
  * QuizHistoryController displays all quiz scores in a list.

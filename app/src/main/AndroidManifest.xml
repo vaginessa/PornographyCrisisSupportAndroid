@@ -17,11 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".quiz.QuizController">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".SupportNetworkList">
         </activity>
@@ -40,10 +40,21 @@
         </activity>
         <activity android:name=".library.AudioActivityController">
         </activity>
-        <activity android:name=".library.ExternalWebsiteActivityController" android:noHistory="true">
+        <activity android:name=".library.ExternalWebsiteActivityController"
+                  android:noHistory="true">
         </activity>
         <activity android:name=".library.WebsiteActivityController">
         </activity>
+
+        <receiver android:name=".CrisisAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/crisis_app_widget_info"/>
+        </receiver>
     </application>
 
 </manifest>

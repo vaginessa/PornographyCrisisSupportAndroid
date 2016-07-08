@@ -29,5 +29,6 @@
     <string name="contact_app_missing_title">Contact App Missing</string>
     <string name="contact_app_missing">There is no contacts app installed for us to pick a contact from.  Please install one.</string>
     <string name="craving_score">Latest Craving Score: </string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

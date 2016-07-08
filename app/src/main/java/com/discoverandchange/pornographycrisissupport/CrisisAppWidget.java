@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.discoverandchange.pornographycrisissupport.quiz.QuizController;
+import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 

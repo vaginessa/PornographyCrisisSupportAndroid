@@ -52,14 +52,14 @@ public class CrisisAppWidget extends AppWidgetProvider {
     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
     // Construct the RemoteViews object
-    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.crisis_app_widget);
-    //views.setTextViewText(R.id.appwidget_text, widgetText);
-
-    // Get the layout and attach an on-click listener
-    views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
-
-    // Instruct the widget manager to update the widget
-    appWidgetManager.updateAppWidget(appWidgetId, views);
+//    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.crisis_app_widget);
+//    //views.setTextViewText(R.id.appwidget_text, widgetText);
+//
+//    // Get the layout and attach an on-click listener
+//    views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
+//
+//    // Instruct the widget manager to update the widget
+//    appWidgetManager.updateAppWidget(appWidgetId, views);
   }
 
 }

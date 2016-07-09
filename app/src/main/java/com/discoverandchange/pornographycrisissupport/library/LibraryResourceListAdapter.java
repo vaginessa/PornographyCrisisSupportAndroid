@@ -1,6 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,10 @@ public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
     if (thumbnail != null && thumbnail.startsWith("http")) {
       // load the resource as an http
       Picasso.with(context).load(thumbnail).fit().into(imageView);
+    } else if (thumbnail != null && !thumbnail.isEmpty()) {
+      // grab the uri we have and try to load it.
+      Uri uri = Uri.parse(thumbnail);
+      Picasso.with(context).load(uri).fit().into(imageView);
     } else {
       // load our android resource thumbnail into the image view.
       imageView.setImageResource(item.getDefaultThumbnailResource());

@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <!-- needed to retrieve a meaningfull picture again after a user has selected it -->
+
 
     <application
         android:name=".App"

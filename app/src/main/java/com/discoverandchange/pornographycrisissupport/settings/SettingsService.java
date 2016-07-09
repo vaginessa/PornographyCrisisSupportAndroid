@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import com.discoverandchange.pornographycrisissupport.library.InspirationalQuoteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
+import com.discoverandchange.pornographycrisissupport.library.MeaningfulPictureResource;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -78,6 +79,17 @@ public class SettingsService {
       quoteResource.setDescription("Your personal inspirational quote to help you deal with your cravings.");
       quoteResource.setText(this.getInspirationalQuote());
       resources.add(quoteResource);
+    }
+
+    Uri pictureUri = this.getMeaningfulPictureUri();
+    if (pictureUri != null) {
+      MeaningfulPictureResource pictureResource = new MeaningfulPictureResource();
+      // TODO: stephen look at making this a URI.
+      pictureResource.setUrl(pictureUri.toString());
+      pictureResource.setThumbnail(pictureUri.toString());
+      pictureResource.setTitle("Meaningfull Picture");
+      pictureResource.setDescription("Your personal meaningful picture to help you deal with your cravings.");
+      resources.add(pictureResource);
     }
     return resources;
   }

@@ -1,6 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.library.controllers;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +31,8 @@ public class MeaningfulPictureController extends BaseNavigationActivity {
     }
 
     MeaningfulPictureResource resource = (MeaningfulPictureResource)obj;
-    File file = new File(resource.getUrl());
     ImageView imageView = (ImageView)findViewById(R.id.imageMeaningfullPicture);
-    Picasso.with(getBaseContext()).load(file).into(imageView);
+    Uri uri = Uri.parse(resource.getUrl());
+    Picasso.with(getBaseContext()).load(uri).into(imageView);
   }
 }

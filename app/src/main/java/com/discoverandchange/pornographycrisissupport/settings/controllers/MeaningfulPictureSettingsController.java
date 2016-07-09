@@ -3,13 +3,16 @@ package com.discoverandchange.pornographycrisissupport.settings.controllers;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
+import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
+import com.discoverandchange.pornographycrisissupport.utils.PicassoListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -63,15 +66,20 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
       return;
     }
 
-    Picasso.with(getBaseContext()).load(uri)
+    new Picasso.Builder(getBaseContext())
+        .listener(new PicassoListener())
+        .build()
+        .load(uri)
         .fit().into(imageCurrentMeaningfullPicture, new Callback() {
       @Override
       public void onSuccess() {
+        Log.d(Constants.LOG_TAG, "meaningfull picture loaded fine.");
         txtNoImage.setVisibility(View.INVISIBLE);
       }
 
       @Override
       public void onError() {
+        Log.d(Constants.LOG_TAG, "meaningfull picture failed to load");
         txtNoImage.setVisibility(View.VISIBLE);
       }
     });
@@ -89,6 +97,11 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
         && data != null && data.getData() != null) {
 
       final Uri uri = data.getData();
+
+      grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+      final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      getContentResolver().takePersistableUriPermission(uri, takeFlags);
 
       // make sure to cancel any current load requests, in case they select an image before
       // the default one has loaded.

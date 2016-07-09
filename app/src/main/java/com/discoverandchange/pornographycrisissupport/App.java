@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.discoverandchange.pornographycrisissupport.library.InspirationalQuoteResource;
+import com.discoverandchange.pornographycrisissupport.library.MeaningfulPictureResource;
 import com.discoverandchange.pornographycrisissupport.library.controllers.AudioActivityController;
 import com.discoverandchange.pornographycrisissupport.library.AudioResource;
 import com.discoverandchange.pornographycrisissupport.library.controllers.ExternalWebsiteActivityController;
@@ -11,6 +12,7 @@ import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteRes
 import com.discoverandchange.pornographycrisissupport.library.LibraryResourceActivityRegistry;
 import com.discoverandchange.pornographycrisissupport.library.ResourceDeserializerService;
 import com.discoverandchange.pornographycrisissupport.library.controllers.InspirationalQuoteController;
+import com.discoverandchange.pornographycrisissupport.library.controllers.MeaningfulPictureController;
 import com.discoverandchange.pornographycrisissupport.library.controllers.VideoActivityController;
 import com.discoverandchange.pornographycrisissupport.library.VideoResource;
 import com.discoverandchange.pornographycrisissupport.library.controllers.WebsiteActivityController;
@@ -56,6 +58,7 @@ public class App extends Application {
         ExternalWebsiteActivityController.class);
     registry.registerResource(WebsiteContentResource.class, WebsiteActivityController.class);
     registry.registerResource(InspirationalQuoteResource.class, InspirationalQuoteController.class);
+    registry.registerResource(MeaningfulPictureResource.class, MeaningfulPictureController.class);
 
     // setup the deserializer
     ResourceDeserializerService deserializerService = ResourceDeserializerService.getInstance();

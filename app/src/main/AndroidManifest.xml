@@ -45,15 +45,15 @@
         <activity android:name=".library.controllers.WebsiteActivityController">
         </activity>
 
-        <receiver android:name=".CrisisAppWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-            </intent-filter>
+        <!--<receiver android:name=".CrisisAppWidget">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>-->
+            <!--</intent-filter>-->
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/crisis_app_widget_info"/>
-        </receiver>
+            <!--<meta-data-->
+                <!--android:name="android.appwidget.provider"-->
+                <!--android:resource="@xml/crisis_app_widget_info"/>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

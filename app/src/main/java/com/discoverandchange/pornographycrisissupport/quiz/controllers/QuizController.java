@@ -2,8 +2,10 @@ package com.discoverandchange.pornographycrisissupport.quiz.controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -11,11 +13,13 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
+import com.discoverandchange.pornographycrisissupport.firstuse.controllers.first_use_controller;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.EndCallListener;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
@@ -43,12 +47,32 @@ public class QuizController extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_quiz);
 
+
+    // Execute another the first use checklist if hasn't been opened before
+    SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+
+    // Store the value temporarily to ensure that we get a boolean true / false instead of always true
+    Boolean prefBool = pref.getBoolean("activity_executed", false);
+
+    if(!prefBool){
+      Intent intent = new Intent(this, first_use_controller.class);
+      startActivity(intent);
+      finish();
+    } else {
+      SharedPreferences.Editor ed = pref.edit();
+      ed.putBoolean("activity_executed", true);
+      ed.commit();
+    }
+
     // gets back the data for the display
     String[] from = {ScoresTable.SCORE};
     int[] to = {android.R.id.text1};
     cursorAdapter = new SimpleCursorAdapter(this,
         android.R.layout.simple_list_item_1, null, from, to, 0);
+
   }
+
+
 
   /**
    * Handles the flow of saving a quiz score.  If the score is a crisis score, it

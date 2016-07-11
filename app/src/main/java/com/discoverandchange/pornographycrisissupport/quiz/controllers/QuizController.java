@@ -2,8 +2,10 @@ package com.discoverandchange.pornographycrisissupport.quiz.controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -11,11 +13,13 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
+import com.discoverandchange.pornographycrisissupport.firstuse.controllers.first_use_controller;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.EndCallListener;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
@@ -43,11 +47,19 @@ public class QuizController extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_quiz);
 
-    // gets back the data for the display
-    String[] from = {ScoresTable.SCORE};
-    int[] to = {android.R.id.text1};
-    cursorAdapter = new SimpleCursorAdapter(this,
-        android.R.layout.simple_list_item_1, null, from, to, 0);
+    if (isCrisisWidgetLaunch()) {
+      QuizService service = new QuizService(getBaseContext());
+      service.saveQuiz(new Quiz(10));
+      handleCrisisQuizScore();
+    } else if (isFirstUseSetupLaunch()) {
+      launchFirstUseSetup();
+    } else {
+      // gets back the data for the display
+      String[] from = {ScoresTable.SCORE};
+      int[] to = {android.R.id.text1};
+      cursorAdapter = new SimpleCursorAdapter(this,
+          android.R.layout.simple_list_item_1, null, from, to, 0);
+    }
   }
 
   /**
@@ -77,20 +89,10 @@ public class QuizController extends BaseNavigationActivity {
     int latestScore = (new QuizService(this)).getLatestQuizScore();
 
     if (isCrisisQuizScore) {
-      sendSupportNetworkTexts();
-
-      // After saving quiz, launch the dialer
-      launchDialer();
+      handleCrisisQuizScore();
     } else {
       launchLibrary();
     }
-  }
-
-  /**
-   * Sends out the crisis text message to people that you are really struggling.
-   */
-  private void sendSupportNetworkTexts() {
-    SupportNetworkService.getInstance(getBaseContext()).contactNetwork();
   }
 
   /**
@@ -122,6 +124,64 @@ public class QuizController extends BaseNavigationActivity {
       Log.d(Constants.LOG_TAG, "SupportContact crisis not found, launching library");
       launchLibrary();
     }
+  }
 
+
+  /**
+   * Launches the first use setup.
+   */
+  private void launchFirstUseSetup() {
+    Intent intent = new Intent(this, first_use_controller.class);
+    startActivity(intent);
+    finish();
+  }
+
+  /**
+   * Checks to see if the first time launch setup has not been completed
+   * @return True if the setup of the app has not been finished.
+   */
+  private boolean isFirstUseSetupLaunch() {
+    // Execute another the first use checklist if hasn't been opened before
+    // TODO: John, Keith we should probably rename this activity pref stuff to something more
+    // sensible like firstSetupSettings.
+    SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+
+    // Store the value temporarily to ensure that we get a boolean true / false
+    // instead of always true
+
+    boolean isSetupFinished = pref.getBoolean("activity_executed", false);
+    return !isSetupFinished;
+  }
+
+  /**
+   * Checks if this activity was launched from the widget crisis button.
+   * @return Returns true if this is the crisis widget launch.
+   */
+  private boolean isCrisisWidgetLaunch() {
+    boolean isCrisisLaunchFromWidget = false;
+    Intent intent = getIntent();
+    if (intent != null) {
+      isCrisisLaunchFromWidget = intent.getBooleanExtra("isCrisisLaunchFromWidget", false);
+
+    }
+    return isCrisisLaunchFromWidget;
+  }
+
+
+  /**
+   * Sends off text messages and launches the dialer when we have a crisis quiz score.
+   */
+  private void handleCrisisQuizScore() {
+    sendSupportNetworkTexts();
+
+    // After saving quiz, launch the dialer
+    launchDialer();
+  }
+
+  /**
+   * Sends out the crisis text message to people that you are really struggling.
+   */
+  private void sendSupportNetworkTexts() {
+    SupportNetworkService.getInstance(getBaseContext()).contactNetwork();
   }
 }

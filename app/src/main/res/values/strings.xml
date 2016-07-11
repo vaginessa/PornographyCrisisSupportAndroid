@@ -39,5 +39,8 @@
     <string name="settings_inspirational_quote_instructions">Enter a inspirational quote that you will see in your library when you need help.</string>
     <string name="inspirational_quote_title">Inspirational Quote</string>
     <string name="meaningful_picture_title">Meaningful Picture</string>
-
+    <string name="add_widget">Add widget</string>
+    <string name="quiz_score_range_mild">Mild</string>
+    <string name="quiz_score_range_moderate">Moderate</string>
+    <string name="quiz_score_range_severe">Severe</string>
 </resources>

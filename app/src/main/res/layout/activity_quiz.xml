@@ -27,10 +27,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="58dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:max="9"
-        android:indeterminate="false"/>
+        android:indeterminate="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -40,5 +40,35 @@
         android:layout_below="@+id/cravingsLevelSlider"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="51dp"
-        android:onClick="handleSubmitQuizClick"/>
+        android:onClick="handleSubmitQuizClick"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/quiz_score_range_mild"
+        android:id="@+id/textView10"
+        android:layout_below="@+id/cravingsLevelSlider"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/quiz_score_range_moderate"
+        android:id="@+id/textView11"
+        android:layout_below="@+id/cravingsLevelSlider"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/quiz_score_range_severe"
+        android:id="@+id/textView12"
+        android:layout_alignTop="@+id/textView11"
+        android:layout_alignRight="@+id/cravingsLevelSlider"
+        android:layout_alignEnd="@+id/cravingsLevelSlider"/>
 </RelativeLayout>

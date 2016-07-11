@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <!-- needed to retrieve a meaningfull picture again after a user has selected it -->
 
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,18 +18,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".quiz.controllers.QuizController">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".supportnetwork.controllers.SupportNetworkListController">
         </activity>
         <activity android:name=".library.controllers.LibraryController">
         </activity>
-
         <provider
             android:name=".db.SupportContactProvider"
             android:authorities="com.discoverandchange.pornographycrisissupport.SupportContactProvider"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity android:name=".supportnetwork.controllers.SupportNetworkEditController"/>
         <activity android:name=".quiz.controllers.QuizHistoryController">
         </activity>
@@ -47,11 +49,6 @@
         <activity android:name=".settings.controllers.SettingsController">
         </activity>
         <activity android:name=".settings.controllers.MeaningfulPictureSettingsController">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".settings.controllers.InspirationalQuoteSettingsController">
         </activity>
@@ -59,6 +56,16 @@
         </activity>
         <activity android:name=".library.controllers.MeaningfulPictureController">
         </activity>
+        <receiver android:name=".CrisisAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/crisis_app_widget_info"/>
+        </receiver>
+        <activity android:name=".firstuse.controllers.first_use_controller"> </activity>
     </application>
 
 </manifest>

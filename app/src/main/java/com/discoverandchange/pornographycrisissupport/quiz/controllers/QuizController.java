@@ -142,9 +142,13 @@ public class QuizController extends BaseNavigationActivity {
    */
   private boolean isFirstUseSetupLaunch() {
     // Execute another the first use checklist if hasn't been opened before
+    // TODO: John, Keith we should probably rename this activity pref stuff to something more
+    // sensible like firstSetupSettings.
     SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
 
-    // Store the value temporarily to ensure that we get a boolean true / false instead of always true
+    // Store the value temporarily to ensure that we get a boolean true / false
+    // instead of always true
+
     boolean isSetupFinished = pref.getBoolean("activity_executed", false);
     return !isSetupFinished;
   }

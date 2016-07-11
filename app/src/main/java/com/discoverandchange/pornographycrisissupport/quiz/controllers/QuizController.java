@@ -2,8 +2,10 @@ package com.discoverandchange.pornographycrisissupport.quiz.controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -11,11 +13,13 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
+import com.discoverandchange.pornographycrisissupport.firstuse.controllers.first_use_controller;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.EndCallListener;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
@@ -48,6 +52,9 @@ public class QuizController extends BaseNavigationActivity {
       service.saveQuiz(new Quiz(10));
       handleCrisisQuizScore();
     }
+    else if (isFirstUseSetupLaunch()) {
+      launchFirstUseSetup();
+    }
     else {
       // gets back the data for the display
       String[] from = {ScoresTable.SCORE};
@@ -55,6 +62,28 @@ public class QuizController extends BaseNavigationActivity {
       cursorAdapter = new SimpleCursorAdapter(this,
           android.R.layout.simple_list_item_1, null, from, to, 0);
     }
+  }
+
+  /**
+   * Launches the first use setup.
+   */
+  private void launchFirstUseSetup() {
+    Intent intent = new Intent(this, first_use_controller.class);
+    startActivity(intent);
+    finish();
+  }
+
+  /**
+   * Checks to see if the first time launch setup has not been completed
+   * @return True if the setup of the app has not been finished.
+   */
+  private boolean isFirstUseSetupLaunch() {
+    // Execute another the first use checklist if hasn't been opened before
+    SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+
+    // Store the value temporarily to ensure that we get a boolean true / false instead of always true
+    boolean isSetupFinished = pref.getBoolean("activity_executed", false);
+    return !isSetupFinished;
   }
 
   /**
@@ -70,6 +99,8 @@ public class QuizController extends BaseNavigationActivity {
     }
     return isCrisisLaunchFromWidget;
   }
+
+
 
   /**
    * Handles the flow of saving a quiz score.  If the score is a crisis score, it

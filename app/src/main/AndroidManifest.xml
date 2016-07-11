@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -17,33 +16,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".quiz.controllers.QuizController">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".supportnetwork.controllers.SupportNetworkListController">
-        </activity>
-        <activity android:name=".library.controllers.LibraryController">
-        </activity>
+        <activity android:name=".supportnetwork.controllers.SupportNetworkListController"></activity>
+        <activity android:name=".library.controllers.LibraryController"></activity>
 
         <provider
             android:name=".db.SupportContactProvider"
             android:authorities="com.discoverandchange.pornographycrisissupport.SupportContactProvider"
-            android:exported="false"/>
+            android:exported="false" />
 
-        <activity android:name=".supportnetwork.controllers.SupportNetworkEditController"/>
-        <activity android:name=".quiz.controllers.QuizHistoryController">
-        </activity>
-        <activity android:name=".library.controllers.VideoActivityController">
-        </activity>
-        <activity android:name=".library.controllers.AudioActivityController">
-        </activity>
-        <activity android:name=".library.controllers.ExternalWebsiteActivityController" android:noHistory="true">
-        </activity>
-        <activity android:name=".library.controllers.WebsiteActivityController">
-        </activity>
+        <activity android:name=".supportnetwork.controllers.SupportNetworkEditController" />
+        <activity android:name=".quiz.controllers.QuizHistoryController"></activity>
+        <activity android:name=".library.controllers.VideoActivityController"></activity>
+        <activity android:name=".library.controllers.AudioActivityController"></activity>
+        <activity
+            android:name=".library.controllers.ExternalWebsiteActivityController"
+            android:noHistory="true"></activity>
+        <activity android:name=".library.controllers.WebsiteActivityController"></activity>
 
         <receiver android:name=".CrisisAppWidget">
             <intent-filter>
@@ -54,6 +48,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/crisis_app_widget_info"/>
         </receiver>
+        <activity android:name=".firstuse.controllers.first_use_controller"> </activity>
     </application>
 
 </manifest>

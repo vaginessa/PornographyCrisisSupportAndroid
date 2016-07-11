@@ -230,14 +230,6 @@ public class SupportNetworkService {
   }
 
   /**
-   * Sends out the passed in test sms message to all of our support network.
-   * @param message The message we want sent out.
-   */
-  public void sendSmsTestMessage(String message) {
-    sendMessageToSupportNetwork(message);
-  }
-
-  /**
    * Given a message to send, it sends a SMS text to all of the phones for each support contact
    * we have.
    *

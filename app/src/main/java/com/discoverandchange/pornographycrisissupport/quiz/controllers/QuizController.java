@@ -89,7 +89,7 @@ public class QuizController extends BaseNavigationActivity {
     int latestScore = (new QuizService(this)).getLatestQuizScore();
 
     if (isCrisisQuizScore) {
-      
+      handleCrisisQuizScore();
     } else {
       launchLibrary();
     }

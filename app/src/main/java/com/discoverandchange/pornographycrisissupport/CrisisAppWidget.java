@@ -44,22 +44,23 @@ public class CrisisAppWidget extends AppWidgetProvider {
     // Create an intent to launch the Dialer
     QuizController quizController = new QuizController();
     Intent intent = new Intent(context, QuizController.class);
-//    intent.putExtra("methodName", "myMethod");
+    intent.putExtra("isCrisisLaunchFromWidget", true);
 
-//    if (intent.getStringExtra("methodName").equals("myMethod")){
-//      quizController.launchDialer();
-//    }
-    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+    // apparently the old intent's stick around and new data added to the intent is not seen
+    // really wierd.  To fix this problem I use the update_current flag
+    // http://stackoverflow.com/a/26720501
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+        PendingIntent.FLAG_UPDATE_CURRENT);
 
     // Construct the RemoteViews object
-//    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.crisis_app_widget);
-//    //views.setTextViewText(R.id.appwidget_text, widgetText);
-//
-//    // Get the layout and attach an on-click listener
-//    views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
-//
-//    // Instruct the widget manager to update the widget
-//    appWidgetManager.updateAppWidget(appWidgetId, views);
+    RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.crisis_widget);
+    //views.setTextViewText(R.id.appwidget_text, widgetText);
+
+    // Get the layout and attach an on-click listener
+    views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);
+
+    // Instruct the widget manager to update the widget
+    appWidgetManager.updateAppWidget(appWidgetId, views);
   }
 
 }

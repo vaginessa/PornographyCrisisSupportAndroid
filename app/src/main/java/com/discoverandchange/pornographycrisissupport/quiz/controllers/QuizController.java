@@ -43,11 +43,32 @@ public class QuizController extends BaseNavigationActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_quiz);
 
-    // gets back the data for the display
-    String[] from = {ScoresTable.SCORE};
-    int[] to = {android.R.id.text1};
-    cursorAdapter = new SimpleCursorAdapter(this,
-        android.R.layout.simple_list_item_1, null, from, to, 0);
+    if (isCrisisWidgetLaunch()) {
+      QuizService service = new QuizService(getBaseContext());
+      service.saveQuiz(new Quiz(10));
+      handleCrisisQuizScore();
+    }
+    else {
+      // gets back the data for the display
+      String[] from = {ScoresTable.SCORE};
+      int[] to = {android.R.id.text1};
+      cursorAdapter = new SimpleCursorAdapter(this,
+          android.R.layout.simple_list_item_1, null, from, to, 0);
+    }
+  }
+
+  /**
+   * Checks if this activity was launched from the widget crisis button.
+   * @return Returns true if this is the crisis widget launch.
+   */
+  private boolean isCrisisWidgetLaunch() {
+    boolean isCrisisLaunchFromWidget = false;
+    Intent intent = getIntent();
+    if (intent != null) {
+      isCrisisLaunchFromWidget = intent.getBooleanExtra("isCrisisLaunchFromWidget", false);
+
+    }
+    return isCrisisLaunchFromWidget;
   }
 
   /**
@@ -77,13 +98,20 @@ public class QuizController extends BaseNavigationActivity {
     int latestScore = (new QuizService(this)).getLatestQuizScore();
 
     if (isCrisisQuizScore) {
-      sendSupportNetworkTexts();
 
-      // After saving quiz, launch the dialer
-      launchDialer();
     } else {
       launchLibrary();
     }
+  }
+
+  /**
+   * Sends off text messages and launches the dialer when we have a crisis quiz score.
+   */
+  private void handleCrisisQuizScore() {
+    sendSupportNetworkTexts();
+
+    // After saving quiz, launch the dialer
+    launchDialer();
   }
 
   /**

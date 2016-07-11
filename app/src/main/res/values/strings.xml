@@ -30,5 +30,8 @@
     <string name="contact_app_missing">There is no contacts app installed for us to pick a contact from.  Please install one.</string>
     <string name="craving_score">Latest Craving Score: </string>
     <string name="add_widget">Add widget</string>
+    <string name="quiz_score_range_mild">Mild</string>
+    <string name="quiz_score_range_moderate">Moderate</string>
+    <string name="quiz_score_range_severe">Severe</string>
 
 </resources>

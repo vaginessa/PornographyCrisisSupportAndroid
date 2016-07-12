@@ -237,8 +237,6 @@ public class SupportNetworkService {
     sendMessageToSupportNetwork(message);
   }
 
-
-
   /**
    * Given a message to send, it sends a SMS text to all of the phones for each support contact
    * we have.

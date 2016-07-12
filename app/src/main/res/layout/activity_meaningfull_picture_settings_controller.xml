@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="No Image Currently Set"
+        android:text="@string/meaningfulPictureSettingsNoImage"
         android:id="@+id/txtViewMeaningfullPictureDefaultMessage"
         android:layout_marginTop="79dp"
         android:layout_centerInParent="true"/>

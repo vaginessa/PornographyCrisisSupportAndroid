@@ -46,4 +46,6 @@
     <string name="quiz_score_range_severe">Severe</string>
     <string name="picture_app_missing_title">Picture application missing</string>
     <string name="picture_app_missing">No application could be found that can open a picture.  Please install one before continuing.</string>
+    <string name="meaningfulPictureSettingsNoImage">No Image Currently Set</string>
+    <string name="meaningful_picture_image_not_found">Error: Could not load picture.</string>
 </resources>

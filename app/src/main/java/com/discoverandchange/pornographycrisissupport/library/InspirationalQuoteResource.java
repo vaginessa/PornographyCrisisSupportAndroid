@@ -1,7 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
 /**
- * Created by snielson on 7/6/16.
+ * Represents an inspirational quote the user can view in the library.
  */
 public class InspirationalQuoteResource extends BaseResource {
 
@@ -11,7 +11,7 @@ public class InspirationalQuoteResource extends BaseResource {
   private String text;
 
   /**
-   * Creates the Inspirational Quote
+   * Creates the Inspirational Quote.
    *
    */
   public InspirationalQuoteResource() {

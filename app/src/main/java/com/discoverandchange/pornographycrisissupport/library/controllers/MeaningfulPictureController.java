@@ -21,10 +21,14 @@ import org.w3c.dom.Text;
 import java.io.File;
 
 /**
- *
+ * Displays the Meaningful Picture resource.
  */
 public class MeaningfulPictureController extends BaseNavigationActivity {
 
+  /**
+   * Creates the picture view or displays an error message if it failed to load.
+   * @param savedInstanceState {@inheritDoc}
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

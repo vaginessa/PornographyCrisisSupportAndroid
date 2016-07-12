@@ -18,6 +18,10 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class InspirationalQuoteSettingsController extends BaseNavigationActivity {
 
+  /**
+   * Creates the layout and displays the saved inspirational quote settings if there is one.
+   * @param savedInstanceState {@inheritDoc}
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class InspirationalQuoteSettingsController extends BaseNavigationActivity
     String text = editText.getText().toString().trim();
 
     if (StringUtils.isEmpty(text)) {
-     displayMissingTextMessage();
+      displayMissingTextMessage();
       return;
     }
 

@@ -65,6 +65,10 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     }
   }
 
+  /**
+   * Removes the picture from the controller as well as the saved settings value.
+   * @param btn The clear button that was clicked.
+   */
   public void handleClearImage(View btn) {
     ImageView imageCurrentMeaningfullPicture =
         (ImageView) findViewById(R.id.imageCurrentMeaningfullPicture);
@@ -77,6 +81,13 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     txtNoImage.setVisibility(View.VISIBLE);
   }
 
+  /**
+   * Handles the picture that was selected, saving it in the settings and displaying
+   * it on the screen
+   * @param requestCode {@inheritDoc}
+   * @param resultCode {@inheritDoc}
+   * @param data The intent containing the picture data that was selected.
+   */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
@@ -102,7 +113,7 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
       // the default one has loaded.
       Picasso.with(getBaseContext()).cancelRequest(imageCurrentMeaningfullPicture);
       Picasso.with(getBaseContext()).load(uri)
-          .fit().into(imageCurrentMeaningfullPicture, new Callback() {
+          .fit().centerInside().into(imageCurrentMeaningfullPicture, new Callback() {
         @Override
         public void onSuccess() {
           txtNoImage.setVisibility(View.INVISIBLE);
@@ -118,7 +129,10 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     }
   }
 
-
+  /**
+   * Displays the saved picture onto the view if we have one. Updates the default text message
+   * based upon the picture loading or not.
+   */
   private void loadInitialPicture() {
     ImageView imageCurrentMeaningfullPicture =
         (ImageView) findViewById(R.id.imageCurrentMeaningfullPicture);

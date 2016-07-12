@@ -75,11 +75,11 @@ public class LibraryResourceListAdapter extends ArrayAdapter<LibraryResource> {
     // if we have an external resource let's load that.
     if (thumbnail != null && thumbnail.startsWith("http")) {
       // load the resource as an http
-      Picasso.with(context).load(thumbnail).fit().into(imageView);
+      Picasso.with(context).load(thumbnail).fit().centerInside().into(imageView);
     } else if (thumbnail != null && !thumbnail.isEmpty()) {
       // grab the uri we have and try to load it.
       Uri uri = Uri.parse(thumbnail);
-      Picasso.with(context).load(uri).fit().into(imageView);
+      Picasso.with(context).load(uri).fit().centerInside().into(imageView);
     } else {
       // load our android resource thumbnail into the image view.
       imageView.setImageResource(item.getDefaultThumbnailResource());

@@ -35,7 +35,7 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     Intent intent = new Intent();
     // Show only images, no videos or anything else
     intent.setType("image/*");
-    intent.setAction(Intent.ACTION_GET_CONTENT);
+    intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
     // Always show the chooser (if there are multiple options available)
     startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
   }
@@ -70,7 +70,9 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
         .listener(new PicassoListener())
         .build()
         .load(uri)
-        .fit().into(imageCurrentMeaningfullPicture, new Callback() {
+        .fit()
+        .centerInside()
+        .into(imageCurrentMeaningfullPicture, new Callback() {
       @Override
       public void onSuccess() {
         Log.d(Constants.LOG_TAG, "meaningfull picture loaded fine.");
@@ -100,8 +102,11 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
 
       grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-      final int takeFlags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
-      getContentResolver().takePersistableUriPermission(uri, takeFlags);
+      final int readFlagGranted = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      if (readFlagGranted == Intent.FLAG_GRANT_READ_URI_PERMISSION) {
+        // compiler doesn't like sending in readFlagGranted, so to surpress the warning we send it in
+        getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+      }
 
       // make sure to cancel any current load requests, in case they select an image before
       // the default one has loaded.

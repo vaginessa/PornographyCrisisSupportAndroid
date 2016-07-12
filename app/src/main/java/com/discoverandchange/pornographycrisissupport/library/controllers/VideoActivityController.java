@@ -68,40 +68,6 @@ public class VideoActivityController extends BaseNavigationActivity {
       // TODO: John handle exception
       Log.e(Constants.LOG_TAG, "Error Connecting", ex);
     }
-
-
-    // Handling the play button
-//    Button play = (Button) findViewById(R.id.play);
-//    play.setOnClickListener(new View.OnClickListener() {
-//
-//      VideoView videoView = (VideoView) findViewById(R.id.videoView);
-//
-//      @Override
-//      public void onClick(View view) {
-//        videoView.start();
-//      }
-//
-//    });
-
-
-    //
-    // Needs to be fixed, kills the video controller as it stands
-    //
-
-    // Handling the stop button
-//    Button stop = (Button) findViewById(R.id.stop);
-//    stop.setOnClickListener(new View.OnClickListener() {
-//
-//      VideoView videoView = (VideoView) findViewById(R.id.videoView);
-//
-//      @Override
-//      public void onClick(View view) {
-//        if (view != null && videoView.isPlaying()) {
-//          videoView.stopPlayback();
-//          // videoView.release();
-//        }
-//      }
-//    });
   }
 
   /**

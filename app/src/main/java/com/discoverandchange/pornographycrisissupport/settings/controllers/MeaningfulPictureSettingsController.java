@@ -30,10 +30,11 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
   /**
    * The callback identifier for when an image has been picked.
    */
-  private int PICK_IMAGE_REQUEST = 1;
+  private static final int PICK_IMAGE_REQUEST = 1;
 
   /**
    * Handles the creation of the controller and the display of the saved picture if there is any.
+   *
    * @param savedInstanceState {@inheritDoc}
    */
   @Override
@@ -45,6 +46,7 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
 
   /**
    * Launches the pick picture intent or tells the user to install one if none is available.
+   *
    * @param btn The button that was clicked.
    */
   public void handleSelectPicture(View btn) {
@@ -58,8 +60,7 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     if (checker.isIntentSafeToLaunch(intent)) {
       // Always show the chooser (if there are multiple options available)
       startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-    else {
+    } else {
       DialogHelper.displayErrorDialog(this, R.string.picture_app_missing_title,
           R.string.picture_app_missing);
     }
@@ -67,6 +68,7 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
 
   /**
    * Removes the picture from the controller as well as the saved settings value.
+   *
    * @param btn The clear button that was clicked.
    */
   public void handleClearImage(View btn) {
@@ -77,25 +79,28 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     SettingsService service = SettingsService.getInstance(getBaseContext());
     service.clearMeaningfulPicture();
 
-    final TextView txtNoImage = (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
+    final TextView txtNoImage = (TextView) findViewById(
+        R.id.txtViewMeaningfullPictureDefaultMessage);
     txtNoImage.setVisibility(View.VISIBLE);
   }
 
   /**
    * Handles the picture that was selected, saving it in the settings and displaying
    * it on the screen
+   *
    * @param requestCode {@inheritDoc}
-   * @param resultCode {@inheritDoc}
-   * @param data The intent containing the picture data that was selected.
+   * @param resultCode  {@inheritDoc}
+   * @param data        The intent containing the picture data that was selected.
    */
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
     ImageView imageCurrentMeaningfullPicture =
-        (ImageView)findViewById(R.id.imageCurrentMeaningfullPicture);
+        (ImageView) findViewById(R.id.imageCurrentMeaningfullPicture);
 
-    final TextView txtNoImage = (TextView)findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
+    final TextView txtNoImage =
+        (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
     if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
         && data != null && data.getData() != null) {
 
@@ -105,27 +110,30 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
 
       final int readFlagGranted = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION);
       if (readFlagGranted == Intent.FLAG_GRANT_READ_URI_PERMISSION) {
-        // compiler doesn't like sending in readFlagGranted, so to surpress the warning we send it in
-        getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // compiler doesn't like sending in readFlagGranted, so to surpress the warning
+        // we send it in
+        getContentResolver().takePersistableUriPermission(uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION);
       }
 
       // make sure to cancel any current load requests, in case they select an image before
       // the default one has loaded.
       Picasso.with(getBaseContext()).cancelRequest(imageCurrentMeaningfullPicture);
       Picasso.with(getBaseContext()).load(uri)
-          .fit().centerInside().into(imageCurrentMeaningfullPicture, new Callback() {
-        @Override
-        public void onSuccess() {
-          txtNoImage.setVisibility(View.INVISIBLE);
-          SettingsService service = SettingsService.getInstance(getBaseContext());
-          service.saveMeaningfulPicture(uri);
-        }
+          .fit().centerInside().into(imageCurrentMeaningfullPicture,
+          new Callback() {
+              @Override
+              public void onSuccess() {
+                txtNoImage.setVisibility(View.INVISIBLE);
+                SettingsService service = SettingsService.getInstance(getBaseContext());
+                service.saveMeaningfulPicture(uri);
+              }
 
-        @Override
-        public void onError() {
-          txtNoImage.setVisibility(View.VISIBLE);
-        }
-      });
+              @Override
+              public void onError() {
+                txtNoImage.setVisibility(View.VISIBLE);
+              }
+            });
     }
   }
 
@@ -137,7 +145,8 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     ImageView imageCurrentMeaningfullPicture =
         (ImageView) findViewById(R.id.imageCurrentMeaningfullPicture);
 
-    final TextView txtNoImage = (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
+    final TextView txtNoImage =
+        (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
 
     SettingsService service = SettingsService.getInstance(getBaseContext());
     Uri uri = service.getMeaningfulPictureUri();

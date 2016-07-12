@@ -78,6 +78,24 @@ public class LibraryController extends BaseNavigationActivity
     Log.d(Constants.LOG_TAG, "resuming library");
   }
 
+  @Override
+  /**
+   * Handles cleanup code for the library.
+   */
+  protected void onStop() {
+    super.onStop();
+    ResourceLibraryService service = ResourceLibraryService.getInstance();
+    service.removeObserver(this); // remove ourselves so we don't have memory leaks.
+    Log.d(Constants.LOG_TAG, "stopping library");
+  }
+
+  @Override
+  public void resourcesLoaded(ResourceLibraryService service) {
+    QuizService quizService = new QuizService(getBaseContext());
+    // grab our resources.
+    setupListAdapter(service, quizService);
+  }
+
   private void setupListAdapter(ResourceLibraryService service, QuizService quizService) {
     List<LibraryResource> resources = new ArrayList<>();
 
@@ -113,23 +131,5 @@ public class LibraryController extends BaseNavigationActivity
         startActivity(intent);
       }
     });
-  }
-
-  @Override
-  /**
-   * Handles cleanup code for the library.
-   */
-  protected void onStop() {
-    super.onStop();
-    ResourceLibraryService service = ResourceLibraryService.getInstance();
-    service.removeObserver(this); // remove ourselves so we don't have memory leaks.
-    Log.d(Constants.LOG_TAG, "stopping library");
-  }
-
-  @Override
-  public void resourcesLoaded(ResourceLibraryService service) {
-    QuizService quizService = new QuizService(getBaseContext());
-    // grab our resources.
-    setupListAdapter(service, quizService);
   }
 }

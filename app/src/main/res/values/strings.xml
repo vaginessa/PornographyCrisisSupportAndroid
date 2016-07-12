@@ -44,4 +44,6 @@
     <string name="quiz_score_range_mild">Mild</string>
     <string name="quiz_score_range_moderate">Moderate</string>
     <string name="quiz_score_range_severe">Severe</string>
+    <string name="picture_app_missing_title">Picture application missing</string>
+    <string name="picture_app_missing">No application could be found that can open a picture.  Please install one before continuing.</string>
 </resources>

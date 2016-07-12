@@ -1,6 +1,7 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork.controllers;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
+import com.discoverandchange.pornographycrisissupport.utils.DialogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -236,7 +238,8 @@ public class SupportNetworkListController extends BaseNavigationActivity {
    * Displays an alert box notifying the user that the contact they chose is invalid.
    */
   private void displayInvalidContactAlert() {
-    displayErrorDialog(R.string.contact_add_invalid_title, R.string.contact_add_invalid);
+    DialogHelper.displayErrorDialog(this, R.string.contact_add_invalid_title,
+        R.string.contact_add_invalid);
   }
 
   /**
@@ -244,28 +247,8 @@ public class SupportNetworkListController extends BaseNavigationActivity {
    * so we can pick a contact.
    */
   private void displayInstallContactsAppDialog() {
-    displayErrorDialog(R.string.contact_app_missing_title, R.string.contact_app_missing);
-  }
-
-  /**
-   * Displays an Alert box representing an error. The error will contain the given title
-   * and message passed in from the resources string file. IE R.string.message.
-   *
-   * @param titleStringId   The resource string id for the alert title
-   * @param messageStringId The resource string id for the alert message displayed.
-   */
-  private void displayErrorDialog(int titleStringId, int messageStringId) {
-    new AlertDialog.Builder(this)
-        .setTitle(titleStringId)
-        .setMessage(messageStringId)
-        .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            // right now we do nothing if they click the ok button.
-          }
-        })
-        .setIcon(android.R.drawable.ic_dialog_alert)
-        .show();
+    DialogHelper.displayErrorDialog(this, R.string.contact_app_missing_title,
+        R.string.contact_app_missing);
   }
 
   /**

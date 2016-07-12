@@ -10,20 +10,32 @@ import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
+import com.discoverandchange.pornographycrisissupport.IntentChecker;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
+import com.discoverandchange.pornographycrisissupport.utils.DialogHelper;
 import com.discoverandchange.pornographycrisissupport.utils.PicassoListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+/**
+ * Handles the setting of a meaningful picture that will display in the resource library.
+ * Users can pick a picture from their gallery, or other applicable image providers, and save it.
+ * This controller also handles the clearing of this setting.
+ */
 public class MeaningfulPictureSettingsController extends BaseNavigationActivity {
 
   // some of the code of this class has been adapted from this example:
   // http://codetheory.in/android-pick-select-image-from-gallery-with-intents/
-
+  /**
+   * The callback identifier for when an image has been picked.
+   */
   private int PICK_IMAGE_REQUEST = 1;
 
-  // TODO: stephen finish documenting this class.
+  /**
+   * Handles the creation of the controller and the display of the saved picture if there is any.
+   * @param savedInstanceState {@inheritDoc}
+   */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,13 +43,26 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
     this.loadInitialPicture();
   }
 
+  /**
+   * Launches the pick picture intent or tells the user to install one if none is available.
+   * @param btn The button that was clicked.
+   */
   public void handleSelectPicture(View btn) {
+
+    IntentChecker checker = new IntentChecker(getBaseContext());
+
     Intent intent = new Intent();
     // Show only images, no videos or anything else
     intent.setType("image/*");
     intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-    // Always show the chooser (if there are multiple options available)
-    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    if (checker.isIntentSafeToLaunch(intent)) {
+      // Always show the chooser (if there are multiple options available)
+      startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+    else {
+      DialogHelper.displayErrorDialog(this, R.string.picture_app_missing_title,
+          R.string.picture_app_missing);
+    }
   }
 
   public void handleClearImage(View btn) {
@@ -50,41 +75,6 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
 
     final TextView txtNoImage = (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
     txtNoImage.setVisibility(View.VISIBLE);
-  }
-
-  private void loadInitialPicture() {
-    ImageView imageCurrentMeaningfullPicture =
-        (ImageView) findViewById(R.id.imageCurrentMeaningfullPicture);
-
-    final TextView txtNoImage = (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
-
-    SettingsService service = SettingsService.getInstance(getBaseContext());
-    Uri uri = service.getMeaningfulPictureUri();
-
-    // no uri, nothing to load.
-    if (uri == null) {
-      return;
-    }
-
-    new Picasso.Builder(getBaseContext())
-        .listener(new PicassoListener())
-        .build()
-        .load(uri)
-        .fit()
-        .centerInside()
-        .into(imageCurrentMeaningfullPicture, new Callback() {
-      @Override
-      public void onSuccess() {
-        Log.d(Constants.LOG_TAG, "meaningfull picture loaded fine.");
-        txtNoImage.setVisibility(View.INVISIBLE);
-      }
-
-      @Override
-      public void onError() {
-        Log.d(Constants.LOG_TAG, "meaningfull picture failed to load");
-        txtNoImage.setVisibility(View.VISIBLE);
-      }
-    });
   }
 
   @Override
@@ -129,4 +119,38 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
   }
 
 
+  private void loadInitialPicture() {
+    ImageView imageCurrentMeaningfullPicture =
+        (ImageView) findViewById(R.id.imageCurrentMeaningfullPicture);
+
+    final TextView txtNoImage = (TextView) findViewById(R.id.txtViewMeaningfullPictureDefaultMessage);
+
+    SettingsService service = SettingsService.getInstance(getBaseContext());
+    Uri uri = service.getMeaningfulPictureUri();
+
+    // no uri, nothing to load.
+    if (uri == null) {
+      return;
+    }
+
+    new Picasso.Builder(getBaseContext())
+        .listener(new PicassoListener())
+        .build()
+        .load(uri)
+        .fit()
+        .centerInside()
+        .into(imageCurrentMeaningfullPicture, new Callback() {
+          @Override
+          public void onSuccess() {
+            Log.d(Constants.LOG_TAG, "meaningfull picture loaded fine.");
+            txtNoImage.setVisibility(View.INVISIBLE);
+          }
+
+          @Override
+          public void onError() {
+            Log.d(Constants.LOG_TAG, "meaningfull picture failed to load");
+            txtNoImage.setVisibility(View.VISIBLE);
+          }
+        });
+  }
 }

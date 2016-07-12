@@ -26,9 +26,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
         android:id="@+id/latestScore"
-        android:layout_above="@+id/libraryTitle"
-        android:layout_alignRight="@+id/libraryTitle"
-        android:layout_alignEnd="@+id/libraryTitle"
+        android:layout_above="@+id/libraryContactNetworkNotifiedMessage"
+        android:layout_alignRight="@+id/libraryContactNetworkNotifiedMessage"
+        android:layout_alignEnd="@+id/libraryContactNetworkNotifiedMessage"
         android:layout_toRightOf="@+id/textView7"
         android:layout_toEndOf="@+id/textView7"/>
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/quiz_controller_contact_network_notified"
-        android:id="@+id/libraryTitle"
+        android:id="@+id/libraryContactNetworkNotifiedMessage"
         android:layout_below="@+id/latestCravingScore"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -48,7 +48,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/library_items"
         android:id="@+id/textView7"
-        android:layout_below="@+id/libraryTitle"
+        android:layout_below="@+id/libraryContactNetworkNotifiedMessage"
         android:layout_centerHorizontal="true"/>
 
     <ListView

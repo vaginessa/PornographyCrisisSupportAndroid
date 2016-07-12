@@ -70,6 +70,19 @@ public class LibraryController extends BaseNavigationActivity
 
     Log.d(Constants.LOG_TAG, "setting latest score view: " + score);
     latestScore.setText(Integer.toString(score));
+
+    toggleContactNetworkMessageForQuizScore(quizService, score);
+  }
+
+  private void toggleContactNetworkMessageForQuizScore(QuizService quizService, int score) {
+    TextView contactsNotifiedMessage =
+        (TextView)findViewById(R.id.libraryContactNetworkNotifiedMessage);
+    if (!quizService.isCrisisScore(score)) {
+      contactsNotifiedMessage.setVisibility(View.GONE);
+    }
+    else {
+      contactsNotifiedMessage.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override

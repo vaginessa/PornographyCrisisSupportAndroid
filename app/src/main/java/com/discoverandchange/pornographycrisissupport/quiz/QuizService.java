@@ -20,6 +20,11 @@ import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
 public class QuizService extends ContextWrapper {
 
   /**
+   * The minimum quiz score that is considered a crisis.
+   */
+  private static final int CRISIS_SCORE_THRESHOLD = 7;
+
+  /**
    * The database reference.
    */
   private SQLiteDatabase db;
@@ -59,7 +64,7 @@ public class QuizService extends ContextWrapper {
     Log.d("saveQuiz", "Score: " + quiz.getScore());
 
     // determine ifCrisisQuizScore
-    return quiz.getScore() >= 7;
+    return isCrisisScore(quiz.getScore());
   }
 
   /**
@@ -239,5 +244,17 @@ public class QuizService extends ContextWrapper {
 
     // log
     Log.d("deleteQuiz", quiz.toString());
+  }
+
+  /**
+   * Returns true if the passed in score should be treated as a crisis score range.
+   * @param score The score to check if it's a crisis score or not
+   * @return Returns true if the score is a crisis score as determined by the service.
+   */
+  public boolean isCrisisScore(int score) {
+    if (score >= CRISIS_SCORE_THRESHOLD) {
+      return true;
+    }
+    return score >= CRISIS_SCORE_THRESHOLD;
   }
 }

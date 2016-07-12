@@ -78,8 +78,7 @@ public class QuizService extends ContextWrapper {
       helper = new PcsDbOpenHelper(this);
       db = helper.getReadableDatabase();
 
-    }
-    catch (SQLiteException ex) {
+    } catch (SQLiteException ex) {
       return 0;
     }
 

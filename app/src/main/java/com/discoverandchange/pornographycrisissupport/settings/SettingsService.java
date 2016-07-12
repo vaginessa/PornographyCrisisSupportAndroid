@@ -18,20 +18,49 @@ import java.util.List;
  * @author Stephen Nielson
  */
 public class SettingsService {
+  /**
+   * The SharedPreferences settings name.
+   */
   private static final String SETTINGS_PREFERENCES = "Settings";
-  private static final String INSPIRATIONAL_QUOTE_SETTING = "InspirationalQuote";
-  private static final String MEANINGFUL_PICTURE_SETTING = "MeaningfulPicture";
-  private static SettingsService service;
-  private static Context context;
-  private Uri meaningfulPictureUri;
 
-  public synchronized static SettingsService getInstance(Context context) {
+  /**
+   * The setting key name for the inspirational quote.
+   */
+  private static final String INSPIRATIONAL_QUOTE_SETTING = "InspirationalQuote";
+
+  /**
+   * The setting key name for the meaningful picture.
+   */
+  private static final String MEANINGFUL_PICTURE_SETTING = "MeaningfulPicture";
+
+  /**
+   * The instantiated singleton instance for the SettingsService.
+   */
+  private static SettingsService service;
+
+  /**
+   * The current application context.
+   */
+  private Context context;
+
+  /**
+   * Returns the settings service instance, instantiating it if necessary for the given context.
+   * Note this method is synchronized so caution should be used in calling it via multiple threads.
+   * @param context The current application context
+   * @return The instantiated service.
+   */
+  public static synchronized SettingsService getInstance(Context context) {
     if (service == null) {
       service = new SettingsService(context.getApplicationContext());
     }
     return service;
   }
 
+  /**
+   * Used for instantiating the SettingsService.  Note this method is opened up so that it can be
+   * unit tested.  SettingsService.getInstance(context) should be used instead of this one.
+   * @param context The current application context.
+   */
   public SettingsService(Context context) {
     this.context = context;
   }
@@ -65,10 +94,9 @@ public class SettingsService {
   }
 
   /**
-   * Returns the resources from the settings service.
-   * TODO: stephen this feels really out of place, I wonder if we should put it in the library.
-   * Perhaps a library global resource with a particular key-value setting.
-   * @return
+   * Returns the LibraryResources (such as inspirational quote, meaningful picture) etc
+   * that can be immediately used from the settings service.
+   * @return List of LibraryResources.
    */
   public List<LibraryResource> getSettingsResources() {
     List<LibraryResource> resources = new ArrayList<>();
@@ -76,7 +104,8 @@ public class SettingsService {
     if (!StringUtils.isEmpty(quote)) {
       InspirationalQuoteResource quoteResource = new InspirationalQuoteResource();
       quoteResource.setTitle("Inspirational Quote");
-      quoteResource.setDescription("Your personal inspirational quote to help you deal with your cravings.");
+      quoteResource.setDescription("Your personal inspirational quote to help you "
+           + "deal with your cravings.");
       quoteResource.setText(this.getInspirationalQuote());
       resources.add(quoteResource);
     }
@@ -84,11 +113,11 @@ public class SettingsService {
     Uri pictureUri = this.getMeaningfulPictureUri();
     if (pictureUri != null) {
       MeaningfulPictureResource pictureResource = new MeaningfulPictureResource();
-      // TODO: stephen look at making this a URI.
       pictureResource.setUrl(pictureUri.toString());
       pictureResource.setThumbnail(pictureUri.toString());
-      pictureResource.setTitle("Meaningfull Picture");
-      pictureResource.setDescription("Your personal meaningful picture to help you deal with your cravings.");
+      pictureResource.setTitle("Meaningful Picture");
+      pictureResource.setDescription("Your personal meaningful "
+          + "picture to help you deal with your cravings.");
       resources.add(pictureResource);
     }
     return resources;
@@ -135,7 +164,11 @@ public class SettingsService {
     return preferences.getString(key, defaultValue);
   }
 
-  // TODO: stephen finish documentating this class.
+  /**
+   * Saves a string key-value pair to the settings shared preferences.
+   * @param key The key of the setting to save
+   * @param value The string value of the setting to save.
+   */
   private void saveStringSetting(String key, String value) {
     SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
     SharedPreferences.Editor editor = preferences.edit();
@@ -143,6 +176,10 @@ public class SettingsService {
     editor.apply();
   }
 
+  /**
+   * Given a string key representing a shared preferences setting, clear it from the preferences.
+   * @param key The name of the setting.
+   */
   private void clearSetting(String key) {
     SharedPreferences preferences = context.getSharedPreferences(SETTINGS_PREFERENCES, 0);
     if (preferences.contains(key)) {

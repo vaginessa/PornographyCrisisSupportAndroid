@@ -36,7 +36,7 @@ public class LibraryController extends BaseNavigationActivity
   private LibraryResourceListAdapter libraryResourceListAdapter;
 
   /**
-   * Creates the library list and displays the current quiz score on the activity
+   * Creates the library list and displays the current quiz score on the activity.
    * @param savedInstanceState {@inheritDoc}
    */
   @Override
@@ -60,8 +60,7 @@ public class LibraryController extends BaseNavigationActivity
     service.registerObserver(this);
     if (!service.isResourcesLoaded()) {
       service.loadResources();
-    }
-    else {
+    } else {
       // setup our text view and setup our list adapter.
       setupListAdapter(service, quizService);
     }
@@ -74,27 +73,10 @@ public class LibraryController extends BaseNavigationActivity
     toggleContactNetworkMessageForQuizScore(quizService, score);
   }
 
-  private void toggleContactNetworkMessageForQuizScore(QuizService quizService, int score) {
-    TextView contactsNotifiedMessage =
-        (TextView)findViewById(R.id.libraryContactNetworkNotifiedMessage);
-    if (!quizService.isCrisisScore(score)) {
-      contactsNotifiedMessage.setVisibility(View.GONE);
-    }
-    else {
-      contactsNotifiedMessage.setVisibility(View.VISIBLE);
-    }
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    Log.d(Constants.LOG_TAG, "resuming library");
-  }
-
-  @Override
   /**
    * Handles cleanup code for the library.
    */
+  @Override
   protected void onStop() {
     super.onStop();
     ResourceLibraryService service = ResourceLibraryService.getInstance();
@@ -102,11 +84,25 @@ public class LibraryController extends BaseNavigationActivity
     Log.d(Constants.LOG_TAG, "stopping library");
   }
 
+  /**
+   * Reloads the library with the new library resources.
+   * @param service The service that finished loading it's resources.
+   */
   @Override
   public void resourcesLoaded(ResourceLibraryService service) {
     QuizService quizService = new QuizService(getBaseContext());
     // grab our resources.
     setupListAdapter(service, quizService);
+  }
+
+  private void toggleContactNetworkMessageForQuizScore(QuizService quizService, int score) {
+    TextView contactsNotifiedMessage =
+        (TextView)findViewById(R.id.libraryContactNetworkNotifiedMessage);
+    if (!quizService.isCrisisScore(score)) {
+      contactsNotifiedMessage.setVisibility(View.GONE);
+    } else {
+      contactsNotifiedMessage.setVisibility(View.VISIBLE);
+    }
   }
 
   private void setupListAdapter(ResourceLibraryService service, QuizService quizService) {

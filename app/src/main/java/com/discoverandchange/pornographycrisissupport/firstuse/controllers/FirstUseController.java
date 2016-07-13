@@ -17,6 +17,7 @@ import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizHistoryController;
+import com.discoverandchange.pornographycrisissupport.settings.controllers.MeaningfulPictureSettingsController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers.SupportNetworkListController;
 
 import java.io.IOException;
@@ -115,6 +116,8 @@ public class FirstUseController extends AppCompatActivity {
         image.setEnabled(true);
         break;
       case 3:
+        Intent intentPic = new Intent(getBaseContext(), MeaningfulPictureSettingsController.class);
+        startActivity(intentPic);
         test.setEnabled(true);
         break;
       case 4:

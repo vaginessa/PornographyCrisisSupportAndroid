@@ -44,4 +44,6 @@
     <string name="quiz_score_range_mild">Mild</string>
     <string name="quiz_score_range_moderate">Moderate</string>
     <string name="quiz_score_range_severe">Severe</string>
+    <string name="activity_test_message">Send</string>
+    <string name="username_prompt">Enter your name. It will be added to the message sent to your crisis contact</string>
 </resources>

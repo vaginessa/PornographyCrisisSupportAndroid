@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".firstuse.controllers.first_use_controller">
+    tools:context=".firstuse.controllers.FirstUseController">
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,5 +67,17 @@
         android:layout_marginTop="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4. Take Quiz"
+        android:id="@+id/checklistButtonQuiz"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/checklistButtonTest"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

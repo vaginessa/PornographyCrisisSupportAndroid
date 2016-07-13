@@ -28,9 +28,6 @@ public class CrisisAppWidget extends AppWidgetProvider {
   public void onEnabled(Context context) {
     // Enter relevant functionality for when the first widget is created
     super.onEnabled(context);
-    //SupportContact supportContact;
-    //SupportNetworkService supportNetworkService = SupportNetworkService.getInstance(context);
-    //supportContact = supportNetworkService.getCrisisSupportContact();
   }
 
   @Override
@@ -54,7 +51,6 @@ public class CrisisAppWidget extends AppWidgetProvider {
 
     // Construct the RemoteViews object
     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.crisis_widget);
-    //views.setTextViewText(R.id.appwidget_text, widgetText);
 
     // Get the layout and attach an on-click listener
     views.setOnClickPendingIntent(R.id.widgetImage, pendingIntent);

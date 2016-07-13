@@ -48,4 +48,6 @@
     <string name="picture_app_missing">No application could be found that can open a picture.  Please install one before continuing.</string>
     <string name="meaningfulPictureSettingsNoImage">No Image Currently Set</string>
     <string name="meaningful_picture_image_not_found">Error: Could not load picture.</string>
+    <string name="audio_controller_play_error_title">Error playing resource</string>
+    <string name="audio_controller_play_error">There was an error in playing or loading your resource. Please try again.</string>
 </resources>

@@ -13,6 +13,7 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.library.AudioResource;
+import com.discoverandchange.pornographycrisissupport.utils.DialogHelper;
 
 import java.io.IOException;
 
@@ -28,7 +29,15 @@ public class AudioActivityController extends BaseNavigationActivity {
   // A variable to hold our video to play
   private AudioResource audioResource = null;
 
+
   /**
+   * Boolean that tells an audio player to start playing as soon as it's prepare async method
+   * is done.
+   */
+  private boolean startPlaying = false;
+
+  /**
+   * TODO: stephen test audio playback.
    * Loads up the audio view buttons and prepares the audio for playback.
    * @param savedInstanceState the saved data we want to restore from.
    */
@@ -49,45 +58,52 @@ public class AudioActivityController extends BaseNavigationActivity {
 
     TextView title = (TextView)findViewById(R.id.audioTitle);
     title.setText(audioResource.getTitle());
+  }
 
-    // Handling the play button
-    Button play = (Button) findViewById(R.id.play);
-    play.setOnClickListener(new View.OnClickListener() {
-
-
-      @Override
-      public void onClick(View view) {
-        String url = audioResource.getUrl();
-
-        if (mediaPlayer == null) {
-          mediaPlayer = new MediaPlayer();
-
-          mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-          try {
-            mediaPlayer.setDataSource(url);
-            mediaPlayer.prepare(); // might take long for buffering, etc.
-          } catch (IOException ex) {
-            Log.e(Constants.LOG_TAG, "Error Connecting", ex);
-          }
-          mediaPlayer.start();
-        }
-      }
-    });
+  /**
+   * Starts playing the audio.
+   * @param startBtn The start button that was clicked
+   */
+  public void startPlayingAudio(View startBtn) {
 
 
-    // Handling the stop button
-    Button stop = (Button) findViewById(R.id.stop);
-    stop.setOnClickListener(new View.OnClickListener() {
+    if (mediaPlayer == null) {
+      createMediaPlayer();
+    }
+    startPlaying = true;
+    mediaPlayer.prepareAsync(); // make this an async operation.
 
-      @Override
-      public void onClick(View view) {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-          mediaPlayer.stop();
-          mediaPlayer.release();
-          mediaPlayer = null;
-        }
-      }
-    });
+    setButtonEnabled(R.id.start, false);
+    setButtonEnabled(R.id.stop, true);
+  }
+
+  /**
+   * Stops the media from playing.
+   * @param stopBtn The stop button that was clicked.
+   */
+  public void stopPlayingAudio(View stopBtn) {
+    if (mediaPlayer != null && startPlaying) {
+      mediaPlayer.stop();
+      startPlaying = false;
+    }
+    setButtonEnabled(R.id.stop, false);
+    setButtonEnabled(R.id.start, false);
+
+    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+      mediaPlayer.stop();
+    }
+  }
+
+  /**
+   * Enables/Disables the passed in button id.
+   * @param buttonId The resource id for the button we want to toggle.
+   * @param isEnabled Whether to enable or disable the button.
+   */
+  private void setButtonEnabled(int buttonId, boolean isEnabled) {
+    Button btn = (Button)findViewById(buttonId);
+    if (btn != null) {
+      btn.setEnabled(isEnabled);
+    }
   }
 
   /**
@@ -100,5 +116,47 @@ public class AudioActivityController extends BaseNavigationActivity {
     }
     super.onDestroy();
 
+  }
+
+  /**
+   * Creates The MediaPlayer for the audio and has it start playing as soon as it's asyncronously
+   * finished loading it's data.
+   * @return
+   */
+  private MediaPlayer createMediaPlayer() {
+    String url = audioResource.getUrl();
+    final MediaPlayer player = new MediaPlayer();
+
+    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    try {
+      player.setDataSource(url);
+      player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+          if (startPlaying) {
+            player.start();
+          }
+        }
+      });
+
+      // set the error listener in case we have problems playing the audio.
+      player.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+        @Override
+        public boolean onError(MediaPlayer mp, int what, int extra) {
+          Log.e(Constants.LOG_TAG, "AudioActivityController error playing audio. what code: "
+              + what + "extra code: " + extra);
+          DialogHelper.displayErrorDialog(getBaseContext(),
+              R.string.audio_controller_play_error_title, R.string.audio_controller_play_error);
+          return true;
+        }
+      });
+
+    } catch (IOException ex) {
+      Log.e(Constants.LOG_TAG, "Error Connecting", ex);
+      DialogHelper.displayErrorDialog(getBaseContext(),
+          R.string.audio_controller_play_error_title,
+          R.string.audio_controller_play_error);
+    }
+    return player;
   }
 }

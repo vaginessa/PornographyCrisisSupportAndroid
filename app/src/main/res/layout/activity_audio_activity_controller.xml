@@ -27,7 +27,8 @@
         android:text="PLAY"
         android:layout_marginTop="67dp"
         android:layout_below="@+id/audioTitle"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:onClick="startPlayingAudio"/>
 
 
     <Button
@@ -36,5 +37,6 @@
         android:layout_height="wrap_content"
         android:text="STOP"
         android:layout_below="@+id/play"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:onClick="stopPlayingAudio"/>
 </RelativeLayout>

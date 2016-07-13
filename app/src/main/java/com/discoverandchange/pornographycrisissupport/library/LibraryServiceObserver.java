@@ -13,6 +13,10 @@ public interface LibraryServiceObserver {
    */
   void resourcesLoaded(ResourceLibraryService service);
 
-  // TODO: stephen we probably need to observe when a resource load error occurred
-  // since this is asynchronous we should fix that problem.
+  /**
+   * Fired when the ResourceLibraryService had an error in loading the network resrouces.
+   * The service is passed along so you can retrieve more information about it.
+   * @param service
+   */
+  void resourcesLoadError(ResourceLibraryService service);
 }

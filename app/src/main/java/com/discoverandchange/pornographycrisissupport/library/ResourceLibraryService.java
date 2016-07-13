@@ -210,4 +210,13 @@ public class ResourceLibraryService {
       observer.resourcesLoaded(this);
     }
   }
+
+  /**
+   * Runs through all of the observers and tells them that our resources failed to load.
+   */
+  public void notifyResourcesFailed() {
+    for (LibraryServiceObserver observer : observers) {
+      observer.resourcesLoadError(this);
+    }
+  }
 }

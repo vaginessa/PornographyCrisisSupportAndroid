@@ -50,4 +50,6 @@
     <string name="meaningful_picture_image_not_found">Error: Could not load picture.</string>
     <string name="audio_controller_play_error_title">Error playing resource</string>
     <string name="audio_controller_play_error">There was an error in playing or loading your resource. Please try again.</string>
+    <string name="library_controller_no_network_title">Network Error</string>
+    <string name="library_controller_no_network">We could not contact the library network.  Please verify your internet connection is working and turned on. Would you like to try loading your resources again?</string>
 </resources>

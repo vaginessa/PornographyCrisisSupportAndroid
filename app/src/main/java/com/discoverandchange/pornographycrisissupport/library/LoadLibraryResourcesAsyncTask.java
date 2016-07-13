@@ -16,6 +16,7 @@ import java.util.Map;
  * Handles the loading of library resources in the background and adding them back to the library
  * resource service once it's done.
  * TODO: stephen look at moving this back into the library service code... as it needs to modify
+ * perhaps we make this a package class as we don't want it working outside this package.
  * some internal state saying the resources have loaded
  * Created by snielson on 6/22/16.
  */
@@ -84,11 +85,10 @@ public class LoadLibraryResourcesAsyncTask extends AsyncTask<String, Void,
       for (Range range : rangeListMap.keySet()) {
         service.addResources(range, rangeListMap.get(range));
       }
+      service.markResourcesLoaded();
     } else {
-      // so the app can continue with null resources we should mark the resources loaded
-      // TODO: stephen perhaps have an resourcesFailed handler
+      service.notifyResourcesFailed();
     }
-    service.markResourcesLoaded();
   }
 
 

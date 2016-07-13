@@ -1,6 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.library.controllers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import com.discoverandchange.pornographycrisissupport.library.LibraryServiceObse
 import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
+import com.discoverandchange.pornographycrisissupport.utils.DialogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +96,36 @@ public class LibraryController extends BaseNavigationActivity
     QuizService quizService = new QuizService(getBaseContext());
     // grab our resources.
     setupListAdapter(service, quizService);
+
+  }
+
+  @Override
+  // TODO: stephen test resource load error.
+  public void resourcesLoadError(ResourceLibraryService service) {
+    Log.e(Constants.LOG_TAG, "Failed to load resource library");
+    final ResourceLibraryService libraryService = service;
+    new AlertDialog.Builder(getBaseContext())
+        .setTitle(R.string.library_controller_no_network_title)
+        .setMessage(R.string.library_controller_no_network)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            // right now we do nothing if they click the ok button.
+            libraryService.loadResources();
+          }
+        })
+        .setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            // right now we do nothing if they click the cancel button.
+          }
+        })
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .show();
+
+
+    DialogHelper.displayErrorDialog(getBaseContext(), R.string.library_controller_no_network_title,
+        R.string.library_controller_no_network);
   }
 
   private void toggleContactNetworkMessageForQuizScore(QuizService quizService, int score) {

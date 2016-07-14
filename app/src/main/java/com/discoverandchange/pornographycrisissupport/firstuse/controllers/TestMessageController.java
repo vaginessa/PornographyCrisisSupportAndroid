@@ -51,8 +51,10 @@ public class TestMessageController extends BaseNavigationActivity{
   @Override
   protected void onPause() {
     super.onPause();
-    setUserName();
-  }
+    if (username == null) {
+      setUserName();
+    }
+}
 
   @Override
   protected void onRestart() {
@@ -78,6 +80,7 @@ public class TestMessageController extends BaseNavigationActivity{
 
         // set the message
         setDefaultMessage(username, message);
+        dialog.dismiss();
       }
     });
 

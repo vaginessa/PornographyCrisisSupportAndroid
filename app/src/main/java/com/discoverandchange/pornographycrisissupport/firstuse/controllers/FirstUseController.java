@@ -76,25 +76,13 @@ public class FirstUseController extends AppCompatActivity {
       }
 //    baseActivity.launchActivity(SupportNetworkListController.class);
     });
-
-    // Handling the take quiz message button
-    Button quiz = (Button) findViewById(R.id.checklistButtonQuiz);
-    quiz.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-
-        updateState(5);
-
-      }
-//    baseActivity.launchActivity(SupportNetworkListController.class);
-    });
   }
 
   public void updateState(int newState) {
     SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
     SharedPreferences.Editor ed = pref.edit();
     ed.putInt("step", newState);
-    if (newState >= 4) {
+    if (newState != 4) {
       ed.commit();
     }
 
@@ -103,19 +91,16 @@ public class FirstUseController extends AppCompatActivity {
     final int supportStep = 2;
     final int imageStep = 3;
     final int testStep = 4;
-    final int defaultStep = 5;
 
 
     Button support = (Button) findViewById(R.id.checklistButtonSupport);
     Button image = (Button) findViewById(R.id.checklistButtonImage);
     Button test = (Button) findViewById(R.id.checklistButtonTest);
-    Button quiz = (Button) findViewById(R.id.checklistButtonQuiz);
     // And other buttons...
 
     support.setEnabled(false);
     image.setEnabled(false);
     test.setEnabled(false);
-    quiz.setEnabled(false);
     // And other buttons...
 
     switch (newState) {
@@ -135,13 +120,9 @@ public class FirstUseController extends AppCompatActivity {
         ed.commit();
         Intent intent = new Intent(getBaseContext(), TestMessageController.class); // Placeholder for testMessage
         startActivity(intent);
-        quiz.setEnabled(true);
         break;
       // Add more button values here if new items added to checklist...
-      case defaultStep:
-        Intent intentQuiz = new Intent(getBaseContext(), QuizController.class);
-        startActivity(intentQuiz);
-        break;
+
 
     }
   }

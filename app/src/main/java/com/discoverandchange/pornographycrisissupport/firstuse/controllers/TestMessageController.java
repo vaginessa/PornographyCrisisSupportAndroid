@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
@@ -126,7 +127,9 @@ public class TestMessageController extends BaseNavigationActivity{
 
     if (isSuccess) {
       // go back to previous activity
-      finish();
+      //finish();
+      Intent intentQuiz = new Intent(getBaseContext(), QuizController.class);
+      startActivity(intentQuiz);
     }
   }
 }

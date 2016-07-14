@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -13,13 +12,12 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
-import com.discoverandchange.pornographycrisissupport.firstuse.controllers.first_use_controller;
+import com.discoverandchange.pornographycrisissupport.firstuse.controllers.FirstUseController;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.EndCallListener;
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
@@ -131,7 +129,7 @@ public class QuizController extends BaseNavigationActivity {
    * Launches the first use setup.
    */
   private void launchFirstUseSetup() {
-    Intent intent = new Intent(this, first_use_controller.class);
+    Intent intent = new Intent(this, FirstUseController.class);
     startActivity(intent);
     finish();
   }
@@ -141,15 +139,13 @@ public class QuizController extends BaseNavigationActivity {
    * @return True if the setup of the app has not been finished.
    */
   private boolean isFirstUseSetupLaunch() {
-    // Execute another the first use checklist if hasn't been opened before
-    // TODO: John, Keith we should probably rename this activity pref stuff to something more
-    // sensible like firstSetupSettings.
-    SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
+    // Execute the first use checklist if hasn't been opened before
+    SharedPreferences firstUseChecks = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
 
     // Store the value temporarily to ensure that we get a boolean true / false
     // instead of always true
 
-    boolean isSetupFinished = pref.getBoolean("activity_executed", false);
+    boolean isSetupFinished = firstUseChecks.getBoolean("activity_executed", false);
     return !isSetupFinished;
   }
 

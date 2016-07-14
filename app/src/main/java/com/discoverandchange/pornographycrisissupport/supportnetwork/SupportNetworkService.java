@@ -142,6 +142,13 @@ public class SupportNetworkService {
   }
 
   /**
+   * Sends a text message as part of the first time setup
+   */
+  public void testSendMessage(String message) {
+    sendMessageToSupportNetwork(message);
+  }
+
+  /**
    * Returns the support network contact to call when the user is in crisis mode.
    *
    * @return The support network to be called when in crisis mode.

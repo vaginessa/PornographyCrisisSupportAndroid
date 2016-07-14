@@ -50,6 +50,7 @@ public class InspirationalQuoteSettingsController extends BaseNavigationActivity
 
     SettingsService service = SettingsService.getInstance(getBaseContext());
     service.saveInspirationalQuote(text);
+    finish();
   }
 
   /**

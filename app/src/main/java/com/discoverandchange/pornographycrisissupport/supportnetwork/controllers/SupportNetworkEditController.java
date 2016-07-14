@@ -55,5 +55,6 @@ public class SupportNetworkEditController extends BaseNavigationActivity {
     Switch viewSwitch = (Switch) findViewById(R.id.contactCrisisSwitch);
     editContact.setIsCrisisContact(viewSwitch.isChecked());
     SupportNetworkService.getInstance(getBaseContext()).saveSupportContact(editContact);
+    finish();
   }
 }

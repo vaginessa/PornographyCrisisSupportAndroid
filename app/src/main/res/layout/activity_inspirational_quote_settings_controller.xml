@@ -65,7 +65,7 @@
         android:text="@string/settings_inspirational_quote_instructions"
         android:id="@+id/textView6"
         android:textAlignment="center"
-        android:layout_above="@+id/editTextInspirationalQuote"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="24dp"/>
 </RelativeLayout>

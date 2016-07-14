@@ -4,7 +4,7 @@ package com.discoverandchange.pornographycrisissupport;
  * Holds global application constants.
  * @author Stephen Nielson
  * @author Keith Higbee
- * @author John Okleberry
+ * @author oogle
  */
 public class Constants {
   /**

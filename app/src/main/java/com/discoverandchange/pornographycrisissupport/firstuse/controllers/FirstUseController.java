@@ -15,6 +15,7 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
+import com.discoverandchange.pornographycrisissupport.library.controllers.MeaningfulPictureController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizHistoryController;
 import com.discoverandchange.pornographycrisissupport.settings.controllers.MeaningfulPictureSettingsController;
@@ -57,6 +58,8 @@ public class FirstUseController extends AppCompatActivity {
       @Override
       public void onClick(View v) {
 
+        Intent intent = new Intent(getBaseContext(), MeaningfulPictureController.class);
+        startActivity(intent);
         updateState(3);
       }
 //    baseActivity.launchActivity(SupportNetworkListController.class);
@@ -95,6 +98,14 @@ public class FirstUseController extends AppCompatActivity {
       ed.commit();
     }
 
+    // To use our First Use Checklist in order
+    final int initialStep = 1;
+    final int supportStep = 2;
+    final int imageStep = 3;
+    final int testStep = 4;
+    final int defaultStep = 5;
+
+
     Button support = (Button) findViewById(R.id.checklistButtonSupport);
     Button image = (Button) findViewById(R.id.checklistButtonImage);
     Button test = (Button) findViewById(R.id.checklistButtonTest);
@@ -107,31 +118,31 @@ public class FirstUseController extends AppCompatActivity {
     quiz.setEnabled(false);
     // And other buttons...
 
-    // TODO: John Make these variables constants / static
     switch (newState) {
-      case 1:
+      case initialStep:
         support.setEnabled(true);
         break;
-      case 2:
+      case supportStep:
         image.setEnabled(true);
         break;
-      case 3:
+      case imageStep:
         Intent intentPic = new Intent(getBaseContext(), MeaningfulPictureSettingsController.class);
         startActivity(intentPic);
         test.setEnabled(true);
         break;
-      case 4:
+      case testStep:
         ed.putBoolean("activity_executed", true);
         ed.commit();
-        Intent intent = new Intent(getBaseContext(), TestMessageController.class);
+        Intent intent = new Intent(getBaseContext(), TestMessageController.class); // Placeholder for testMessage
         startActivity(intent);
         quiz.setEnabled(true);
         break;
-      case 5:
+      // Add more button values here if new items added to checklist...
+      case defaultStep:
         Intent intentQuiz = new Intent(getBaseContext(), QuizController.class);
         startActivity(intentQuiz);
         break;
-      // Add more button values here if new items added to checklist...
+
     }
   }
 }

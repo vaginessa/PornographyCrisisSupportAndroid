@@ -17,7 +17,7 @@ import com.discoverandchange.pornographycrisissupport.library.VideoResource;
  * Controls interactions with video-
  * Returns to Library Screen.
  *
- * @author john.okleberry@gmail.com
+ * @author oogle
  */
 public class VideoActivityController extends BaseNavigationActivity {
 

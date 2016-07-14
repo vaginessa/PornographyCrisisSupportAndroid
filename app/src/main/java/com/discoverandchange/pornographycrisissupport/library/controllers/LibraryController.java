@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.discoverandchange.pornographycrisissupport.library.LibraryServiceObse
 import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
-import com.discoverandchange.pornographycrisissupport.utils.DialogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,33 +99,42 @@ public class LibraryController extends BaseNavigationActivity
 
   }
 
+  /**
+   * Display an error message saying the resources failed loading and ask the user to retry
+   * loading the resources.  It will keep asking the prompt until the user cancels or network
+   * connectivity is re-established.
+   * @param service The service that failed to load.
+   */
   @Override
-  // TODO: stephen test resource load error.
   public void resourcesLoadError(ResourceLibraryService service) {
     Log.e(Constants.LOG_TAG, "Failed to load resource library");
     final ResourceLibraryService libraryService = service;
-    new AlertDialog.Builder(getBaseContext())
+    new AlertDialog.Builder(this)
         .setTitle(R.string.library_controller_no_network_title)
         .setMessage(R.string.library_controller_no_network)
         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
             // right now we do nothing if they click the ok button.
-            libraryService.loadResources();
+            new AsyncTask<Void, Void, Void>() {
+
+              @Override
+              protected Void doInBackground(Void... params) {
+                libraryService.loadResources();
+                return null;
+              }
+            }.execute();
           }
         })
         .setNegativeButton(android.R.string.cancel,new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialog, int which) {
-            // right now we do nothing if they click the cancel button.
+            // right now we do nothing if they click the cancel button because the dialog will be
+            // auto-dismissed.
           }
         })
         .setIcon(android.R.drawable.ic_dialog_alert)
         .show();
-
-
-    DialogHelper.displayErrorDialog(getBaseContext(), R.string.library_controller_no_network_title,
-        R.string.library_controller_no_network);
   }
 
   private void toggleContactNetworkMessageForQuizScore(QuizService quizService, int score) {

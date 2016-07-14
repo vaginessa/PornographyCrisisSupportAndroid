@@ -2,6 +2,7 @@ package com.discoverandchange.pornographycrisissupport.supportnetwork.controller
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,7 +33,8 @@ public class SupportNetworkEditController extends BaseNavigationActivity {
     editContact = (SupportContact) intent.getSerializableExtra(Constants
         .SUPPORT_CONTACT_EDIT_MESSAGE);
     if (editContact == null) {
-      // TODO: stephen, john handle null case
+      Log.e(Constants.LOG_TAG, "Contact does not exist.");
+      finish();
     }
 
     Switch viewSwitch = (Switch) findViewById(R.id.contactCrisisSwitch);

@@ -36,9 +36,11 @@
         <activity android:name=".supportnetwork.controllers.SupportNetworkEditController"/>
         <activity android:name=".quiz.controllers.QuizHistoryController">
         </activity>
-        <activity android:name=".library.controllers.VideoActivityController">
+        <activity android:name=".library.controllers.VideoActivityController"
+                  android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
-        <activity android:name=".library.controllers.AudioActivityController">
+        <activity android:name=".library.controllers.AudioActivityController"
+                  android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".library.controllers.ExternalWebsiteActivityController"

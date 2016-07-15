@@ -33,7 +33,6 @@ public class Constants {
    */
   public static final String LOG_TAG_DEBUG  = "pcs.debug";
 
-  // TODO: stephen, when we publish this to the live server, switch the url
   /**
    * The URL that the app retrieves it's network resources from.
    */

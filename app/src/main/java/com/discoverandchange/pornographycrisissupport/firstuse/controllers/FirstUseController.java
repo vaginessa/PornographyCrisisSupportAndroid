@@ -23,12 +23,18 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers
 
 import java.io.IOException;
 
+/**
+ * Displays a checklist for the first time user to interact with
+ */
 public class FirstUseController extends AppCompatActivity {
 
   // TODO: John & Stephen Robust verification that steps are being completed
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  /**
+   * Allows the user to interact with the checklist buttons
+   * @param savedInstanceState Allows app state to be saved before checklist opened
+     */
+    protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_first_use_controller);
 
@@ -42,8 +48,12 @@ public class FirstUseController extends AppCompatActivity {
     // Handling the support network button
     Button support = (Button) findViewById(R.id.checklistButtonSupport);
     support.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+
+        /**
+         * Allows the first button to open the SupportNetworkListController to add first contacts
+         * @param view Required for the screen to be updated to the new Support Network activity
+         */
+        public void onClick(View view) {
         //Do Something
         Intent intent = new Intent(getBaseContext(), SupportNetworkListController.class);
         startActivity(intent);
@@ -55,8 +65,12 @@ public class FirstUseController extends AppCompatActivity {
     // Handling the select inspiring image button
     Button image = (Button) findViewById(R.id.checklistButtonImage);
     image.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+
+      /**
+       * Allows the second button to open the MeaningfulPictureController to add a user-selected pic
+       * @param view Required for the screen to be updated to the new Meaningful Picture activity
+         */
+        public void onClick(View view) {
 
         Intent intent = new Intent(getBaseContext(), MeaningfulPictureController.class);
         startActivity(intent);
@@ -68,17 +82,24 @@ public class FirstUseController extends AppCompatActivity {
     // Handling the send test message button
     Button test = (Button) findViewById(R.id.checklistButtonTest);
     test.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+      /**
+       * Allows the second button to open the TestMessageController to verify support network reached
+       * @param view Required for the screen to be updated to the new TestMessageController activity
+         */
+        public void onClick(View view) {
 
         updateState(4);
 
       }
-//    baseActivity.launchActivity(SupportNetworkListController.class);
     });
   }
 
-  public void updateState(int newState) {
+  /**
+   * Walks the user through the first-time setup checklist one step at a time before letting the user
+   * take their first cravings quiz
+   * @param newState Used to change the checklist status over time, higher values are closer to finish
+     */
+    public void updateState(int newState) {
     SharedPreferences pref = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
     SharedPreferences.Editor ed = pref.edit();
     ed.putInt("step", newState);

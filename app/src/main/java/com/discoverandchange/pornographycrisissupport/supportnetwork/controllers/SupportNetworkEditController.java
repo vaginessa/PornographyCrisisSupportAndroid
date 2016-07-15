@@ -33,7 +33,7 @@ public class SupportNetworkEditController extends BaseNavigationActivity {
     editContact = (SupportContact) intent.getSerializableExtra(Constants
         .SUPPORT_CONTACT_EDIT_MESSAGE);
     if (editContact == null) {
-      Log.wtf(Constants.LOG_TAG, "Null support contact sent in, when it never should");
+      Log.e(Constants.LOG_TAG, "Null support contact sent in, when it never should");
       finish();
       return;
     }

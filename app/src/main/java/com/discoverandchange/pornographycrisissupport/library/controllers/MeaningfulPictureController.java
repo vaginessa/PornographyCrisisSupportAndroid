@@ -42,13 +42,17 @@ public class MeaningfulPictureController extends BaseNavigationActivity {
       return;
     }
 
+    final TextView txtNoImage = (TextView)findViewById(R.id.txtMeaningfulPictureNoImage);
+    // default to invisible so we show it only on the error.
+    txtNoImage.setVisibility(View.INVISIBLE);
+
     MeaningfulPictureResource resource = (MeaningfulPictureResource)obj;
     ImageView imageView = (ImageView)findViewById(R.id.imageMeaningfullPicture);
     if (StringUtils.isEmpty(resource.getUrl())) {
       Log.wtf(Constants.LOG_TAG, "sent invalid meaningful picture resource");
     }
 
-    final TextView txtNoImage = (TextView)findViewById(R.id.txtMeaningfulPictureNoImage);
+
     Uri uri = Uri.parse(resource.getUrl());
     Picasso.with(getBaseContext()).load(uri).into(imageView,
         new Callback() {

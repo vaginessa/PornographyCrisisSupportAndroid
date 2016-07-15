@@ -27,8 +27,5 @@ public class LibraryResourceActivityRegistryTest {
     registry.registerResource(LibraryResource.class, Activity.class);
     activity = registry.getActivityForResource(LibraryResource.class);
     assertThat("We should have gotten back the registered class", activity, notNullValue());
-
-    // TODO: stephen as we add activities & resources we should test more than the basic here.
-
   }
 }

@@ -58,6 +58,9 @@ public class AudioActivityController extends BaseNavigationActivity {
 
     TextView title = (TextView)findViewById(R.id.audioTitle);
     title.setText(audioResource.getTitle());
+
+    // disable the stop button so they have to start the audio first.
+    setButtonEnabled(R.id.stop, false);
   }
 
   /**
@@ -68,12 +71,12 @@ public class AudioActivityController extends BaseNavigationActivity {
 
 
     if (mediaPlayer == null) {
-      createMediaPlayer();
+      mediaPlayer = createMediaPlayer();
     }
     startPlaying = true;
     mediaPlayer.prepareAsync(); // make this an async operation.
 
-    setButtonEnabled(R.id.start, false);
+    setButtonEnabled(R.id.play, false);
     setButtonEnabled(R.id.stop, true);
   }
 
@@ -86,8 +89,9 @@ public class AudioActivityController extends BaseNavigationActivity {
       mediaPlayer.stop();
       startPlaying = false;
     }
+
+    setButtonEnabled(R.id.play, true);
     setButtonEnabled(R.id.stop, false);
-    setButtonEnabled(R.id.start, false);
 
     if (mediaPlayer != null && mediaPlayer.isPlaying()) {
       mediaPlayer.stop();

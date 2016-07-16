@@ -35,6 +35,12 @@ public class CrisisAppWidget extends AppWidgetProvider {
     // Enter relevant functionality for when the last widget is disabled
   }
 
+  /**
+   * Sets up the crisis app widget with the intent information to launch the quiz dialer.
+   * @param context The current application context
+   * @param appWidgetManager The widge manager.
+   * @param appWidgetId The current id of this app widget.
+   */
   public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                               int appWidgetId) {
 

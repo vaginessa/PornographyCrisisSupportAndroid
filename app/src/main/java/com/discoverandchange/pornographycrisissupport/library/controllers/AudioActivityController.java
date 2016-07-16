@@ -125,7 +125,7 @@ public class AudioActivityController extends BaseNavigationActivity {
   /**
    * Creates The MediaPlayer for the audio and has it start playing as soon as it's asyncronously
    * finished loading it's data.
-   * @return
+   * @return The instantiated media player.
    */
   private MediaPlayer createMediaPlayer() {
     String url = audioResource.getUrl();

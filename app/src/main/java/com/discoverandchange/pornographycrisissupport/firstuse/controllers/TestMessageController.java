@@ -1,24 +1,15 @@
 package com.discoverandchange.pornographycrisissupport.firstuse.controllers;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
-import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
-import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
 
 
@@ -27,11 +18,12 @@ import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetw
  *
  * @author Keith Higbee
  */
-public class TestMessageController extends BaseNavigationActivity{
+public class TestMessageController extends BaseNavigationActivity {
 
   boolean isUsername = false;
   String username;
   String message;
+
   /**
    * Creates the initial arrays and cursorAdapter for communicating with the database.
    *
@@ -55,7 +47,7 @@ public class TestMessageController extends BaseNavigationActivity{
     if (username == null) {
       setUserName();
     }
-}
+  }
 
   @Override
   protected void onRestart() {
@@ -93,15 +85,15 @@ public class TestMessageController extends BaseNavigationActivity{
    * Message can be changed.
    *
    * @param username Name of the user needing help
-   * @param text Default message to be sent to the contacts
+   * @param text     Default message to be sent to the contacts
    */
   public void setDefaultMessage(String username, String text) {
     this.message = text;
-    message = "You have been added to the support network for " +
-        username + ". You will be sent a message at this phone number when " +
-        username + " reports that they are in need of support.";
+    message = "You have been added to the support network for "
+        + username + ". You will be sent a message at this phone number when "
+        + username + " reports that they are in need of support.";
 
-    EditText editText = (EditText)findViewById(R.id.test_message);
+    EditText editText = (EditText) findViewById(R.id.test_message);
     editText.setText(message, TextView.BufferType.EDITABLE);
   }
 
@@ -124,8 +116,7 @@ public class TestMessageController extends BaseNavigationActivity{
     try {
       SupportNetworkService.getInstance(getBaseContext()).testSendMessage(message);
       isSuccess = true;
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       throw new Exception(ex.toString());
     }
 

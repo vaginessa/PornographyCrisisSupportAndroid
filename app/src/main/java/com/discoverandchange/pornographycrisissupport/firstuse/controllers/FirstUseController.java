@@ -9,13 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
 import com.discoverandchange.pornographycrisissupport.library.controllers.MeaningfulPictureController;
 import com.discoverandchange.pornographycrisissupport.quiz.controllers.QuizController;
-import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.controllers.SupportNetworkListController;
 
 /**
@@ -77,8 +75,7 @@ public class FirstUseController extends AppCompatActivity {
     FirstUseChecklistService service = FirstUseChecklistService.getInstance(getBaseContext());
     if (service.isSetupComplete()) {
       handleSetupCompleted();
-    }
-    else {
+    } else {
       updateStepButtonsForState(service.getCurrentSetupStep());
     }
   }
@@ -108,8 +105,7 @@ public class FirstUseController extends AppCompatActivity {
         test.setEnabled(true);
       }
       break;
-      default:
-      {
+      default: {
         Log.d(Constants.LOG_TAG, "updateStepButtonsForState called with invalid state of "
             + currentSetupStep);
       }
@@ -201,8 +197,7 @@ public class FirstUseController extends AppCompatActivity {
       }
       break;
       // Add more button values here if new items added to checklist...
-      default:
-      {
+      default: {
         Log.d(Constants.LOG_TAG, "UpdateState called with invalid state of " + newState);
       }
       break;

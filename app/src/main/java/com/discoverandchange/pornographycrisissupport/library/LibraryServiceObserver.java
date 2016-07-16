@@ -16,7 +16,7 @@ public interface LibraryServiceObserver {
   /**
    * Fired when the ResourceLibraryService had an error in loading the network resrouces.
    * The service is passed along so you can retrieve more information about it.
-   * @param service
+   * @param service The service that failed to load it's resources.
    */
   void resourcesLoadError(ResourceLibraryService service);
 }

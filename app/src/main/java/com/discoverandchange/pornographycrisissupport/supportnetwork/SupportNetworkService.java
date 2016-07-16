@@ -142,7 +142,7 @@ public class SupportNetworkService {
   }
 
   /**
-   * Sends a text message as part of the first time setup
+   * Sends a text message as part of the first time setup.
    */
   public void testSendMessage(String message) {
     sendMessageToSupportNetwork(message);

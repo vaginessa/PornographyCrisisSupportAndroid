@@ -52,8 +52,6 @@ public class BaseNavigationActivity extends AppCompatActivity
     getLayoutInflater().inflate(layoutResId, frameLayout, true);
 
     super.setContentView(fullLayout);
-    // TODO: stephen verify both menus are setup.
-
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);

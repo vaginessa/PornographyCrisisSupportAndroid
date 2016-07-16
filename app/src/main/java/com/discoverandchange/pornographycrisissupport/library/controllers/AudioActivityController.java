@@ -37,7 +37,6 @@ public class AudioActivityController extends BaseNavigationActivity {
   private boolean startPlaying = false;
 
   /**
-   * TODO: stephen test audio playback.
    * Loads up the audio view buttons and prepares the audio for playback.
    * @param savedInstanceState the saved data we want to restore from.
    */

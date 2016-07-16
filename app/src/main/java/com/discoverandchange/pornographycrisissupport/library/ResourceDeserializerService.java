@@ -113,13 +113,17 @@ public class ResourceDeserializerService {
       for (int i = 0; i < ranges.length(); i++) {
         JSONObject jsonRange = (JSONObject) ranges.getJSONObject(i);
         Range range = hydrateRange(jsonRange);
-        Log.d(Constants.LOG_TAG_DEBUG, "deserialized range of " + range.getMinimum()
-            + " - " + range.getMaximum());
+        if (Constants.DEBUG_MODE) {
+          Log.d(Constants.LOG_TAG_DEBUG, "deserialized range of " + range.getMinimum()
+              + " - " + range.getMaximum());
+        }
         JSONArray resources = jsonRange.getJSONArray("resources");
         List<LibraryResource> libraryResources = new ArrayList<>();
 
         for (int r = 0; r < resources.length(); r++) {
-          Log.d(Constants.LOG_TAG_DEBUG, "Deserializing resource in range[" + i + "] count: " + r);
+          if (Constants.DEBUG_MODE) {
+            Log.d(Constants.LOG_TAG_DEBUG, "Deserializing resource in range[" + i + "] count: " + r);
+          }
           JSONObject jsonResource = (JSONObject) resources.getJSONObject(r);
           LibraryResource resource = hydrateResource(jsonResource);
           libraryResources.add(resource);
@@ -156,7 +160,9 @@ public class ResourceDeserializerService {
    */
   private LibraryResource hydrateResource(JSONObject jsonResource) throws JSONException {
     String type = jsonResource.getString("type");
-    Log.d(Constants.LOG_TAG, "Attempting to deserialize resource of type: " + type);
+    if (Constants.DEBUG_MODE) {
+      Log.d(Constants.LOG_TAG, "Attempting to deserialize resource of type: " + type);
+    }
     ResourceDeserializer deserializer = getDeserializerForType(type);
     if (deserializer == null) {
       throw new IllegalArgumentException("Unsupported type found: " + type);

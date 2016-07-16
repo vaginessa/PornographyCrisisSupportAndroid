@@ -28,8 +28,10 @@ public class ExternalWebsiteResourceDeserializer extends MediaResourceDeserializ
 
     String url = jsonResource.optString("url", null);
     externalWebsite.setUrl(url);
-    Log.d(Constants.LOG_TAG, "External Website[" + externalWebsite.getTitle()
-        + "] deserialized with url " + externalWebsite.getUrl());
+    if (Constants.DEBUG_MODE) {
+      Log.d(Constants.LOG_TAG, "External Website[" + externalWebsite.getTitle()
+          + "] deserialized with url " + externalWebsite.getUrl());
+    }
     return externalWebsite;
   }
 }

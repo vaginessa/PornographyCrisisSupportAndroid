@@ -23,30 +23,19 @@ import java.util.List;
  */
 public class ResourceLibraryServiceTest {
 
-  public static final int MILD_DEFAULT_RESOURCE_SIZE = 3;
-  public static final int MODERATE_DEFAULT_RESOURCE_SIZE = 4;
-  public static final int SEVERE_DEFAULT_RESOURCE_SIZE = 5;
-
   @Test
-  public void testGetResourcesForQuiz() {
+  public void testGetResourcesForQuizIsEmptyOnInitialLoad() {
 
     ResourceLibraryService service = new ResourceLibraryService();
     List<LibraryResource> resources = service.getResourcesForQuiz(new Quiz(10));
 
     assertNotNull("Resource list should have come back", resources);
-    assertFalse("Resource list should have at least one resource", resources.isEmpty());
-    assertEquals("Resource list should have at least 5 resources", 5, resources.size());
+    assertTrue("Resource list should have be empty", resources.isEmpty());
 
     List<LibraryResource> resourcesMildCravings = service.getResourcesForQuiz(new Quiz(2));
 
     assertNotNull("Resource list should have come back", resourcesMildCravings);
-    assertFalse("Resource list should have at least one resource", resourcesMildCravings.isEmpty());
-    assertEquals("Resource list should have at least 3 resources",
-        MILD_DEFAULT_RESOURCE_SIZE, resourcesMildCravings.size());
-    LibraryResource firstMildResource = resourcesMildCravings.get(0);
-    LibraryResource firstSevereResource = resources.get(0);
-    assertNotEqual("mild cravings should not have the same resources as severe", firstMildResource,
-        firstSevereResource);
+    assertTrue("Resource list should have be empty", resourcesMildCravings.isEmpty());
   }
 
   @Test
@@ -78,6 +67,7 @@ public class ResourceLibraryServiceTest {
     service.registerObserver(observer);
 
     service.addResource(Range.between(1, 3), mock(LibraryResource.class));
+    service.markResourcesLoaded();
     verify(observer, times(1)).resourcesLoaded(service);
   }
 
@@ -92,6 +82,7 @@ public class ResourceLibraryServiceTest {
     service.removeObserver(observer1);
 
     service.addResource(Range.between(1, 3), mock(LibraryResource.class));
+    service.markResourcesLoaded();
     verify(observer1, times(0)).resourcesLoaded(service);
     verify(observer2, times(1)).resourcesLoaded(service);
   }

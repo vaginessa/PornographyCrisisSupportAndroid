@@ -55,4 +55,9 @@ public class Constants {
    * in the individual activity controllers.
    */
   public static final String LIBRARY_RESOURCE_VIEW_MESSAGE = "libraryResource.view";
+
+  /**
+   * Turns on and off buttons and logging features in the app based on if this is true or not.
+   */
+  public static final boolean DEBUG_MODE = true;
 }

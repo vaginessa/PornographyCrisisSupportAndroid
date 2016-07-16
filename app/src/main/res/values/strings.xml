@@ -54,4 +54,5 @@
     <string name="library_controller_no_network">We could not contact the library network.  Please verify your internet connection is working and turned on. Would you like to try loading your resources again?</string>
     <string name="activity_test_message">Send</string>
     <string name="username_prompt">Enter your name. It will be added to the message sent to your crisis contact</string>
+    <string name="settings_reset_app_data">Reset app settings</string>
 </resources>

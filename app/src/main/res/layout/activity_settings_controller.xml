@@ -30,4 +30,13 @@
         android:layout_centerHorizontal="true"
         android:onClick="openInspirationalQuote"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_reset_app_data"
+        android:id="@+id/btnSettingsResetAppData"
+        android:onClick="resetAppData"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

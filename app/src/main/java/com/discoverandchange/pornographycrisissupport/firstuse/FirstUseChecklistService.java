@@ -20,29 +20,29 @@ import java.util.Map;
 public class FirstUseChecklistService {
 
   /**
-   * The very start of the setup process.
-   */
-  public static final int INITIAL_STEP = 1;
-
-  /**
    * Setup the support network setup step.
    */
-  public static final int SUPPORT_STEP = 2;
+  public static final int SUPPORT_STEP = 1;
 
   /**
    * Setup the meaningful image setup step.
    */
-  public static final int IMAGE_STEP = 3;
+  public static final int IMAGE_STEP = 2;
 
   /**
    * Verify our support network is being notified that we are contacting them.
    */
-  public static final int TEST_STEP = 4;
+  public static final int TEST_STEP = 3;
 
   /**
    * State to indicate we finished setting up the controller.
    */
-  public static final int COMPLETED_STEP = 5;
+  public static final int COMPLETED_STEP = 4;
+
+  /**
+   * The very start of the setup process.
+   */
+  public static final int INITIAL_STEP = SUPPORT_STEP;
 
   /**
    * The last step of our setup.

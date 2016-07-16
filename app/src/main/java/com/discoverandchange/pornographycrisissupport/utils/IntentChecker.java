@@ -1,4 +1,4 @@
-package com.discoverandchange.pornographycrisissupport;
+package com.discoverandchange.pornographycrisissupport.utils;
 
 import android.content.Context;
 import android.content.ContextWrapper;

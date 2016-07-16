@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
-import com.discoverandchange.pornographycrisissupport.IntentChecker;
+import com.discoverandchange.pornographycrisissupport.utils.IntentChecker;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
 import com.discoverandchange.pornographycrisissupport.settings.SettingsService;

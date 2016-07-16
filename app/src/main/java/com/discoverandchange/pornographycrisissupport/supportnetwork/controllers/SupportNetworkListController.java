@@ -1,7 +1,6 @@
 package com.discoverandchange.pornographycrisissupport.supportnetwork.controllers;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,7 @@ import android.widget.ListView;
 
 import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
-import com.discoverandchange.pornographycrisissupport.IntentChecker;
+import com.discoverandchange.pornographycrisissupport.utils.IntentChecker;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;

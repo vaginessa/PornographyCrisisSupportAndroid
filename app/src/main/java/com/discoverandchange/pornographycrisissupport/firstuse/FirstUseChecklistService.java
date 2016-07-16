@@ -20,6 +20,11 @@ import java.util.Map;
 public class FirstUseChecklistService {
 
   /**
+   * Flag used to reset the setup.
+   */
+  private static final int RESET_STEPS = 0;
+
+  /**
    * Setup the support network setup step.
    */
   public static final int SUPPORT_STEP = 1;
@@ -172,6 +177,6 @@ public class FirstUseChecklistService {
    * Clears the setup being complete and puts it back on the original first step.
    */
   public void resetSetup() {
-    markStepComplete(INITIAL_STEP);
+    markStepComplete(RESET_STEPS);
   }
 }

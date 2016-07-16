@@ -1,5 +1,11 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.discoverandchange.pornographycrisissupport.library.json.ResourceDeserializer;
 
 import org.apache.commons.lang3.Range;
@@ -13,14 +19,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
 
 /**
- * Created by snielson on 6/23/16.
+ * Unit tests for ResourceDeserializerService.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ResourceDeserializerServiceTest {
@@ -44,22 +46,22 @@ public class ResourceDeserializerServiceTest {
    */
   public void testDeserialize() throws JSONException {
 
-    JSONObject mockJSONMapping = mock(JSONObject.class);
+    JSONObject mockJsonMapping = mock(JSONObject.class);
     JSONArray mockRangeList = mock(JSONArray.class);
     JSONObject mockRange = mock(JSONObject.class);
     JSONArray mockResourceList = mock(JSONArray.class);
-    JSONObject mockJSONVideo = mock(JSONObject.class);
+    JSONObject mockJsonVideo = mock(JSONObject.class);
 
-    when(mockJSONMapping.getJSONArray("ranges")).thenReturn(mockRangeList);
+    when(mockJsonMapping.getJSONArray("ranges")).thenReturn(mockRangeList);
     when(mockRangeList.length()).thenReturn(1);
     when(mockRangeList.getJSONObject(0)).thenReturn(mockRange);
     when(mockRange.optInt("start", 0)).thenReturn(1);
     when(mockRange.optInt("end", 0)).thenReturn(3);
     when(mockRange.getJSONArray("resources")).thenReturn(mockResourceList);
     when(mockResourceList.length()).thenReturn(1);
-    when(mockResourceList.getJSONObject(0)).thenReturn(mockJSONVideo);
-    when(mockJSONVideo.getString("type")).thenReturn("Video");
-    when(mockJSONVideo.getString("url"))
+    when(mockResourceList.getJSONObject(0)).thenReturn(mockJsonVideo);
+    when(mockJsonVideo.getString("type")).thenReturn("Video");
+    when(mockJsonVideo.getString("url"))
         .thenReturn("https://www.discoverandchange.com/wp-content/uploads/2016/02/"
             + "DiscoverAndChangeIntroVideo.mp4");
 
@@ -69,7 +71,7 @@ public class ResourceDeserializerServiceTest {
     service.registerDeserializer("Video", videoDeserializer);
     when(videoDeserializer.deserialize(any(JSONObject.class))).thenReturn(mockVideo);
 
-    Map<Range, List<LibraryResource>> resourcesByRange = service.deserialize(mockJSONMapping);
+    Map<Range, List<LibraryResource>> resourcesByRange = service.deserialize(mockJsonMapping);
 
     assertThat("resources should contain one range", resourcesByRange.size(), is(1));
     Range<Integer> range = resourcesByRange.keySet().iterator().next();

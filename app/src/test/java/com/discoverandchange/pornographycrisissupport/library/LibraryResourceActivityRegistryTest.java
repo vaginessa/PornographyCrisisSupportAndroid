@@ -1,16 +1,13 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
-import android.app.Activity;
-
-import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
-import com.discoverandchange.pornographycrisissupport.library.LibraryResourceActivityRegistry;
-
-import org.junit.Test;
-import org.mockito.Matchers;
-
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import android.app.Activity;
+
+import org.junit.Test;
+
 
 /**
  * Created by snielson on 6/22/16.

@@ -1,17 +1,5 @@
 package com.discoverandchange.pornographycrisissupport.library;
 
-import android.test.suitebuilder.annotation.SmallTest;
-
-import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
-import com.discoverandchange.pornographycrisissupport.library.LibraryServiceObserver;
-import com.discoverandchange.pornographycrisissupport.library.ResourceLibraryService;
-import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
-
-import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
-
 import static android.test.MoreAsserts.assertNotEqual;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -20,12 +8,18 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 
 import org.apache.commons.lang3.Range;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
- * Created by snielson on 6/6/16.
+ * Unit tests for ResourceLibraryService.
  */
 public class ResourceLibraryServiceTest {
 
@@ -51,7 +45,8 @@ public class ResourceLibraryServiceTest {
         MILD_DEFAULT_RESOURCE_SIZE, resourcesMildCravings.size());
     LibraryResource firstMildResource = resourcesMildCravings.get(0);
     LibraryResource firstSevereResource = resources.get(0);
-    assertNotEqual("mild cravings should not have the same resources as severe", firstMildResource, firstSevereResource);
+    assertNotEqual("mild cravings should not have the same resources as severe", firstMildResource,
+        firstSevereResource);
   }
 
   @Test
@@ -101,7 +96,8 @@ public class ResourceLibraryServiceTest {
     verify(observer2, times(1)).resourcesLoaded(service);
   }
 
-  private void runResourceCheck(List<LibraryResource> resources, List<LibraryResource> check, int size, String type) {
+  private void runResourceCheck(List<LibraryResource> resources, List<LibraryResource> check,
+                                int size, String type) {
     assertEquals(type + " resources should have been added", check.size(), size);
     for (int i = 0; i < resources.size(); i++) {
       assertTrue(type + " contains this resources", check.contains(resources.get(i)));

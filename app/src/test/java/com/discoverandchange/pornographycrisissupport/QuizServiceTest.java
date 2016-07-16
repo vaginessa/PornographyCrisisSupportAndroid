@@ -1,24 +1,21 @@
 package com.discoverandchange.pornographycrisissupport;
 
+import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import android.content.Context;
 import android.database.Cursor;
 
 import com.discoverandchange.pornographycrisissupport.quiz.Quiz;
 import com.discoverandchange.pornographycrisissupport.quiz.QuizService;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
- *
+ * Tests the QuizService class.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class QuizServiceTest {

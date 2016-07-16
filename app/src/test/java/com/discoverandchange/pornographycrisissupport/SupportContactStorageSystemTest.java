@@ -1,12 +1,18 @@
 package com.discoverandchange.pornographycrisissupport;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.discoverandchange.pornographycrisissupport.db.SupportContactTable;
 import com.discoverandchange.pornographycrisissupport.db.SupportContactStorageSystem;
+import com.discoverandchange.pornographycrisissupport.db.SupportContactTable;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 
 import org.junit.Test;
@@ -16,14 +22,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsNull.notNullValue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
- * Created by snielson on 6/15/16.
+ * Tests the SupportContactStorageSystem class.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SupportContactStorageSystemTest {
@@ -48,7 +48,8 @@ public class SupportContactStorageSystemTest {
 
     Cursor supportNetworkCursor = mock(Cursor.class);
     ContentResolver resolver = mock(ContentResolver.class);
-    SupportContactStorageSystem storageSystem = new SupportContactStorageSystem(context, contentUri);
+    SupportContactStorageSystem storageSystem =
+        new SupportContactStorageSystem(context, contentUri);
     when(context.getContentResolver()).thenReturn(resolver);
 
     when(resolver.query(contentUri, SupportContactTable.ALL_COLUMNS, null, null, null))

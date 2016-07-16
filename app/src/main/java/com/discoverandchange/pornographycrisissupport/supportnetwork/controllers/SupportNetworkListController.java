@@ -44,6 +44,11 @@ public class SupportNetworkListController extends BaseNavigationActivity {
   private SupportContactsArrayAdapter contactArrayAdapter = null;
 
   /**
+   * Tells whether the activity is currently in setup mode.
+   */
+  private boolean inSetupMode = false;
+
+  /**
    * Refreshes the support network content on the page after a pause or startup.
    */
   public void onResume() {  // After a pause OR at startup
@@ -60,6 +65,9 @@ public class SupportNetworkListController extends BaseNavigationActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_support_network_list);
+
+    FirstUseChecklistService service = FirstUseChecklistService.getInstance(getBaseContext());
+    inSetupMode = !service.isSetupComplete();
   }
 
 
@@ -157,6 +165,11 @@ public class SupportNetworkListController extends BaseNavigationActivity {
     // some data structure to hold the contact && the list of phone numbers to pass back.
 
     cursor.close();
+
+    // the first contact should be a crisis contact.
+    if (inSetupMode) {
+      contact.setIsCrisisContact(true);
+    }
 
     if (phoneList.size() > 1) {
       displayPhoneSelectionDialog(contact, phoneList);

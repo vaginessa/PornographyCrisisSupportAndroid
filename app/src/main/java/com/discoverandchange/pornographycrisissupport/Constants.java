@@ -59,5 +59,5 @@ public class Constants {
   /**
    * Turns on and off buttons and logging features in the app based on if this is true or not.
    */
-  public static final boolean DEBUG_MODE = true;
+  public static final boolean DEBUG_MODE = false;
 }

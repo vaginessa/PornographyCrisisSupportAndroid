@@ -11,7 +11,7 @@ import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 
 /**
- * Listens for phone call status and determines its state.
+ * Listens for phone call status and starts the library when the phone call has ended.
  *
  * @author Stephen Nielson
  */

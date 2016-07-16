@@ -17,6 +17,7 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.R;
 import com.discoverandchange.pornographycrisissupport.db.ScoresTable;
+import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
 import com.discoverandchange.pornographycrisissupport.firstuse.controllers.FirstUseController;
 import com.discoverandchange.pornographycrisissupport.library.controllers.LibraryController;
 import com.discoverandchange.pornographycrisissupport.quiz.EndCallListener;
@@ -129,8 +130,8 @@ public class QuizController extends BaseNavigationActivity {
    * Launches the first use setup.
    */
   private void launchFirstUseSetup() {
-    Intent intent = new Intent(this, FirstUseController.class);
-    startActivity(intent);
+    FirstUseChecklistService service = FirstUseChecklistService.getInstance(getBaseContext());
+    service.launchSetup(this);
     finish();
   }
 
@@ -139,14 +140,8 @@ public class QuizController extends BaseNavigationActivity {
    * @return True if the setup of the app has not been finished.
    */
   private boolean isFirstUseSetupLaunch() {
-    // Execute the first use checklist if hasn't been opened before
-    SharedPreferences firstUseChecks = getSharedPreferences("ActivityPREF", Context.MODE_PRIVATE);
-
-    // Store the value temporarily to ensure that we get a boolean true / false
-    // instead of always true
-
-    boolean isSetupFinished = firstUseChecks.getBoolean("activity_executed", false);
-    return !isSetupFinished;
+    FirstUseChecklistService service = FirstUseChecklistService.getInstance(getBaseContext());
+    return !service.isSetupComplete();
   }
 
   /**

@@ -12,6 +12,7 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.IntentChecker;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
 import com.discoverandchange.pornographycrisissupport.settings.SettingsService;
 import com.discoverandchange.pornographycrisissupport.utils.DialogHelper;
 import com.discoverandchange.pornographycrisissupport.utils.PicassoListener;
@@ -127,6 +128,8 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
                 txtNoImage.setVisibility(View.INVISIBLE);
                 SettingsService service = SettingsService.getInstance(getBaseContext());
                 service.saveMeaningfulPicture(uri);
+
+                handleFirstUseSetup();
               }
 
               @Override
@@ -134,6 +137,15 @@ public class MeaningfulPictureSettingsController extends BaseNavigationActivity 
                 txtNoImage.setVisibility(View.VISIBLE);
               }
             });
+    }
+  }
+
+  private void handleFirstUseSetup() {
+    FirstUseChecklistService firstUseChecklistService = FirstUseChecklistService
+        .getInstance(getBaseContext());
+    if (!firstUseChecklistService.isSetupComplete()) {
+      firstUseChecklistService.markStepComplete(FirstUseChecklistService.IMAGE_STEP);
+      firstUseChecklistService.launchSetup(this);
     }
   }
 

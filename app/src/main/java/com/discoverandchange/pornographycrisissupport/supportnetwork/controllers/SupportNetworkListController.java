@@ -19,6 +19,7 @@ import com.discoverandchange.pornographycrisissupport.BaseNavigationActivity;
 import com.discoverandchange.pornographycrisissupport.Constants;
 import com.discoverandchange.pornographycrisissupport.IntentChecker;
 import com.discoverandchange.pornographycrisissupport.R;
+import com.discoverandchange.pornographycrisissupport.firstuse.FirstUseChecklistService;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContact;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportContactsArrayAdapter;
 import com.discoverandchange.pornographycrisissupport.supportnetwork.SupportNetworkService;
@@ -162,6 +163,18 @@ public class SupportNetworkListController extends BaseNavigationActivity {
     } else {
       saveContactData(contact);
       setupSupportContactsList();
+      handleSetupStepCompletion();
+    }
+  }
+
+  /**
+   * Checks if we are in setup, and continues on to the rest of the setup if we are.
+   */
+  private void handleSetupStepCompletion() {
+    FirstUseChecklistService service = FirstUseChecklistService.getInstance(getBaseContext());
+    if (!service.isSetupComplete()) {
+      service.markStepComplete(FirstUseChecklistService.SUPPORT_STEP);
+      service.launchSetup(this);
     }
   }
 
@@ -205,6 +218,7 @@ public class SupportNetworkListController extends BaseNavigationActivity {
             saveContactData(contact);
             setupSupportContactsList();
             dialog.dismiss();
+            handleSetupStepCompletion();
           }
         });
     builderSingle.show();

@@ -122,7 +122,8 @@ public class ResourceDeserializerService {
 
         for (int r = 0; r < resources.length(); r++) {
           if (Constants.DEBUG_MODE) {
-            Log.d(Constants.LOG_TAG_DEBUG, "Deserializing resource in range[" + i + "] count: " + r);
+            Log.d(Constants.LOG_TAG_DEBUG, "Deserializing resource in range[" + i + "] count: "
+                + r);
           }
           JSONObject jsonResource = (JSONObject) resources.getJSONObject(r);
           LibraryResource resource = hydrateResource(jsonResource);

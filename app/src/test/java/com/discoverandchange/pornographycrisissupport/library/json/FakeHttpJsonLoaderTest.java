@@ -1,19 +1,19 @@
 package com.discoverandchange.pornographycrisissupport.library.json;
 
+import static junit.framework.Assert.assertNotNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertNotNull;
-
 /**
  * Tests the FakeHttpJsonLoader class to make sure it returns a fake
  * JSON string that our deserialization classes can use for testing w/o having
  * a fully implemented external JSON api.
  * @see FakeHttpJsonLoader
- * @author Stephen Nielson <snielson@discoverandchange.com>
+ * @author Stephen Nielson snielson@discoverandchange.com
  */
 public class FakeHttpJsonLoaderTest {
 

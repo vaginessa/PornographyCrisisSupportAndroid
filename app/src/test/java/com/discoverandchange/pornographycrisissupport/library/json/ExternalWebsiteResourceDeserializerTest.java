@@ -1,5 +1,8 @@
 package com.discoverandchange.pornographycrisissupport.library.json;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.discoverandchange.pornographycrisissupport.library.ExternalWebsiteResource;
 import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
 
@@ -7,15 +10,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 /**
  * Tests the ExternalWebsiteResourceDeserializer class to make sure it
- * properly converts from JSON to an ExternalWebsiteResource
+ * properly converts from JSON to an ExternalWebsiteResource.
  * @see ExternalWebsiteResourceDeserializer
  * @see ExternalWebsiteResource
- * @author Stephen Nielson <snielson@discoverandchange.com>
+ * @author Stephen Nielson snielson@discoverandchange.com
  */
 public class ExternalWebsiteResourceDeserializerTest {
 
@@ -37,7 +37,9 @@ public class ExternalWebsiteResourceDeserializerTest {
     ExternalWebsiteResourceDeserializer deserializer = new ExternalWebsiteResourceDeserializer();
     LibraryResource website = deserializer.deserialize(new JSONObject(fullTest));
 
-    assertThat("resource should be a video resource", website,  instanceOf(ExternalWebsiteResource.class));
-    MediaResourceAssert.assertMediaResourceDeserialized(website, url, description, thumbnail, title, type);
+    assertThat("resource should be a video resource", website,
+        instanceOf(ExternalWebsiteResource.class));
+    MediaResourceAssert.assertMediaResourceDeserialized(website, url, description, thumbnail,
+        title, type);
   }
 }

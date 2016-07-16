@@ -1,16 +1,16 @@
 package com.discoverandchange.pornographycrisissupport.library.json;
 
-import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
-import com.discoverandchange.pornographycrisissupport.library.MediaResource;
-
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
+import com.discoverandchange.pornographycrisissupport.library.MediaResource;
+
 /**
  * Helper class to assert MediaResource properties are properly filled in on a library
  * resource.
- * @author Stephen Nielson <snielson@discoverandchange.com>
+ * @author Stephen Nielson snielson@discoverandchange.com
  */
 public class MediaResourceAssert {
 
@@ -24,13 +24,15 @@ public class MediaResourceAssert {
    * @param title The value that the resource title should have.
    * @param type The actual resource type that the resource should be.
    */
-  public static void assertMediaResourceDeserialized(LibraryResource resource, String url, String description,
-                                                     String thumbnail, String title, String type)
-  {
+  public static void assertMediaResourceDeserialized(LibraryResource resource, String url,
+                                                     String description, String thumbnail,
+                                                     String title, String type) {
     assertThat("resource should be of type media resource", resource,
         instanceOf(MediaResource.class));
     MediaResource mediaResource = (MediaResource)resource;
-    assertThat("media resource url should have been deserialized", mediaResource.getUrl(), is(url));
-    BaseMediaResourceAssert.assertResourceDeserialized(resource, description, thumbnail, title, type);
+    assertThat("media resource url should have been deserialized", mediaResource.getUrl(),
+        is(url));
+    BaseMediaResourceAssert.assertResourceDeserialized(resource, description, thumbnail, title,
+        type);
   }
 }

@@ -1,14 +1,14 @@
 package com.discoverandchange.pornographycrisissupport.library.json;
 
-import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.discoverandchange.pornographycrisissupport.library.LibraryResource;
 
 /**
  * Helper class to assert BaseMediaResource properties are properly filled in on a library
  * resource.
- * @author Stephen Nielson <snielson@discoverandchange.com>
+ * @author Stephen Nielson snielson@discoverandchange.com
  */
 public class BaseMediaResourceAssert {
 
